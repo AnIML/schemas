@@ -91,7 +91,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element ref="Unit" minOccurs="0"/>
+							<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:token" use="required">
 							<xs:annotation>
@@ -139,11 +139,23 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:element ref="Unit" minOccurs="0"/>
-				<xs:element name="AllowedValue" type="ParameterValueType" minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="AllowedValue" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
 					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ParameterValueType">
+								<xs:attribute name="unit" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>Label of Unit that applies to this allowed value
+</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
 				</xs:element>
 				<xs:element name="AllowedRange" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
@@ -184,6 +196,12 @@
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="unit" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>Label of Unit that applies to this allowed range of values
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -374,7 +392,13 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="label" type="xs:string" use="required"/>
+			<xs:attribute name="label" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:simpleType name="SIUnitNames">
