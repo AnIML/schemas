@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by Gary Kramer (NIST) -->
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Gary W. Kramer (NIST) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--Root-Node of every AnIML document-->
 	<xs:element name="AnIML">
@@ -8,14 +8,14 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Samples" minOccurs="0"/>
+				<xs:element ref="SampleSet" minOccurs="0"/>
 				<xs:element ref="MeasurementData" minOccurs="0"/>
 				<xs:element ref="AuditTrail" minOccurs="0"/>
 				<xs:element ref="Signatures" minOccurs="0"/>
 			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="0.1">
+			<xs:attribute name="version" type="xs:string" use="required" fixed="0.2">
 				<xs:annotation>
-					<xs:documentation>Version number of this AnIML document. Must be "0.1".</xs:documentation>
+					<xs:documentation>Version number of this AnIML document. Must be "0.2".</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -23,7 +23,7 @@
 	</xs:element>
 	<!-- -->
 	<!--Top-Level document elements-->
-	<xs:element name="Samples">
+	<xs:element name="SampleSet">
 		<xs:annotation>
 			<xs:documentation>Container for Samples used in this AnIML document.</xs:documentation>
 		</xs:annotation>
@@ -35,7 +35,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element ref="ParameterCategories" minOccurs="0"/>
+							<xs:element ref="ParameterCategorySet" minOccurs="0"/>
 						</xs:sequence>
 						<xs:attributeGroup ref="SignableItem"/>
 						<xs:attribute name="sampleID" type="xs:token" use="required"/>
@@ -61,11 +61,22 @@
 	</xs:element>
 	<xs:element name="MeasurementData">
 		<xs:annotation>
-			<xs:documentation>Container for multiple PageSets that describe the process and results.</xs:documentation>
+			<xs:documentation>Container for multiple ExperimentStets that describe the process and results.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="PageSet" maxOccurs="unbounded"/>
+				<xs:element name="Templates" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Represents a container for ExperementStep templates</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ExperimentStep" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:ID" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ExperimentStep" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attributeGroup ref="SignableItem"/>
 		</xs:complexType>
@@ -91,6 +102,11 @@
 							<xs:element name="Action" type="ChangeType">
 								<xs:annotation>
 									<xs:documentation>Type of change made (created, modified, ...)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Reason" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Explaination why changes were made.</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="Description" type="xs:string" minOccurs="0">
@@ -127,9 +143,9 @@
 	</xs:element>
 	<!-- -->
 	<!--Elements representing process information and data-->
-	<xs:element name="PageSet">
+	<xs:element name="ExperimentStep">
 		<xs:annotation>
-			<xs:documentation>Container for multiple Pages. Use one PageSet per Experiment.</xs:documentation>
+			<xs:documentation>Container that documents a step in a sequence of experiments. Use one ExperimentStep per application of a Technique.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -146,7 +162,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="SampleRef">
+							<xs:element name="SampleRef" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation>Reference to a Sample used in this Experiment.</xs:documentation>
 								</xs:annotation>
@@ -197,20 +213,11 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-				<xs:element ref="ParameterCategories" minOccurs="0"/>
-				<xs:element name="Pages" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Container for Pages that contain the results gleaned from the Technique.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="Page" minOccurs="0" maxOccurs="unbounded"/>
-						</xs:sequence>
-						<xs:attributeGroup ref="SignableItem"/>
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="ParameterCategorySet" minOccurs="0"/>
+				<xs:element ref="PageSet" minOccurs="0"/>
 			</xs:sequence>
 			<xs:attributeGroup ref="SignableItemWithName"/>
+			<xs:attribute name="templateUsed" type="xs:IDREF" use="optional"/>
 		</xs:complexType>
 		<xs:key name="pageID">
 			<xs:selector xpath="Page"/>
@@ -224,7 +231,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="References" minOccurs="0"/>
-				<xs:element name="Vectors" minOccurs="0">
+				<xs:element name="VectorSet" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Container for n-dimensional Data.</xs:documentation>
 					</xs:annotation>
@@ -305,6 +312,7 @@
 											<xs:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
+									<xs:attribute name="type" type="VectorTypeNames" use="required"/>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -319,25 +327,19 @@
 						<xs:field xpath="@vectorID"/>
 					</xs:key>
 				</xs:element>
-				<xs:element ref="ParameterCategories" minOccurs="0"/>
-				<xs:element name="SubPages" minOccurs="0">
+				<xs:element ref="ParameterCategorySet" minOccurs="0"/>
+				<xs:element ref="PageSet" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Container for Pages that reference a data point in the current Page.</xs:documentation>
 					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="Page" maxOccurs="unbounded"/>
-						</xs:sequence>
-						<xs:attributeGroup ref="SignableItem"/>
-					</xs:complexType>
 				</xs:element>
-				<xs:element name="SubPageSets" minOccurs="0">
+				<xs:element name="ExperimentStepSet" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Container for PageSets that reference a data point in the current Page.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element ref="PageSet" maxOccurs="unbounded"/>
+							<xs:element ref="ExperimentStep" maxOccurs="unbounded"/>
 						</xs:sequence>
 						<xs:attributeGroup ref="SignableItem"/>
 					</xs:complexType>
@@ -360,6 +362,11 @@
 						<xs:attributeGroup ref="SignableItemWithName"/>
 						<xs:attribute name="vectorID" type="xs:string" use="required"/>
 						<xs:attribute name="index" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="refWidth" type="xs:positiveInteger" use="optional" default="1">
+							<xs:annotation>
+								<xs:documentation>Specifies how many values, starting from the index, should be referenced. Used to refer to an area, rather than an individual value.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 					<xs:keyref name="vectorIDRef" refer="vectorID">
 						<xs:selector xpath="."/>
@@ -370,7 +377,7 @@
 			<xs:attributeGroup ref="SignableItem"/>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="ParameterCategories">
+	<xs:element name="ParameterCategorySet">
 		<xs:annotation>
 			<xs:documentation>Container for categorized and nested Name/Value Pairs.</xs:documentation>
 		</xs:annotation>
@@ -391,7 +398,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Parameters" minOccurs="0">
+				<xs:element name="ParameterSet" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Container for Name/Value Pairs</xs:documentation>
 					</xs:annotation>
@@ -420,20 +427,10 @@
 						<xs:field xpath="@name"/>
 					</xs:unique>
 				</xs:element>
-				<xs:element name="SubParameterCategories" minOccurs="0">
+				<xs:element ref="ParameterCategorySet" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Contains multiple subcategories of ParameterCategory.</xs:documentation>
 					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="ParameterCategory" maxOccurs="unbounded"/>
-						</xs:sequence>
-						<xs:attributeGroup ref="SignableItem"/>
-					</xs:complexType>
-					<xs:unique name="parameterCategoryName">
-						<xs:selector xpath="ParameterCategory"/>
-						<xs:field xpath="@name"/>
-					</xs:unique>
 				</xs:element>
 			</xs:sequence>
 			<xs:attributeGroup ref="SignableItemWithName"/>
@@ -441,23 +438,23 @@
 	</xs:element>
 	<xs:element name="Unit">
 		<xs:annotation>
-			<xs:documentation>UnitsML reference. Value contains printable name of unit.</xs:documentation>
+			<xs:documentation>Definition of Measurement Unit</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="xs:token">
-					<xs:attribute name="uri" type="xs:anyURI" use="optional">
-						<xs:annotation>
-							<xs:documentation>URI to UnitsML document that contains the definition for the unit used.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="unitID" type="xs:token" use="optional">
-						<xs:annotation>
-							<xs:documentation>UnitID within the given UnitsML document that identifies the unit used.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:extension>
-			</xs:simpleContent>
+			<xs:sequence>
+				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:token">
+								<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="offset" type="xs:float" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="label" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:simpleType name="SamplePurpose">
@@ -514,25 +511,15 @@
 		<xs:restriction base="xs:boolean"/>
 	</xs:simpleType>
 	<!-- -->
-	<!--Complex Types for Parameter and Vector values-->
+	<!--Complex Types for Parameter and Vector values, Simple Type for Data Type names-->
 	<xs:complexType name="ParameterValueType">
 		<xs:annotation>
 			<xs:documentation>Elements for basic type values in Parameters.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
-			<xs:element name="Long" type="xs:long">
-				<xs:annotation>
-					<xs:documentation>Individual Long Value (64 bits, signed).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Int" type="xs:int">
 				<xs:annotation>
 					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Byte" type="xs:byte">
-				<xs:annotation>
-					<xs:documentation>Individual Byte Value (8 bits, signed).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Float32" type="xs:float">
@@ -560,9 +547,19 @@
 					<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PNG" type="xs:base64Binary">
+				<xs:annotation>
+					<xs:documentation>Base 64 encoded image format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="XML" type="xs:anyType">
 				<xs:annotation>
 					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SVG" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Value governed by a different XML Schema. It is for representing images.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -580,23 +577,15 @@
 		<xs:annotation>
 			<xs:documentation>Elements for numeric vector values.</xs:documentation>
 			<xs:documentation>Elements for numeric vector values.</xs:documentation>
+			<xs:documentation>Elements for numeric vector values.</xs:documentation>
+			<xs:documentation>Elements for numeric vector values.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="VectorValueType">
 				<xs:choice>
-					<xs:element name="Long" type="xs:long">
-						<xs:annotation>
-							<xs:documentation>Individual Long Value (64 bits, signed).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="Int" type="xs:int">
 						<xs:annotation>
 							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="Byte" type="xs:byte">
-						<xs:annotation>
-							<xs:documentation>Individual Byte Value (8 bits, signed).</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="Float32" type="xs:float">
@@ -613,6 +602,27 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:simpleType name="ParameterTypeNames">
+		<xs:annotation>
+			<xs:documentation>Names of Data Types for Parameters</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="int"/>
+			<xs:enumeration value="long"/>
+			<xs:enumeration value="float32"/>
+			<xs:enumeration value="float64"/>
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="dateTime"/>
+			<xs:enumeration value="xml"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VectorTypeNames">
+		<xs:annotation>
+			<xs:documentation>Names of Data Types for Vectors</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="ParameterTypeNames"/>
+	</xs:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
 	<xs:attributeGroup name="ValueSet">
@@ -746,4 +756,15 @@
 			<xs:enumeration value="software"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:element name="PageSet">
+		<xs:annotation>
+			<xs:documentation>Container for Pages that contain the results gleaned from the Technique.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Page" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="SignableItem"/>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>

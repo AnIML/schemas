@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by Gary Kramer (NIST) -->
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Gary W. Kramer (NIST) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xs:element name="Technique">
@@ -38,9 +38,14 @@
 								<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="inherited" type="xs:boolean" use="optional" default="true">
+						<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
 							<xs:annotation>
-								<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page.</xs:documentation>
+								<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 					</xs:complexType>
@@ -86,6 +91,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="Documentation" minOccurs="0"/>
+							<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:token" use="required">
 							<xs:annotation>
@@ -95,11 +101,6 @@
 						<xs:attribute name="type" type="VectorTypeNames" use="required">
 							<xs:annotation>
 								<xs:documentation>Data type this Vector needs to have.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="unit" type="xs:anySimpleType" use="optional">
-							<xs:annotation>
-								<xs:documentation>Unit for the values of this Vector.</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 						<xs:attribute name="modality" type="Modality" use="optional" default="required">
@@ -114,16 +115,7 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="SubPagesBlueprint" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Sub Pages that need to be  attached to this Page.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="PageBlueprint" maxOccurs="unbounded"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:token" use="required">
@@ -147,10 +139,15 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Documentation" minOccurs="0"/>
+				<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="AllowedValue" type="xs:anySimpleType" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="name" type="xs:token" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
 			<xs:attribute name="type" type="ParameterTypeNames" use="required"/>
-			<xs:attribute name="unit" type="xs:anySimpleType" use="optional"/>
 			<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
 			<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
 				<xs:annotation>
@@ -168,10 +165,10 @@
 				<xs:element ref="Documentation" minOccurs="0"/>
 				<xs:choice>
 					<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-					<xs:element ref="SubParameterCategoriesBlueprint"/>
+					<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
 					<xs:sequence>
 						<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-						<xs:element ref="SubParameterCategoriesBlueprint"/>
+						<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:choice>
 			</xs:sequence>
@@ -181,20 +178,6 @@
 		</xs:complexType>
 		<xs:unique name="parameterName">
 			<xs:selector xpath="ParameterBlueprint"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-	</xs:element>
-	<xs:element name="SubParameterCategoriesBlueprint">
-		<xs:annotation>
-			<xs:documentation>Sub-Categories to be nested underneath current Parameter Category.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-		<xs:unique name="parameterCategoryName">
-			<xs:selector xpath="ParameterCategoryBlueprint"/>
 			<xs:field xpath="@name"/>
 		</xs:unique>
 	</xs:element>
@@ -225,15 +208,14 @@
 			<xs:documentation>Names of all data types used in AnIML</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:enumeration value="long"/>
 			<xs:enumeration value="int"/>
-			<xs:enumeration value="byte"/>
-			<xs:enumeration value="float32"/>
-			<xs:enumeration value="float64"/>
+			<xs:enumeration value="float"/>
 			<xs:enumeration value="string"/>
 			<xs:enumeration value="boolean"/>
 			<xs:enumeration value="dateTime"/>
 			<xs:enumeration value="xml"/>
+			<xs:enumeration value="png"/>
+			<xs:enumeration value="svg"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="VectorTypeNames">
@@ -254,6 +236,27 @@
 		<xs:annotation>
 			<xs:documentation>Description of the Element it is nested under.</xs:documentation>
 		</xs:annotation>
+	</xs:element>
+	<xs:element name="Unit">
+		<xs:annotation>
+			<xs:documentation>Definition of Measurement Unit</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:token">
+								<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="offset" type="xs:float" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="label" type="xs:string" use="required"/>
+		</xs:complexType>
 	</xs:element>
 	<xs:simpleType name="MaxOccurs">
 		<xs:annotation>
