@@ -299,13 +299,13 @@
 			<xs:sequence>
 				<xs:element ref="Documentation" minOccurs="0"/>
 				<xs:choice>
-					<xs:sequence>
-						<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-						<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-						<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
 					<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
 					<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
+					<xs:sequence>
+						<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
+						<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
+						<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
 					<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:choice>
 			</xs:sequence>
