@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xs:element name="AnIML">
@@ -339,7 +339,7 @@
 	</xs:element>
 	<xs:element name="ParameterCategory">
 		<xs:annotation>
-			<xs:documentation>Defines a category of Parameters. Used to model hierachies among Parameters.</xs:documentation>
+			<xs:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
