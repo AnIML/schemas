@@ -140,7 +140,7 @@
 			<xs:sequence>
 				<xs:element ref="Documentation" minOccurs="0"/>
 				<xs:element ref="Unit" minOccurs="0"/>
-				<xs:element name="AllowedValue" type="xs:anySimpleType" minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="AllowedValue" type="ParameterValueType" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
 					</xs:annotation>
@@ -156,15 +156,15 @@
 									<xs:documentation>Lower Boundary of Range.</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:simpleContent>
-										<xs:extension base="xs:anySimpleType">
+									<xs:complexContent>
+										<xs:extension base="NumericValueType">
 											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
 												<xs:annotation>
 													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
 										</xs:extension>
-									</xs:simpleContent>
+									</xs:complexContent>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="Max">
@@ -172,15 +172,15 @@
 									<xs:documentation>Upper Boundary of Range.</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:simpleContent>
-										<xs:extension base="xs:anySimpleType">
+									<xs:complexContent>
+										<xs:extension base="NumericValueType">
 											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
 												<xs:annotation>
 													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
 										</xs:extension>
-									</xs:simpleContent>
+									</xs:complexContent>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -243,7 +243,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- -->
-	<!--Type definitions for basic data type names-->
+	<!--Type definitions for basic data types-->
 	<xs:simpleType name="AllTypeNames">
 		<xs:annotation>
 			<xs:documentation>Names of all data types used in AnIML</xs:documentation>
@@ -271,6 +271,84 @@
 		</xs:annotation>
 		<xs:restriction base="AllTypeNames"/>
 	</xs:simpleType>
+	<xs:complexType name="ParameterValueType">
+		<xs:annotation>
+			<xs:documentation>Elements for allowed values in Parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="int" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="float32" type="xs:float">
+				<xs:annotation>
+					<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="float64" type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="string" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Individual String Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="boolean" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Individual Boolean Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="png" type="xs:base64Binary">
+				<xs:annotation>
+					<xs:documentation>Base 64 encoded image format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xml" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="svg" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Value governed by a different XML Schema. It is for representing images.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="NumericValueType">
+		<xs:annotation>
+			<xs:documentation>Elements for allowed numeric values in Parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterValueType">
+				<xs:choice>
+					<xs:element name="int" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="float32" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="float64" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
 	<!-- -->
 	<!--Miscellaneous-->
 	<xs:element name="Documentation" type="xs:string">
