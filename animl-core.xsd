@@ -383,7 +383,7 @@
 				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:simpleContent>
-							<xs:extension base="xs:token">
+							<xs:extension base="SIUnitNames">
 								<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
 								<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
 								<xs:attribute name="offset" type="xs:float" use="optional" default="0"/>
@@ -741,6 +741,20 @@
 			<xs:documentation>Names of Data Types for Vectors</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="ParameterTypeNames"/>
+	</xs:simpleType>
+	<xs:simpleType name="SIUnitNames">
+		<xs:annotation>
+			<xs:documentation>Names of all SI Units</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="m"/>
+			<xs:enumeration value="kg"/>
+			<xs:enumeration value="s"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="K"/>
+			<xs:enumeration value="mol"/>
+			<xs:enumeration value="cd"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
