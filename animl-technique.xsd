@@ -91,7 +91,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="Unit" minOccurs="0"/>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:token" use="required">
 							<xs:annotation>
@@ -139,7 +139,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Unit" minOccurs="0"/>
 				<xs:element name="AllowedValue" type="xs:anySimpleType" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
