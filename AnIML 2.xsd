@@ -1,95 +1,137 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<xs:schema id="AnIML" targetNamespace="http://tempuri.org/AnIML.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://tempuri.org/AnIML.xsd" xmlns:mstns="http://tempuri.org/AnIML.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+<xs:schema id="AnIML" targetNamespace="http://tempuri.org/AnIML.xsd" elementFormDefault="qualified"
+	attributeFormDefault="qualified" xmlns="http://tempuri.org/AnIML.xsd" xmlns:mstns="http://tempuri.org/AnIML.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 	<xs:element name="AnIML" msdata:IsDataSet="true">
 		<xs:complexType>
 			<xs:choice maxOccurs="unbounded">
+				<xs:element name="Signature">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SignatureID" type="xs:int" />
+							<xs:element name="SignedInfo" type="xs:string" minOccurs="0" />
+							<xs:element name="ValueID" type="xs:int" minOccurs="0" />
+							<xs:element name="KeyInfo" type="xs:short" minOccurs="0" />
+							<xs:element name="Object" type="xs:short" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="Audit">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="Timestamp" type="xs:dateTime" minOccurs="0" />
+							<xs:element name="AuditID" type="xs:int" />
+							<xs:element name="SignatureID" type="xs:int" minOccurs="0" />
 							<xs:element name="UserID" type="xs:int" minOccurs="0" />
+							<xs:element name="Timestamp" type="xs:dateTime" minOccurs="0" />
 							<xs:element name="Action" type="xs:short" minOccurs="0" />
 							<xs:element name="Reason" type="xs:short" minOccurs="0" />
 							<xs:element name="Description" type="xs:short" minOccurs="0" />
-							<xs:element name="SignableItemID" type="xs:int" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="AutoIncrementedValue">
+				<xs:element name="User">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="PageID" type="xs:int" minOccurs="0" />
-							<xs:element name="Increment" type="xs:double" minOccurs="0" />
-							<xs:element name="StartValue" type="xs:double" minOccurs="0" />
+							<xs:element name="UserID" type="xs:int" />
+							<xs:element name="Name" type="xs:string" minOccurs="0" />
+							<xs:element name="Email" type="xs:string" minOccurs="0" />
+							<xs:element name="Phone" type="xs:string" minOccurs="0" />
+							<xs:element name="Location" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="EncodedValue">
+				<xs:element name="Experiment">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="PageID" type="xs:int" minOccurs="0" />
-							<xs:element name="Value" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="IndividualValue">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="PageID" type="xs:int" minOccurs="0" />
-							<xs:element name="Value" type="xs:string" minOccurs="0" />
+							<xs:element name="ExperimentID" type="xs:int" />
+							<xs:element name="AuthorID" type="xs:int" minOccurs="0" />
+							<xs:element name="SampleID" type="xs:int" minOccurs="0" />
+							<xs:element name="TechniqueID" type="xs:int" minOccurs="0" />
+							<xs:element name="Name" type="xs:string" minOccurs="0" />
+							<xs:element name="IsTemplate" type="xs:short" minOccurs="0" />
+							<xs:element name="Timestamp" type="xs:dateTime" minOccurs="0" />
+							<xs:element name="Comment" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="Page">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="ValueSetTypeID" type="xs:int" minOccurs="0" />
+							<xs:element name="PageID" type="xs:int" />
 							<xs:element name="ExperimentID" type="xs:int" minOccurs="0" />
+							<xs:element name="Offset" type="xs:float" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="Parameter">
+				<xs:element name="ValueSetType">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="Name" type="xs:string" minOccurs="0" />
-							<xs:element name="Value" type="xs:string" minOccurs="0" />
-							<xs:element name="CategoryID" type="xs:int" minOccurs="0" />
-							<xs:element name="TypeID" type="xs:int" minOccurs="0" />
-							<xs:element name="SignableItemID" type="xs:int" minOccurs="0" />
-							<xs:element name="ExperimentID" type="xs:int" minOccurs="0" />
+							<xs:element name="ValueSetTypeID" type="xs:int" />
+							<xs:element name="ValueSetTypeName" type="xs:string" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Selection">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SelectionID" type="xs:int" />
 							<xs:element name="PageID" type="xs:int" minOccurs="0" />
-							<xs:element name="SampleID" type="xs:int" minOccurs="0" />
+							<xs:element name="VectorID" type="xs:int" minOccurs="0" />
+							<xs:element name="SelectionType" type="xs:string" minOccurs="0" />
+							<xs:element name="Start" type="xs:short" minOccurs="0" />
+							<xs:element name="Stop" type="xs:short" minOccurs="0" />
+							<xs:element name="PointIndex" type="xs:short" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="ParameterCategory">
+				<xs:element name="EncodedValue">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="Name" type="xs:string" minOccurs="0" />
-							<xs:element name="SignableItemID" type="xs:int" minOccurs="0" />
-							<xs:element name="Type" type="xs:short" minOccurs="0" />
+							<xs:element name="EncodedValueID" type="xs:int" />
+							<xs:element name="VectorID" type="xs:int" minOccurs="0" />
+							<xs:element name="Value" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="Sample">
+				<xs:element name="Vector">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="ExternalSampleID" type="xs:string" minOccurs="0" />
-							<xs:element name="SampleName" type="xs:string" minOccurs="0" />
-							<xs:element name="SampleTypeID" type="xs:int" minOccurs="0" />
-							<xs:element name="SignableItemID" type="xs:int" minOccurs="0" />
-							<xs:element name="Barcode" type="xs:string" minOccurs="0" />
-							<xs:element name="IsDerived" type="xs:short" minOccurs="0" />
-							<xs:element name="RoleID" type="xs:int" minOccurs="0" />
-							<xs:element name="Purpose" type="xs:short" minOccurs="0" />
+							<xs:element name="VectorID" type="xs:int" />
+							<xs:element name="ValueSetTypeID" type="xs:int" minOccurs="0" />
+							<xs:element name="PageID" type="xs:int" minOccurs="0" />
+							<xs:element name="IsDependent" type="xs:short" minOccurs="0" />
+							<xs:element name="IsVisible" type="xs:short" minOccurs="0" />
+							<xs:element name="Scale" type="xs:string" minOccurs="0" />
+							<xs:element name="Length" type="xs:short" minOccurs="0" />
+							<xs:element name="ValueTypeID" type="xs:int" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AutoIncrementedValue">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AutoIncrementedValueID" type="xs:int" />
+							<xs:element name="VectorID" type="xs:int" minOccurs="0" />
+							<xs:element name="Increment" type="xs:double" minOccurs="0" />
+							<xs:element name="StartValue" type="xs:double" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="IndividualValue">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IndividualValueID" type="xs:int" />
+							<xs:element name="VectorID" type="xs:int" minOccurs="0" />
+							<xs:element name="Value" type="xs:string" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Technique">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TechniqueID" type="xs:int" />
+							<xs:element name="TechniqueName" type="xs:string" minOccurs="0" />
+							<xs:element name="URI" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -102,321 +144,215 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="SampleRole">
+				<xs:element name="Sample">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="RoleName" type="xs:string" minOccurs="0" />
+							<xs:element name="SampleID" type="xs:int" />
+							<xs:element name="SampleRoleID" type="xs:int" minOccurs="0" />
+							<xs:element name="SampleTypeID" type="xs:int" minOccurs="0" />
+							<xs:element name="SampleName" type="xs:string" minOccurs="0" />
+							<xs:element name="ExternalSampleID" type="xs:string" minOccurs="0" />
+							<xs:element name="IsDerived" type="xs:short" minOccurs="0" />
+							<xs:element name="Purpose" type="xs:short" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="SampleType">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
+							<xs:element name="SampleTypeID" type="xs:int" />
 							<xs:element name="Name" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="Selection">
+				<xs:element name="SampleRole">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="PageID" type="xs:int" minOccurs="0" />
-							<xs:element name="SelectionType" type="xs:string" minOccurs="0" />
-							<xs:element name="Start" type="xs:short" minOccurs="0" />
-							<xs:element name="Stop" type="xs:short" minOccurs="0" />
-							<xs:element name="PointIndex" type="xs:short" minOccurs="0" />
-							<xs:element name="ParentPageID" type="xs:string" minOccurs="0" />
+							<xs:element name="SampleRoleID" type="xs:int" />
+							<xs:element name="RoleName" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="Signature">
+				<xs:element name="ParameterType">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="SignedInfo" type="xs:string" minOccurs="0" />
-							<xs:element name="ValueID" type="xs:int" minOccurs="0" />
-							<xs:element name="KeyInfo" type="xs:short" minOccurs="0" />
-							<xs:element name="Object" type="xs:short" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Technique">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="TechniqueName" type="xs:string" minOccurs="0" />
-							<xs:element name="URI" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="User">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
+							<xs:element name="ParameterTypeID" type="xs:int" />
 							<xs:element name="Name" type="xs:string" minOccurs="0" />
-							<xs:element name="Email" type="xs:string" minOccurs="0" />
-							<xs:element name="Phone" type="xs:string" minOccurs="0" />
-							<xs:element name="Location" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ValueSetType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ValueSetTypeID" type="xs:int" />
-							<xs:element name="ValueSetTypeName" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Experiment">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
-							<xs:element name="Name" type="xs:string" minOccurs="0" />
-							<xs:element name="TechniqueID" type="xs:int" minOccurs="0" />
-							<xs:element name="AuthorID" type="xs:int" minOccurs="0" />
-							<xs:element name="IsTemplate" type="xs:short" minOccurs="0" />
-							<xs:element name="Timestamp" type="xs:dateTime" minOccurs="0" />
-							<xs:element name="SampleID" type="xs:int" minOccurs="0" />
-							<xs:element name="SignableItemID" type="xs:int" minOccurs="0" />
+							<xs:element name="Type" type="xs:short" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="ValueType">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ID" type="xs:int" />
+							<xs:element name="ValueTypeID" type="xs:int" />
 							<xs:element name="Name" type="xs:string" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Parameter">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ParameterID" type="xs:int" />
+							<xs:element name="ValueTypeID" type="xs:int" minOccurs="0" />
+							<xs:element name="ParameterTypeID" type="xs:int" minOccurs="0" />
+							<xs:element name="ExperimentID" type="xs:int" minOccurs="0" />
+							<xs:element name="PageID" type="xs:int" minOccurs="0" />
+							<xs:element name="SampleID" type="xs:int" minOccurs="0" />
+							<xs:element name="Name" type="xs:string" minOccurs="0" />
+							<xs:element name="Value" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:choice>
 		</xs:complexType>
 		<xs:unique name="AnIMLKey1" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Audit" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey3" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:AutoIncrementedValue" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey4" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EncodedValue" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey6" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:IndividualValue" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey7" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey8" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey9" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ParameterCategory" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey10" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Sample" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey11" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SampleExperiment" />
-			<xs:field xpath="mstns:SampleExperimentID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey12" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SampleRole" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey13" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SampleType" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey14" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Selection" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey15" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:Signature" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey16" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Technique" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey17" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:User" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey18" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ValueSetType" />
-			<xs:field xpath="mstns:ValueSetTypeID" />
+			<xs:field xpath="mstns:SignatureID" />
 		</xs:unique>
 		<xs:unique name="AnIMLKey2" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Experiment" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:unique name="AnIMLKey5" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ValueType" />
-			<xs:field xpath="mstns:ID" />
-		</xs:unique>
-		<xs:key name="key1">
-			<xs:selector xpath=".//mstns:Signature" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="SignatureAudit" refer="key1">
 			<xs:selector xpath=".//mstns:Audit" />
-			<xs:field xpath="mstns:SignableItemID" />
-		</xs:keyref>
-		<xs:key name="key2">
+			<xs:field xpath="mstns:AuditID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey3" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:User" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="UserAudit" refer="key2">
+			<xs:field xpath="mstns:UserID" />
+		</xs:unique>
+		<xs:keyref name="UserAudit" refer="AnIMLKey3">
 			<xs:selector xpath=".//mstns:Audit" />
 			<xs:field xpath="mstns:UserID" />
 		</xs:keyref>
-		<xs:key name="key3">
-			<xs:selector xpath=".//mstns:User" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="UserExperiment" refer="key3">
-			<xs:selector xpath=".//mstns:Experiment" />
-			<xs:field xpath="mstns:AuthorID" />
+		<xs:keyref name="SignatureAudit" refer="AnIMLKey1">
+			<xs:selector xpath=".//mstns:Audit" />
+			<xs:field xpath="mstns:SignatureID" />
 		</xs:keyref>
-		<xs:keyref name="ExperimentPage" refer="AnIMLKey2">
+		<xs:unique name="AnIMLKey4" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:Experiment" />
+			<xs:field xpath="mstns:ExperimentID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey5" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:Page" />
+			<xs:field xpath="mstns:PageID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey6" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:ValueSetType" />
+			<xs:field xpath="mstns:ValueSetTypeID" />
+		</xs:unique>
+		<xs:keyref name="ExperimentPage" refer="AnIMLKey4">
 			<xs:selector xpath=".//mstns:Page" />
 			<xs:field xpath="mstns:ExperimentID" />
 		</xs:keyref>
-		<xs:key name="key4">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageEncodedValue" refer="key4">
-			<xs:selector xpath=".//mstns:EncodedValue" />
-			<xs:field xpath="mstns:PageID" />
-		</xs:keyref>
-		<xs:key name="key5">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageAutoIncrementedValue" refer="key5">
-			<xs:selector xpath=".//mstns:AutoIncrementedValue" />
-			<xs:field xpath="mstns:PageID" />
-		</xs:keyref>
-		<xs:key name="key6">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageIndividualValue" refer="key6">
-			<xs:selector xpath=".//mstns:IndividualValue" />
-			<xs:field xpath="mstns:PageID" />
-		</xs:keyref>
-		<xs:key name="key7">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageSelection" refer="key7">
+		<xs:unique name="AnIMLKey7" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:Selection" />
+			<xs:field xpath="mstns:SelectionID" />
+		</xs:unique>
+		<xs:keyref name="PageSelection" refer="AnIMLKey5">
 			<xs:selector xpath=".//mstns:Selection" />
 			<xs:field xpath="mstns:PageID" />
 		</xs:keyref>
-		<xs:key name="key8">
-			<xs:selector xpath=".//mstns:Sample" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="SampleParameter" refer="key8">
-			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:ID" />
+		<xs:keyref name="VectorSelection" refer="AnIMLKey8">
+			<xs:selector xpath=".//mstns:Selection" />
+			<xs:field xpath="mstns:VectorID" />
 		</xs:keyref>
-		<xs:key name="key9">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageParameter" refer="key9">
-			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:PageID" />
+		<xs:unique name="AnIMLKey9" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:EncodedValue" />
+			<xs:field xpath="mstns:EncodedValueID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey8" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:Vector" />
+			<xs:field xpath="mstns:VectorID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey10" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:AutoIncrementedValue" />
+			<xs:field xpath="mstns:AutoIncrementedValueID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey11" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:IndividualValue" />
+			<xs:field xpath="mstns:IndividualValueID" />
+		</xs:unique>
+		<xs:keyref name="VectorEncodedValue" refer="AnIMLKey8">
+			<xs:selector xpath=".//mstns:EncodedValue" />
+			<xs:field xpath="mstns:VectorID" />
 		</xs:keyref>
-		<xs:key name="key10">
-			<xs:selector xpath=".//mstns:Experiment" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="ExperimentParameter" refer="key10">
-			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:ExperimentID" />
+		<xs:keyref name="VectorAutoIncrementedValue" refer="AnIMLKey8">
+			<xs:selector xpath=".//mstns:AutoIncrementedValue" />
+			<xs:field xpath="mstns:VectorID" />
 		</xs:keyref>
-		<xs:key name="key11">
-			<xs:selector xpath=".//mstns:Sample" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="SampleSampleExperiment" refer="key11">
-			<xs:selector xpath=".//mstns:SampleExperiment" />
-			<xs:field xpath="mstns:SampleID" />
+		<xs:keyref name="VectorIndividualValue" refer="AnIMLKey8">
+			<xs:selector xpath=".//mstns:IndividualValue" />
+			<xs:field xpath="mstns:VectorID" />
 		</xs:keyref>
-		<xs:key name="key12">
-			<xs:selector xpath=".//mstns:Experiment" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="ExperimentSampleExperiment" refer="key12">
-			<xs:selector xpath=".//mstns:SampleExperiment" />
-			<xs:field xpath="mstns:ExperimentID" />
-		</xs:keyref>
-		<xs:key name="key13">
-			<xs:selector xpath=".//mstns:SampleType" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="SampleTypeSample" refer="key13">
-			<xs:selector xpath=".//mstns:Sample" />
-			<xs:field xpath="mstns:SampleTypeID" />
-		</xs:keyref>
-		<xs:key name="key14">
-			<xs:selector xpath=".//mstns:SampleRole" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="SampleRoleSample" refer="key14">
-			<xs:selector xpath=".//mstns:Sample" />
-			<xs:field xpath="mstns:RoleID" />
-		</xs:keyref>
-		<xs:key name="key15">
+		<xs:unique name="AnIMLKey12" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:Technique" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="TechniqueExperiment" refer="key15">
+			<xs:field xpath="mstns:TechniqueID" />
+		</xs:unique>
+		<xs:keyref name="TechniqueExperiment" refer="AnIMLKey12">
 			<xs:selector xpath=".//mstns:Experiment" />
 			<xs:field xpath="mstns:TechniqueID" />
 		</xs:keyref>
-		<xs:keyref name="ParameterCategoryParameter" refer="AnIMLKey9">
-			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:CategoryID" />
+		<xs:unique name="AnIMLKey13" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:SampleExperiment" />
+			<xs:field xpath="mstns:SampleExperimentID" />
+		</xs:unique>
+		<xs:keyref name="ExperimentSampleExperiment" refer="AnIMLKey4">
+			<xs:selector xpath=".//mstns:SampleExperiment" />
+			<xs:field xpath="mstns:ExperimentID" />
 		</xs:keyref>
-		<xs:key name="key16">
+		<xs:unique name="AnIMLKey14" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:Sample" />
+			<xs:field xpath="mstns:SampleID" />
+		</xs:unique>
+		<xs:keyref name="SampleSampleExperiment" refer="AnIMLKey14">
+			<xs:selector xpath=".//mstns:SampleExperiment" />
+			<xs:field xpath="mstns:SampleID" />
+		</xs:keyref>
+		<xs:unique name="AnIMLKey15" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:SampleType" />
+			<xs:field xpath="mstns:SampleTypeID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey16" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:SampleRole" />
+			<xs:field xpath="mstns:SampleRoleID" />
+		</xs:unique>
+		<xs:keyref name="SampleRoleSample" refer="AnIMLKey16">
+			<xs:selector xpath=".//mstns:Sample" />
+			<xs:field xpath="mstns:SampleRoleID" />
+		</xs:keyref>
+		<xs:keyref name="SampleTypeSample" refer="AnIMLKey15">
+			<xs:selector xpath=".//mstns:Sample" />
+			<xs:field xpath="mstns:SampleTypeID" />
+		</xs:keyref>
+		<xs:unique name="AnIMLKey18" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:ParameterType" />
+			<xs:field xpath="mstns:ParameterTypeID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey19" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ValueType" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="ValueTypeParameter" refer="key16">
+			<xs:field xpath="mstns:ValueTypeID" />
+		</xs:unique>
+		<xs:unique name="AnIMLKey17" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:Parameter" />
-			<xs:field xpath="mstns:TypeID" />
+			<xs:field xpath="mstns:ParameterID" />
+		</xs:unique>
+		<xs:keyref name="ParameterTypeParameter" refer="AnIMLKey18">
+			<xs:selector xpath=".//mstns:Parameter" />
+			<xs:field xpath="mstns:ParameterTypeID" />
 		</xs:keyref>
-		<xs:key name="key17">
-			<xs:selector xpath=".//mstns:ValueSetType" />
-			<xs:field xpath="mstns:ValueSetTypeID" />
-		</xs:key>
-		<xs:keyref name="ValueSetTypePage" refer="key17">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ValueSetTypeID" />
+		<xs:keyref name="ValueTypeParameter" refer="AnIMLKey19">
+			<xs:selector xpath=".//mstns:Parameter" />
+			<xs:field xpath="mstns:ValueTypeID" />
 		</xs:keyref>
-		<xs:key name="key18">
-			<xs:selector xpath=".//mstns:Page" />
-			<xs:field xpath="mstns:ID" />
-		</xs:key>
-		<xs:keyref name="PageSelection1" refer="key18">
-			<xs:selector xpath=".//mstns:Selection" />
-			<xs:field xpath="mstns:ParentPageID" />
+		<xs:keyref name="PageParameter" refer="AnIMLKey5">
+			<xs:selector xpath=".//mstns:Parameter" />
+			<xs:field xpath="mstns:PageID" />
+		</xs:keyref>
+		<xs:keyref name="SampleParameter" refer="AnIMLKey14">
+			<xs:selector xpath=".//mstns:Parameter" />
+			<xs:field xpath="mstns:SampleID" />
+		</xs:keyref>
+		<xs:keyref name="ExperimentParameter" refer="AnIMLKey4">
+			<xs:selector xpath=".//mstns:Parameter" />
+			<xs:field xpath="mstns:ExperimentID" />
 		</xs:keyref>
 	</xs:element>
 </xs:schema>
