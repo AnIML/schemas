@@ -304,6 +304,7 @@
 			<xs:documentation>Names of all SI Units</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
 			<xs:enumeration value="m"/>
 			<xs:enumeration value="kg"/>
 			<xs:enumeration value="s"/>
