@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xs:element name="Technique">
@@ -11,7 +10,7 @@
 				<xs:element ref="Documentation" minOccurs="0"/>
 				<xs:element name="SampleRole" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>Role that a specific Sample plays in Technique.</xs:documentation>
+						<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -63,6 +62,7 @@
 					<xs:documentation>Describes if this file is an extension to an existing technique.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
 		</xs:complexType>
 		<xs:unique name="topParameterCategoryName">
 			<xs:selector xpath="ParameterCategoryBlueprint"/>
@@ -326,7 +326,7 @@
 			</xs:element>
 			<xs:element name="png" type="xs:base64Binary">
 				<xs:annotation>
-					<xs:documentation>Base 64 encoded image format</xs:documentation>
+					<xs:documentation>Base 64 encoded PNG image</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="xml" type="xs:anyType">
@@ -336,7 +336,7 @@
 			</xs:element>
 			<xs:element name="svg" type="xs:anyType">
 				<xs:annotation>
-					<xs:documentation>Value governed by a different XML Schema. It is for representing images.</xs:documentation>
+					<xs:documentation>Value governed by the SVG DTD. It is for representing images.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -381,6 +381,9 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Combination of SI units used to represent measurement unit</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:simpleContent>
 							<xs:extension base="SIUnitNames">
