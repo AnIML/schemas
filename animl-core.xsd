@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xs:element name="AnIML">
@@ -14,9 +13,9 @@
 				<xs:element ref="AuditTrail" minOccurs="0"/>
 				<xs:element ref="Signatures" minOccurs="0"/>
 			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="0.2">
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0">
 				<xs:annotation>
-					<xs:documentation>Version number of this AnIML document. Must be "0.2".</xs:documentation>
+					<xs:documentation>Version number of this AnIML document. Must be "1.0".</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -120,13 +119,13 @@
 	</xs:element>
 	<xs:element name="Signatures">
 		<xs:annotation>
-			<xs:documentation>Container for Digital Signatures to validate parts of this AnIML document..</xs:documentation>
+			<xs:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Signature" type="ds:SignatureType" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>Digital Signature that has been applied to a part of this AnIML document.</xs:documentation>
+						<xs:documentation>Digital Signature that has been applied to a part of this AnIML document. Uses the W3C XML-DSIG specification.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -221,8 +220,16 @@
 															</xs:annotation>
 															<xs:complexType>
 																<xs:sequence>
-																	<xs:element name="StartValue" type="NumericValueType"/>
-																	<xs:element name="Increment" type="NumericValueType"/>
+																	<xs:element name="StartValue" type="NumericValueType">
+																		<xs:annotation>
+																			<xs:documentation>First value of the incremented set</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="Increment" type="NumericValueType">
+																		<xs:annotation>
+																			<xs:documentation>Increment value</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
 																</xs:sequence>
 																<xs:attributeGroup ref="ValueSet"/>
 															</xs:complexType>
@@ -332,7 +339,7 @@
 	</xs:element>
 	<xs:element name="ParameterCategory">
 		<xs:annotation>
-			<xs:documentation>Defines a category of Parameters. Used to model hierachies among Paramters.</xs:documentation>
+			<xs:documentation>Defines a category of Parameters. Used to model hierachies among Parameters.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -381,6 +388,9 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Combination of SI units used to represent measurement unit</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:simpleContent>
 							<xs:extension base="SIUnitNames">
@@ -626,7 +636,7 @@
 			</xs:element>
 			<xs:element name="png" type="xs:base64Binary">
 				<xs:annotation>
-					<xs:documentation>Base 64 encoded image format</xs:documentation>
+					<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="xml" type="xs:anyType">
@@ -636,7 +646,7 @@
 			</xs:element>
 			<xs:element name="svg" type="xs:anyType">
 				<xs:annotation>
-					<xs:documentation>Value governed by a different XML Schema. It is for representing images.</xs:documentation>
+					<xs:documentation>Value governed by the SVG  DTD. It is for representing images.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -681,7 +691,7 @@
 					</xs:element>
 					<xs:element name="png" type="xs:base64Binary">
 						<xs:annotation>
-							<xs:documentation>Base 64 encoded image format</xs:documentation>
+							<xs:documentation>Base 64 encoded PNG image</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="xml" type="xs:anyType">
@@ -691,7 +701,7 @@
 					</xs:element>
 					<xs:element name="svg" type="xs:anyType">
 						<xs:annotation>
-							<xs:documentation>Value governed by a different XML Schema. It is for representing images.</xs:documentation>
+							<xs:documentation>Value governed by the SVG DTD. It is for representing images.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:choice>
