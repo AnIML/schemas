@@ -695,9 +695,6 @@
 	<xs:complexType name="NumericValueType">
 		<xs:annotation>
 			<xs:documentation>Elements for numeric vector values.</xs:documentation>
-			<xs:documentation>Elements for numeric vector values.</xs:documentation>
-			<xs:documentation>Elements for numeric vector values.</xs:documentation>
-			<xs:documentation>Elements for numeric vector values.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="ParameterValueType">
