@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Maren Fiege (Creon·Lab·Control AG) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xs:element name="Technique">
@@ -188,6 +187,9 @@
 								<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="scale" type="Scale" use="optional" default="linear"/>
+						<xs:attribute name="plotUse" type="PlotUse" use="required"/>
+						<xs:attribute name="dependency" type="Dependency" use="required"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
@@ -327,6 +329,33 @@
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="produced"/>
 			<xs:enumeration value="consumed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Dependency">
+		<xs:annotation>
+			<xs:documentation>Specified whether the Vector is independent or dependent.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="independent"/>
+			<xs:enumeration value="dependent"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Scale">
+		<xs:annotation>
+			<xs:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="linear"/>
+			<xs:enumeration value="logarithmic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlotUse">
+		<xs:annotation>
+			<xs:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="dimension"/>
+			<xs:enumeration value="attribute"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="Modality">
