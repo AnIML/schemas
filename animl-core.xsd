@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xs:element name="AnIML">
@@ -20,6 +19,14 @@
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
+		<xs:key name="sampleID">
+			<xs:selector xpath="SampleSet/Sample"/>
+			<xs:field xpath="@sampleID"/>
+		</xs:key>
+		<xs:keyref name="sampleIDUsage" refer="sampleID">
+			<xs:selector xpath=".//ExperimentStep/SamplesUsed/SampleRef"/>
+			<xs:field xpath="@sampleID"/>
+		</xs:keyref>
 		<!-- annotation -->
 	</xs:element>
 	<!-- -->
@@ -55,10 +62,6 @@
 			</xs:sequence>
 			<xs:attributeGroup ref="SignableItem"/>
 		</xs:complexType>
-		<xs:key name="sampleID">
-			<xs:selector xpath="Sample"/>
-			<xs:field xpath="@sampleID"/>
-		</xs:key>
 	</xs:element>
 	<xs:element name="MeasurementData">
 		<xs:annotation>
@@ -71,6 +74,10 @@
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
+		<xs:keyref name="vectorIDRef" refer="vectorID">
+			<xs:selector xpath=".//ExperimentStep/References/IndexRef"/>
+			<xs:field xpath="@vector"/>
+		</xs:keyref>
 	</xs:element>
 	<xs:element name="AuditTrail">
 		<xs:annotation>
@@ -146,10 +153,6 @@
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
-		<xs:key name="pageID">
-			<xs:selector xpath="Page"/>
-			<xs:field xpath="@name"/>
-		</xs:key>
 	</xs:element>
 	<xs:element name="Template">
 		<xs:annotation>
@@ -269,7 +272,11 @@
 										</xs:element>
 									</xs:sequence>
 									<xs:attributeGroup ref="SignableItem"/>
-									<xs:attribute name="length" type="xs:nonNegativeInteger" use="required"/>
+									<xs:attribute name="length" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation>Number of data points each vector contains.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
 								</xs:complexType>
 								<xs:key name="vectorID">
 									<xs:annotation>
@@ -314,10 +321,6 @@
 							</xs:annotation>
 						</xs:attribute>
 					</xs:complexType>
-					<xs:keyref name="vectorIDRef" refer="vectorID">
-						<xs:selector xpath="."/>
-						<xs:field xpath="@vector"/>
-					</xs:keyref>
 				</xs:element>
 			</xs:sequence>
 			<xs:attributeGroup ref="SignableItem"/>
@@ -449,10 +452,6 @@
 								<xs:attribute name="role" type="xs:token" use="required"/>
 								<xs:attribute name="purpose" type="SamplePurpose" use="required"/>
 							</xs:complexType>
-							<xs:keyref name="sampleIDUsage" refer="sampleID">
-								<xs:selector xpath="."/>
-								<xs:field xpath="@sampleID"/>
-							</xs:keyref>
 						</xs:element>
 					</xs:sequence>
 					<xs:attributeGroup ref="SignableItem"/>
