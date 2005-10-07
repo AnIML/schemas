@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 U (http://www.altova.com) by Burkhard Schäfer (Burkhard Schäfer Software & Networks) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
@@ -9,7 +10,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="SampleSet" minOccurs="0"/>
-				<xs:element ref="MeasurementData" minOccurs="0"/>
+				<xs:element ref="ExperimentStepSet" minOccurs="0"/>
 				<xs:element ref="AuditTrail" minOccurs="0"/>
 				<xs:element ref="Signatures" minOccurs="0"/>
 			</xs:sequence>
@@ -63,7 +64,7 @@
 			<xs:attributeGroup ref="SignableItem"/>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="MeasurementData">
+	<xs:element name="ExperimentStepSet">
 		<xs:annotation>
 			<xs:documentation>Container for multiple ExperimentSteps that describe the process and results.</xs:documentation>
 		</xs:annotation>
@@ -149,7 +150,7 @@
 			<xs:complexContent>
 				<xs:extension base="ExperimentStepType">
 					<xs:attributeGroup ref="SignableItemWithName"/>
-					<xs:attribute name="templateUsed" type="xs:IDREF" use="optional"/>
+					<xs:attribute name="templateUsed" type="xs:token" use="optional"/>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -163,7 +164,7 @@
 			<xs:complexContent>
 				<xs:extension base="TemplateType">
 					<xs:attributeGroup ref="SignableItem"/>
-					<xs:attribute name="templateId" type="xs:ID" use="required"/>
+					<xs:attribute name="templateId" type="xs:token" use="required"/>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -200,7 +201,7 @@
 															</xs:annotation>
 															<xs:complexType>
 																<xs:complexContent>
-																	<xs:extension base="VectorValueType">
+																	<xs:extension base="UnboundedValueType">
 																		<xs:attributeGroup ref="ValueSet"/>
 																	</xs:extension>
 																</xs:complexContent>
@@ -288,11 +289,7 @@
 							</xs:element>
 							<xs:element ref="ParameterCategorySet" minOccurs="0"/>
 							<xs:element ref="PageSet" minOccurs="0"/>
-							<xs:element name="ExperimentStepSet" type="StepsAndTemplates" minOccurs="0">
-								<xs:annotation>
-									<xs:documentation>Container for ExperimentSteps that reference a data point in the current Page.</xs:documentation>
-								</xs:annotation>
-							</xs:element>
+							<xs:element ref="ExperimentStepSet" minOccurs="0"/>
 						</xs:sequence>
 						<xs:attributeGroup ref="SignableItemWithName"/>
 					</xs:complexType>
@@ -359,7 +356,7 @@
 								</xs:annotation>
 								<xs:complexType>
 									<xs:complexContent>
-										<xs:extension base="ParameterValueType">
+										<xs:extension base="SingleValueType">
 											<xs:sequence>
 												<xs:element ref="Unit" minOccurs="0"/>
 											</xs:sequence>
@@ -599,11 +596,11 @@
 	</xs:simpleType>
 	<!-- -->
 	<!--Complex Types for Parameter and Vector values, Simple Types for Data Type names-->
-	<xs:complexType name="ParameterValueType">
+	<xs:complexType name="UnboundedValueType">
 		<xs:annotation>
-			<xs:documentation>Elements for basic type values in Parameters.</xs:documentation>
+			<xs:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xs:documentation>
 		</xs:annotation>
-		<xs:choice>
+		<xs:choice maxOccurs="unbounded">
 			<xs:element name="int" type="xs:int">
 				<xs:annotation>
 					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
@@ -651,14 +648,13 @@
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="VectorValueType">
+	<xs:complexType name="SingleValueType">
 		<xs:annotation>
 			<xs:documentation>Elements for IndividualValueSets in Vectors.</xs:documentation>
-			<xs:documentation>Elements for values in Vectors.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:restriction base="ParameterValueType">
-				<xs:choice maxOccurs="unbounded">
+			<xs:restriction base="UnboundedValueType">
+				<xs:choice>
 					<xs:element name="int" type="xs:int">
 						<xs:annotation>
 							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
@@ -691,7 +687,7 @@
 					</xs:element>
 					<xs:element name="png" type="xs:base64Binary">
 						<xs:annotation>
-							<xs:documentation>Base 64 encoded PNG image</xs:documentation>
+							<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="xml" type="xs:anyType">
@@ -701,7 +697,7 @@
 					</xs:element>
 					<xs:element name="svg" type="xs:anyType">
 						<xs:annotation>
-							<xs:documentation>Value governed by the SVG DTD. It is for representing images.</xs:documentation>
+							<xs:documentation>Value governed by the SVG  DTD. It is for representing images.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:choice>
@@ -713,7 +709,7 @@
 			<xs:documentation>Elements for numeric vector values.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:restriction base="ParameterValueType">
+			<xs:restriction base="UnboundedValueType">
 				<xs:choice>
 					<xs:element name="int" type="xs:int">
 						<xs:annotation>
