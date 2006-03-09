@@ -6,136 +6,52 @@
 			<xs:documentation>Root Element of an AnIML Technique Definition.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:choice>
-				<xs:element name="Definition">
+			<xs:sequence>
+				<xs:element ref="Documentation" minOccurs="0"/>
+				<xs:element name="SampleRole" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element name="SampleRole" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element ref="Documentation" minOccurs="0"/>
-										<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-										<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
-									</xs:sequence>
-									<xs:attribute name="name" type="xs:token" use="required">
-										<xs:annotation>
-											<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="purpose" type="SamplePurpose" use="required">
-										<xs:annotation>
-											<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="modality" type="Modality" use="optional" default="required">
-										<xs:annotation>
-											<xs:documentation>States if a sample with this role is required.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-										<xs:annotation>
-											<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
-										<xs:annotation>
-											<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
-										<xs:annotation>
-											<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-								</xs:complexType>
-							</xs:element>
-							<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 							<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-							<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
 						</xs:sequence>
-						<xs:attribute name="name" type="xs:string" use="required"/>
-						<xs:attribute name="extension" type="xs:boolean" use="optional" default="false"/>
-						<xs:attribute name="uri" type="xs:anyURI" use="optional"/>
+						<xs:attribute name="name" type="xs:token" use="required">
+							<xs:annotation>
+								<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="purpose" type="SamplePurpose" use="required">
+							<xs:annotation>
+								<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="modality" type="Modality" use="optional" default="required">
+							<xs:annotation>
+								<xs:documentation>States if a sample with this role is required.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+							<xs:annotation>
+								<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
+							<xs:annotation>
+								<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="Module">
-					<xs:complexType>
-						<xs:choice maxOccurs="unbounded">
-							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element name="SampleRole" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element ref="Documentation" minOccurs="0"/>
-										<xs:element name="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded">
-											<xs:complexType>
-												<xs:complexContent>
-													<xs:extension base="ModelParameterCategory">
-														<xs:attribute name="name" type="xs:string" use="required"/>
-														<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-														<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
-													</xs:extension>
-												</xs:complexContent>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-									<xs:attribute name="name" type="xs:token" use="required">
-										<xs:annotation>
-											<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="purpose" type="SamplePurpose" use="required">
-										<xs:annotation>
-											<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="modality" type="Modality" use="optional" default="required">
-										<xs:annotation>
-											<xs:documentation>States if a sample with this role is required.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-										<xs:annotation>
-											<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
-										<xs:annotation>
-											<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
-										<xs:annotation>
-											<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="PageBlueprint" type="ModulePage" minOccurs="0" maxOccurs="unbounded"/>
-							<xs:element name="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:complexContent>
-										<xs:extension base="ModelParameterCategory">
-											<xs:attribute name="name" type="xs:string" use="required"/>
-											<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-											<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
-										</xs:extension>
-									</xs:complexContent>
-								</xs:complexType>
-							</xs:element>
-						</xs:choice>
-						<xs:attribute name="name" type="xs:string" use="required"/>
-						<xs:attribute name="version" type="xs:string" use="optional"/>
-						<xs:attribute name="uri" type="xs:anyURI" use="optional"/>
-					</xs:complexType>
-				</xs:element>
-			</xs:choice>
+				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
 			<xs:attribute name="version" type="xs:string" use="required" fixed="1.1"/>
 		</xs:complexType>
 		<xs:unique name="topParameterCategoryName">
@@ -194,7 +110,6 @@
 				</xs:element>
 				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:token" use="required">
 				<xs:annotation>
@@ -306,9 +221,7 @@
 					<xs:sequence>
 						<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
 						<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
-						<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
 					</xs:sequence>
-					<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:choice>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:token" use="required"/>
@@ -538,86 +451,4 @@
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
-	<xs:element name="UsedModule">
-		<xs:annotation>
-			<xs:documentation>Is a reference to an included module. The attribute elementName refers to the name of an element which is a child of the "Module" element specified in "name".</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:attribute name="name" type="xs:string" use="required"/>
-			<xs:attribute name="uri" type="xs:anyURI" use="required"/>
-			<xs:attribute name="version" type="xs:string" use="optional"/>
-			<xs:attribute name="elementName" type="xs:string" use="required"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:complexType name="ModulePage">
-		<xs:sequence>
-			<xs:element ref="Documentation" minOccurs="0"/>
-			<xs:element name="VectorBlueprint" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Description of Vector that needs to be attached to this Page.</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element ref="Documentation" minOccurs="0"/>
-						<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-					<xs:attribute name="name" type="xs:token" use="required">
-						<xs:annotation>
-							<xs:documentation>Name this Vector needs to bear.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="type" type="VectorTypeNames" use="required">
-						<xs:annotation>
-							<xs:documentation>Data type this Vector needs to have.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="modality" type="Modality" use="optional" default="required">
-						<xs:annotation>
-							<xs:documentation>Description if this Vector is optional or required.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-						<xs:annotation>
-							<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="PageBlueprint" type="ModulePage" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="ParameterCategoryBlueprint" type="ModelParameterCategory" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ModelParameterCategory">
-		<xs:sequence>
-			<xs:element ref="Documentation" minOccurs="0"/>
-			<xs:choice>
-				<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-				<xs:element name="ParameterCategoryBlueprint" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:complexContent>
-							<xs:extension base="ModelParameterCategory">
-								<xs:attribute name="name" type="xs:string" use="required"/>
-								<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-								<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
-							</xs:extension>
-						</xs:complexContent>
-					</xs:complexType>
-				</xs:element>
-				<xs:sequence>
-					<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-					<xs:element name="ParameterCategoryBlueprint" maxOccurs="unbounded">
-						<xs:complexType>
-							<xs:complexContent>
-								<xs:extension base="ModelParameterCategory">
-									<xs:attribute name="name" type="xs:string" use="required"/>
-									<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-									<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
-								</xs:extension>
-							</xs:complexContent>
-						</xs:complexType>
-					</xs:element>
-				</xs:sequence>
-			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
 </xs:schema>
