@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2006 U (http://www.altova.com) by Burkhard Schäfer (Burkhard Schäfer Software & Networks) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
@@ -636,7 +635,7 @@
 					<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="xml" type="xs:anyType">
+			<xs:element name="xml" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
 				</xs:annotation>
@@ -690,7 +689,7 @@
 							<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="xml" type="xs:anyType">
+					<xs:element name="xml" type="xs:string">
 						<xs:annotation>
 							<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
 						</xs:annotation>
