@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 sp1 U (http://www.xmlspy.com) by Maren Fiege (Waters GmbH) -->
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Maren Fiege (Creon·Lab·Control AG) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--XML Schema for AnIML Technique Definition files. -->
+	<xs:element name="Technique">
+		<xs:annotation>
+			<xs:documentation>Root Element of an AnIML Technique Definition.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="Definition">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Documentation" minOccurs="0"/>
+							<xs:element name="SampleRole" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Documentation" minOccurs="0"/>
+										<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+										<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:token" use="required">
+										<xs:annotation>
+											<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="purpose" type="SamplePurpose" use="required">
+										<xs:annotation>
+											<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1">
+										<xs:annotation>
+											<xs:documentation>States if a sample with this role is required.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+										<xs:annotation>
+											<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
+										<xs:annotation>
+											<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
+										<xs:annotation>
+											<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="extension" type="xs:boolean" use="optional" default="false"/>
+						<xs:attribute name="uri" type="xs:anyURI" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Module">
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element ref="Documentation" minOccurs="0"/>
+							<xs:element name="SampleRole" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Documentation" minOccurs="0"/>
+										<xs:element name="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="ModelParameterCategory">
+														<xs:attribute name="name" type="xs:string" use="required"/>
+														<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1"/>
+														<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:token" use="required">
+										<xs:annotation>
+											<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="purpose" type="SamplePurpose" use="required">
+										<xs:annotation>
+											<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1">
+										<xs:annotation>
+											<xs:documentation>States if a sample with this role is required.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+										<xs:annotation>
+											<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
+										<xs:annotation>
+											<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
+										<xs:annotation>
+											<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PageBlueprint" type="ModulePage" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="ModelParameterCategory">
+											<xs:attribute name="name" type="xs:string" use="required"/>
+											<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1"/>
+											<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="version" type="xs:string" use="optional"/>
+						<xs:attribute name="uri" type="xs:anyURI" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.1"/>
+		</xs:complexType>
+		<xs:unique name="topParameterCategoryName">
+			<xs:selector xpath="ParameterCategoryBlueprint"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="sampleName">
+			<xs:selector xpath="SampleRole"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="pageName">
+			<xs:selector xpath="PageBlueprint"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="PageBlueprint">
+		<xs:annotation>
+			<xs:documentation>Description of a Page that is to be attached at this hierarchy level.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Documentation" minOccurs="0"/>
+				<xs:element name="VectorBlueprint" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Description of Vector that needs to be attached to this Page.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Documentation" minOccurs="0"/>
+							<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:token" use="required">
+							<xs:annotation>
+								<xs:documentation>Name this Vector needs to bear.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="type" type="VectorTypeNames" use="required">
+							<xs:annotation>
+								<xs:documentation>Data type this Vector needs to have.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1">
+							<xs:annotation>
+								<xs:documentation>Description if this Vector is optional or required.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+							<xs:annotation>
+								<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:token" use="required">
+				<xs:annotation>
+					<xs:documentation>Name that the Page needs to receive.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1">
+				<xs:annotation>
+					<xs:documentation>Specifies if Page is optional or required.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<!-- -->
+	<!--Elements for Parameters-->
+	<xs:element name="ParameterBlueprint">
+		<xs:annotation>
+			<xs:documentation>Name-value pair to be stored in current Parameter Category.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Documentation" minOccurs="0"/>
+				<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="AllowedValue" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ParameterValueType">
+								<xs:attribute name="unit" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>Label of Unit that applies to this allowed value
+</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AllowedRange" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Range of Permitted Values for Parameters.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Min">
+								<xs:annotation>
+									<xs:documentation>Lower Boundary of Range.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="NumericValueType">
+											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
+												<xs:annotation>
+													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Max">
+								<xs:annotation>
+									<xs:documentation>Upper Boundary of Range.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="NumericValueType">
+											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
+												<xs:annotation>
+													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="unit" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>Label of Unit that applies to this allowed range of values
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="ParameterTypeNames" use="required"/>
+			<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1"/>
+			<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+				<xs:annotation>
+					<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ParameterCategoryBlueprint">
+		<xs:annotation>
+			<xs:documentation>Collection of Parameters to be used on this hierarchy level.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Documentation" minOccurs="0"/>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
+					<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
+					<xs:element ref="UsedModule" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:token" use="required"/>
+			<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1"/>
+			<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1"/>
+		</xs:complexType>
+		<xs:unique name="parameterName">
+			<xs:selector xpath="ParameterBlueprint"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<!-- -->
+	<!--Type definitions-->
+	<xs:simpleType name="SamplePurpose">
+		<xs:annotation>
+			<xs:documentation>Boolean data type indicating whether a sample is consumed or produced in an experiment.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="produced"/>
+			<xs:enumeration value="consumed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- -->
+	<!--Type definitions for basic data types-->
+	<xs:simpleType name="AllTypeNames">
+		<xs:annotation>
+			<xs:documentation>Names of all data types used in AnIML</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="int"/>
+			<xs:enumeration value="float"/>
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="dateTime"/>
+			<xs:enumeration value="xml"/>
+			<xs:enumeration value="png"/>
+			<xs:enumeration value="svg"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VectorTypeNames">
+		<xs:annotation>
+			<xs:documentation>Names of Data types usable for Vectors</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="AllTypeNames"/>
+	</xs:simpleType>
+	<xs:simpleType name="ParameterTypeNames">
+		<xs:annotation>
+			<xs:documentation>Names of Data types usable for Parameters</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="AllTypeNames"/>
+	</xs:simpleType>
+	<xs:complexType name="ParameterValueType">
+		<xs:annotation>
+			<xs:documentation>Elements for allowed values in Parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="int" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="decimal" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Individual Decimal Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="float32" type="xs:float">
+				<xs:annotation>
+					<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="float64" type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="string" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Individual String Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="boolean" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Individual Boolean Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="png" type="xs:base64Binary">
+				<xs:annotation>
+					<xs:documentation>Base 64 encoded PNG image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xml" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="svg" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Value governed by the SVG DTD. It is for representing images.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="NumericValueType">
+		<xs:annotation>
+			<xs:documentation>Elements for allowed numeric values in Parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterValueType">
+				<xs:choice>
+					<xs:element name="int" type="xs:int">
+						<xs:annotation>
+							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="float32" type="xs:float">
+						<xs:annotation>
+							<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="float64" type="xs:double">
+						<xs:annotation>
+							<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- -->
+	<!--Miscellaneous-->
+	<xs:element name="Documentation" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Description of the Element it is nested under.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Unit">
+		<xs:annotation>
+			<xs:documentation>Definition of Measurement Unit</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Combination of SI units used to represent measurement unit</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="SIUnitNames">
+								<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
+								<xs:attribute name="offset" type="xs:float" use="optional" default="0"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="label" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="SIUnitNames">
+		<xs:annotation>
+			<xs:documentation>Names of all SI Units</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="m"/>
+			<xs:enumeration value="kg"/>
+			<xs:enumeration value="s"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="K"/>
+			<xs:enumeration value="mol"/>
+			<xs:enumeration value="cd"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaxOccurs">
+		<xs:annotation>
+			<xs:documentation>Positive Integers and "unbounded" for multiplicity.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="xs:positiveInteger">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="unbounded"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:element name="UsedModule">
+		<xs:annotation>
+			<xs:documentation>Is a reference to an included module. The attribute elementName refers to the name of an element which is a child of the "Module" element specified in "name".</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="uri" type="xs:anyURI" use="required"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+			<xs:attribute name="elementName" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ModulePage">
+		<xs:sequence>
+			<xs:element ref="Documentation" minOccurs="0"/>
+			<xs:element name="VectorBlueprint" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Description of Vector that needs to be attached to this Page.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Documentation" minOccurs="0"/>
+						<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="name" type="xs:token" use="required">
+						<xs:annotation>
+							<xs:documentation>Name this Vector needs to bear.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="type" type="VectorTypeNames" use="required">
+						<xs:annotation>
+							<xs:documentation>Data type this Vector needs to have.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1">
+						<xs:annotation>
+							<xs:documentation>Description if this Vector is optional or required.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+						<xs:annotation>
+							<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PageBlueprint" type="ModulePage" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ParameterCategoryBlueprint" type="ModelParameterCategory" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModelParameterCategory">
+		<xs:sequence>
+			<xs:element ref="Documentation" minOccurs="0"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
+				<xs:element name="ParameterCategoryBlueprint" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ModelParameterCategory">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="minOccurs" type="MinOccurs" use="optional" default="1"/>
+								<xs:attribute name="maxOccurs" type="MaxOccurs" use="required"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MinOccurs">
+		<xs:annotation>
+			<xs:documentation>0 or 1</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
