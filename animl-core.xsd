@@ -1,1005 +1,1095 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by aroth (NIST) -->
 <!-- CHANGES:
+	- W3C XSD Namespace declaration changed from xs: to xsd:
+	- Elements within ExperimentStepSet/Template/Author defined globaly
+		- DataType EMailType defined globaly
 
-- Global complex type AnIMLType for the element AnIML created
-- Global element declaration for AnIML created
+	- ComplexType VectorSetType defined globaly
+	- Element VectorSet defined globaly
 
-- Global complex type SampleSetType for the element SampleSet created
-- Global element declaration for SampleSet created
+	- ComplexType VectorType defined globaly
+	- Element Vector defined globaly
 
-- Global complex type ExperimentStepSetType for the element ExperimentStepSet created
-- Global element declaration for ExperimentStepSet created
+	- ComplexType IndividualValueSetType defined globaly
+	- Element IndividualValueSet defined globaly
 
-- Global complex type PageSetType for the element PageSet created
-- Global element declaration for PageSet created
+	- ComplexType EncodedValueSetType defined globaly
+	- Element EncodedValueSet defined globaly
 
-- Global complex type ParameterCategorySetType for the element ParameterCategorySet created
-- Global element declaration for ParameterCategorySet created
+	- Element int defined globaly	
+	- Element float32 defined globaly	
+	- Element float64 defined globaly	
+	- Element string defined globaly	
+	- Element boolean defined globaly	
+	- Element int dateTime globaly	
+	- Element png defined globaly	
+	- Element xml defined globaly	
+	- Element svg defined globaly	
 
-- Global complex type ParameterCategoryType for the element ParameterCategory created
-- Global element declaration for ParameterCategory created
+	- ComplexType SingleValueType updated with references for elements used
+	- ComplexType UnboundedValueType updated with references for elements used
 
-- Global complex type UnitType for the element Unit created
-- Global element declaration for Unit created
+	- ComplexType AutoIncrementedValueSetType defined globaly
+	- Element AutoIncrementedValueSet defined globaly
+	- ComplexType StartValueType defined globaly
+	- Element StartValue defined globaly
+	- ComplexType IncrementType defined globaly
+	- Element Increment defined globaly
 
-- Global element declaration for Author created
+	- ComplexType LogEntryType defined globaly
+	- Element LogEntry defined globaly
 
-- Global element declaration for Technique created
-- There were two different declarations of the element Technique available. Reduced to one.
+	- ComplexType ChangeType changed to ActionType
+	- ComplexType ActionType defined globaly
+	- Element Action defined globaly
 
-- Global complex type EMailType for the element EMail created
-- Global element declaration for EMail created
+	- ComplexType ReasonType defined globaly
+	- Element Reason defined globaly
 
-- Global element declaration for Location created
+	- ComplexType DescriptionType defined globaly
+	- Element Description defined globaly
 
-- Global data type DataPointReferenceType similar to IndexRef created. Attribute index renamed to startValue. Attribute refWidth renamed to range.
+	- ComplexType ReferenceType defined globaly
+	- Element Reference defined globaly
 
-- Global data type ParentDataPointReferenceType created. It derives from DataPointReferenceType.
-- Global element ParentDataPointReference created. Type ParentDataPointReferenceType.
+	- Element Signature defined globaly
 
-- Global data type SiblingDataPointReferenceType created. It derives from DataPointReferenceType.
-- Global element SiblingDataPointReference created. Type SiblingDataPointReferenceType.
-- Global data type SiblingDataPointReferenceSetType similar to References created. But IndexRef element replaced by SiblingDataPointReference.
-- Global element SiblingDataPointReferenceSet created. Data type SiblingDataPointReferenceSetType.
-
-- Global data type ParentDataPointReferenceSetType similar to References created. But IndexRef element replaced by ParentDataPointReference.
-- Global element ParentDataPointReferenceSet created. Data type SiblingDataPointReferenceSetType.
-- Element References replaced by ParentDataPointReferenceSet within the ExperimentStep element.
-- Element References replaced by SiblingDataPointReferenceSet within the Paget element.
-
-- Global element References deleted.
-
-- Global data type SamplesUsedType renamed to SampleReferenceSetType
-- Global element SamplesUsed renamed to SampleReferenceSet
-
+	- Element and declaration order changed in accordance to NDR for AnIML Schema.
 
 - TODO:
 	- If the draft for the new referencing model will be accepted then the schema must be reviewed for old IndexRef constraints.
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
 -->
-<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+<xsd:schema xmlns="urn:org:astm:animl:schema:core:draft:0.1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:core:draft:0.1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
-	<xs:element name="AnIML" type="AnIMLType">
-		<xs:annotation>
-			<xs:documentation>Root Element for AnIML documents.</xs:documentation>
-		</xs:annotation>
-		<xs:key name="sampleID">
-			<xs:selector xpath="SampleSet/Sample"/>
-			<xs:field xpath="@sampleID"/>
-		</xs:key>
-		<xs:keyref name="sampleIDUsage" refer="sampleID">
-			<xs:selector xpath=".//ExperimentStep/SamplesUsed/SampleRef"/>
-			<xs:field xpath="@sampleID"/>
-		</xs:keyref>
+	<xsd:element name="AnIML" type="AnIMLType">
+		<xsd:annotation>
+			<xsd:documentation>Root Element for AnIML documents.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:key name="sampleID">
+			<xsd:selector xpath="SampleSet/Sample"/>
+			<xsd:field xpath="@sampleID"/>
+		</xsd:key>
+		<xsd:keyref name="sampleIDUsage" refer="sampleID">
+			<xsd:selector xpath=".//ExperimentStep/SamplesUsed/SampleRef"/>
+			<xsd:field xpath="@sampleID"/>
+		</xsd:keyref>
 		<!-- annotation -->
-	</xs:element>
+	</xsd:element>
+	<xsd:complexType name="AnIMLType">
+		<xsd:annotation>
+			<xsd:documentation>ComplexType for the root element of an AnIML document.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SampleSet" minOccurs="0"/>
+			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
+			<xsd:element ref="AuditTrail" minOccurs="0"/>
+			<xsd:element ref="SignatureSet" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.1">
+			<xsd:annotation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.1".</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
 	<!-- -->
 	<!--Top-Level document elements-->
-	<xs:element name="SampleSet" type="SampleSetType">
-		<xs:annotation>
-			<xs:documentation>Container for Samples used in this AnIML document.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="ExperimentStepSet" type="ExperimentStepSetType">
-		<xs:annotation>
-			<xs:documentation>Container for multiple ExperimentSteps that describe the process and results.</xs:documentation>
-		</xs:annotation>
-		<xs:keyref name="vectorIDRef" refer="vectorID">
-			<xs:selector xpath=".//ExperimentStep/References/IndexRef"/>
-			<xs:field xpath="@vector"/>
-		</xs:keyref>
-	</xs:element>
-	<xs:element name="AuditTrail">
-		<xs:annotation>
-			<xs:documentation>Container for log entries describing changes to this document.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="LogEntry" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Describes a set of changes made to this AnIML document by one user at a given time.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="Timestamp"/>
-							<xs:element name="User" type="UserInformationType">
-								<xs:annotation>
-									<xs:documentation>User or device responsible for the changes.</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="Action" type="ChangeType">
-								<xs:annotation>
-									<xs:documentation>Type of change made (created, modified, ...)</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="Reason" type="xs:string" minOccurs="0">
-								<xs:annotation>
-									<xs:documentation>Explaination why changes were made.</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="Description" type="xs:string" minOccurs="0">
-								<xs:annotation>
-									<xs:documentation>Plain-text explaination of changes.</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="Reference" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-						</xs:sequence>
-						<xs:attributeGroup ref="SignableItem"/>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attributeGroup ref="SignableItem"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="Signatures">
-		<xs:annotation>
-			<xs:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="Signature" type="ds:SignatureType" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Digital Signature that has been applied to a part of this AnIML document. Uses the W3C XML-DSIG specification.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<!-- -->
+	<xsd:element name="SampleSet" type="SampleSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Samples used in this AnIML document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleSetType">
+		<xsd:sequence>
+			<xsd:element ref="Sample" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="ExperimentStepSet" type="ExperimentStepSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple ExperimentSteps that describe the process and results.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:keyref name="vectorIDRef" refer="vectorID">
+			<xsd:selector xpath=".//ExperimentStep/References/IndexRef"/>
+			<xsd:field xpath="@vector"/>
+		</xsd:keyref>
+	</xsd:element>
+	<xsd:complexType name="ExperimentStepSetType">
+		<xsd:sequence>
+			<xsd:element ref="Template" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ExperimentStep" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="AuditTrail" type="AuditTrailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for log entries describing changes to this document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AuditTrailType">
+		<xsd:sequence>
+			<xsd:element ref="LogEntry" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="SignatureSet" type="SignatureSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SignatureSetType">
+		<xsd:sequence>
+			<xsd:element ref="Signature" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- SampleSet information-->
+	<xsd:element name="Sample" type="SampleType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Sample, referenced from other parts of this AnIML document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleType">
+		<xsd:sequence>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
+		<xsd:attribute name="barcode" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Value of barcode label that is attached to sample container.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="derived" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>Indicates whether this is a derived Sample. A derived Sample is a Sample that has been created by applying a Technique. (Sub-Sampling, Processing, ...)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
 	<!--Elements representing process information and data-->
-	<xs:element name="ExperimentStep">
-		<xs:annotation>
-			<xs:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="ExperimentStepType">
-					<xs:attributeGroup ref="SignableItemWithName"/>
-					<xs:attribute name="templateUsed" type="xs:token" use="optional"/>
-				</xs:extension>
-			</xs:complexContent>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="Template">
-		<xs:annotation>
-			<xs:documentation>ExperimentStep templates</xs:documentation>
-			<xs:documentation>Represents a container for ExperementStep templates</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="TemplateType">
-					<xs:attributeGroup ref="SignableItem"/>
-					<xs:attribute name="templateId" type="xs:token" use="required"/>
-				</xs:extension>
-			</xs:complexContent>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="PageSet" type="PageSetType">
-		<xs:annotation>
-			<xs:documentation>Container for Pages that contain the results gleaned from the Technique.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+	<xsd:element name="ExperimentStep">
+		<xsd:annotation>
+			<xsd:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ExperimentStepType">
+					<xsd:attributeGroup ref="SignableItemWithName"/>
+					<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ExperimentStepType">
+		<xsd:annotation>
+			<xsd:documentation>Children of Experiment Step element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Author" minOccurs="0"/>
+			<xsd:element ref="Timestamp" minOccurs="0"/>
+			<xsd:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
+			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
+			<xsd:element ref="Technique" minOccurs="0"/>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="PageSet" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Template">
+		<xsd:annotation>
+			<xsd:documentation>ExperimentStep templates</xsd:documentation>
+			<xsd:documentation>Represents a container for ExperementStep templates</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="TemplateType">
+					<xsd:attributeGroup ref="SignableItem"/>
+					<xsd:attribute name="templateId" type="xsd:token" use="required"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TemplateType">
+		<xsd:annotation>
+			<xsd:documentation>Children of Template element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="ExperimentStepType">
+				<xsd:sequence>
+					<xsd:element ref="Author" minOccurs="0"/>
+					<xsd:element ref="Timestamp" minOccurs="0"/>
+					<xsd:element ref="Technique" minOccurs="0"/>
+					<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+					<xsd:element ref="PageSet" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Author" type="AuthorType">
+		<xsd:annotation>
+			<xsd:documentation>Person or device that created this ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AuthorType">
+		<xsd:complexContent>
+			<xsd:extension base="UserInformationType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Timestamp" type="TimestampType">
+		<xsd:annotation>
+			<xsd:documentation>Date and time of modification.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TimestampType">
+		<xsd:annotation>
+			<xsd:documentation>Date and time of modification.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:dateTime"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="ParentDataPointReferenceSet" type="ParentDataPointReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the superordinate page.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParentDataPointReferenceSetType">
+		<xsd:sequence>
+			<xsd:element ref="ParentDataPointReference" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Vector and Value in superordinate being referenced.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SampleReference" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="Technique" type="TechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Technique used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Technique used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Extension" type="ExtensionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>URI where Technique Definition file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="PageSet" type="PageSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Pages that contain the results gleaned from the Technique.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PageSetType">
+		<xsd:sequence>
+			<xsd:element ref="Page" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<!-- ParentDataPointReferenceSet related information-->
+	<xsd:element name="ParentDataPointReference" type="ParentDataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the page within the super-ordinate page set</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParentDataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Datatype which defines a reference to a data point or value range in the page within the super-ordinate page set</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataPointReferenceType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--SampleReferenceSet related information-->
+	<xsd:element name="SampleReference" type="SampleReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a Sample used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleReferenceType">
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
+		<xsd:attribute name="role" type="xsd:token" use="required"/>
+		<xsd:attribute name="purpose" type="SamplePurpose" use="required"/>
+	</xsd:complexType>
+	<!--Technique related information-->
+	<xsd:element name="Extension" type="ExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Extension to amend Technique.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Extension to amend Technique.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>URI where Extension file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="name" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--Page related information-->
+	<xsd:element name="Page" type="PageType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Data derived from Experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PageType">
+		<xsd:sequence>
+			<xsd:element ref="SiblingDataPointReferenceSet" minOccurs="0"/>
+			<xsd:element ref="VectorSet" minOccurs="0"/>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="PageSet" minOccurs="0"/>
+			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+	</xsd:complexType>
+	<xsd:element name="SiblingDataPointReferenceSet" type="SiblingDataPointReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the sibling  page within the same page set.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SiblingDataPointReferenceSetType">
+		<xsd:sequence>
+			<xsd:element ref="SiblingDataPointReference" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Vector and Value in sibling page being referenced.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="pageID" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>ID of the page refered to wihtin the same page set .</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType"/>
+	<xsd:complexType name="SiblingDataPointReferenceType">
+		<xsd:complexContent>
+			<xsd:extension base="DataPointReferenceType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="VectorSet" type="VectorSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for n-dimensional Data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:key name="vectorID">
+			<xsd:annotation>
+				<xsd:documentation>Every Vector ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath="Vector"/>
+			<xsd:field xpath="@vectorID"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:complexType name="VectorSetType">
+		<xsd:sequence>
+			<xsd:element ref="Vector" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="length" type="xsd:nonNegativeInteger" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Number of data points each vector contains.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="Vector" type="VectorType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple Values.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VectorType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="IndividualValueSet" maxOccurs="unbounded"/>
+				<xsd:element ref="EncodedValueSet" maxOccurs="unbounded"/>
+				<xsd:element ref="AutoIncrementedValueSet" maxOccurs="unbounded"/>
+			</xsd:choice>
+			<xsd:element ref="Unit" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attribute name="dependency" type="Dependency" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="vectorID" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Identifies the Vector. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="plotUse" type="PlotUse" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether a new dimension should be created for this vector.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="visible" type="Visibility" use="optional" default="true">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether data in this Vector is to be displayed to the user by default.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="scale" type="Scale" use="optional" default="linear">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="type" type="VectorTypeNames" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="IndividualValueSet" type="IndividualValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values explicitly specified.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="IndividualValueSetType">
+		<xsd:complexContent>
+			<xsd:extension base="UnboundedValueType">
+				<xsd:attributeGroup ref="ValueSet"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="EncodedValueSet" type="EncodedValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values encoded as a base64 binary string.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EncodedValueSetType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:base64Binary">
+				<xsd:attributeGroup ref="ValueSet"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="StartValue" type="StartValueType"/>
+	<xsd:complexType name="StartValueType">
+		<xsd:annotation>
+			<xsd:documentation>First value of the incremented set</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Increment" type="IncrementType"/>
+	<xsd:complexType name="IncrementType">
+		<xsd:annotation>
+			<xsd:documentation>Increment value</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="AutoIncrementedValueSet" type="AutoIncrementedValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values given in form of a start value and an increment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AutoIncrementedValueSetType">
+		<xsd:sequence>
+			<xsd:element ref="StartValue"/>
+			<xsd:element ref="Increment"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="ValueSet"/>
+	</xsd:complexType>
+	<xsd:element name="Unit" type="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UnitType">
+		<xsd:sequence>
+			<xsd:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="SIUnitNames">
+							<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
+							<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
+							<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="label" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:minLength value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--AuditTrail and LogEntry related information-->
+	<xsd:element name="LogEntry" type="LogEntryType">
+		<xsd:annotation>
+			<xsd:documentation>Describes a set of changes made to the particular AnIML document by one user at a given time.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LogEntryType">
+		<xsd:annotation>
+			<xsd:documentation>Describes a set of changes made to the particular AnIML document by one user at a given time.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Timestamp"/>
+			<xsd:element ref="UserInformation">
+				<xsd:annotation>
+					<xsd:documentation>User or device responsible for the changes.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Action"/>
+			<xsd:element ref="Reason" minOccurs="0"/>
+			<xsd:element ref="Description" minOccurs="0"/>
+			<xsd:element ref="Reference" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="UserInformation" type="UserInformationType">
+		<xsd:annotation>
+			<xsd:documentation>User or device responsible for the changes.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UserInformationType">
+		<xsd:annotation>
+			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Name">
+				<xsd:annotation>
+					<xsd:documentation>Name of person or device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="EMail" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact email address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Phone" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact phone number.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Location" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Location or physical address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="UserTypes" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="Name" type="NameType">
+		<xsd:annotation>
+			<xsd:documentation>Name of person or device.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="NameType">
+		<xsd:annotation>
+			<xsd:documentation>Name of person or device.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="EMail" type="EMailType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="EMailType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value=".*@.*\..*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Phone" type="PhoneType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PhoneType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Location" type="LocationType">
+		<xsd:annotation>
+			<xsd:documentation>Location or physical address.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LocationType">
+		<xsd:annotation>
+			<xsd:documentation>Location or physical address.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Action" type="ActionType">
+		<xsd:annotation>
+			<xsd:documentation>Type of change made (created, modified, ...)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ActionType">
+		<xsd:annotation>
+			<xsd:documentation>Type of action described by an audit trail entry</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="created">
+				<xsd:annotation>
+					<xsd:documentation>The given user has created the references item(s).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="modifed">
+				<xsd:annotation>
+					<xsd:documentation>Item already existed and has been modified. Modifications are explained in the Description element.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="read">
+				<xsd:annotation>
+					<xsd:documentation>The given user has exercised read access on the referenced item(s).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="signed">
+				<xsd:annotation>
+					<xsd:documentation>The given user has attached a digital signature.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="deleted">
+				<xsd:annotation>
+					<xsd:documentation>The referenced items were deleted. No reference is specified. Description explains what was deleted.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Reason" type="ReasonType">
+		<xsd:annotation>
+			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReasonType">
+		<xsd:annotation>
+			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Description" type="DescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DescriptionType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Reference" type="ReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:IDREF"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Signature" type="ds:SignatureType">
+		<xsd:annotation>
+			<xsd:documentation>Digital Signature that has been applied to a part of this AnIML document. Uses the W3C XML-DSIG specification.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!--
 THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and ParentDataPointReferenceType
-	<xs:element name="ReferencesOLD">
-		<xs:annotation>
-			<xs:documentation>Establishes a reference to a data point or value range in the superordinate page.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="IndexRef" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Vector and Value in Super-Page being referenced.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:attributeGroup ref="SignableItemWithName"/>
-						<xs:attribute name="vectorID" type="xs:string" use="required"/>
-						<xs:attribute name="index" type="xs:nonNegativeInteger" use="required"/>
-						<xs:attribute name="refWidth" type="xs:positiveInteger" use="optional" default="1">
-							<xs:annotation>
-								<xs:documentation>Specifies how many values, starting from the index, should be referenced. Used to refer to an area, rather than an individual value.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attributeGroup ref="SignableItem"/>
-		</xs:complexType>
-	</xs:element>
+	<xsd:element name="ReferencesOLD">
+		<xsd:annotation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the superordinate page.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="IndexRef" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Vector and Value in Super-Page being referenced.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:attributeGroup ref="SignableItemWithName"/>
+						<xsd:attribute name="vectorID" type="xsd:string" use="required"/>
+						<xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
+						<xsd:attribute name="refWidth" type="xsd:positiveInteger" use="optional" default="1">
+							<xsd:annotation>
+								<xsd:documentation>Specifies how many values, starting from the index, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="SignableItem"/>
+		</xsd:complexType>
+	</xsd:element>
 -->
-	<xs:element name="ParameterCategorySet" type="ParameterCategorySetType">
-		<xs:annotation>
-			<xs:documentation>Container for categorized and nested Name/Value Pairs.</xs:documentation>
-		</xs:annotation>
-		<xs:unique name="parameterCategoryName">
-			<xs:selector xpath="ParameterCategory"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-	</xs:element>
-	<xs:element name="ParameterCategory" type="ParameterCategoryType">
-		<xs:annotation>
-			<xs:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="Unit" type="UnitType">
-		<xs:annotation>
-			<xs:documentation>Definition of Measurement Unit</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="ExperimentStepType">
-		<xs:annotation>
-			<xs:documentation>Children of Experiment Step element</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element ref="Author" minOccurs="0"/>
-			<xs:element ref="Timestamp" minOccurs="0"/>
-			<xs:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
-			<xs:element ref="SampleReferenceSet" minOccurs="0"/>
-			<xs:element ref="Technique" minOccurs="0"/>
-			<xs:element ref="ParameterCategorySet" minOccurs="0"/>
-			<xs:element ref="PageSet" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="TemplateType">
-		<xs:annotation>
-			<xs:documentation>Children of Template element</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="ExperimentStepType">
-				<xs:sequence>
-					<xs:element ref="Author" minOccurs="0"/>
-					<xs:element ref="Timestamp" minOccurs="0"/>
-					<xs:element ref="Technique" minOccurs="0"/>
-					<xs:element ref="ParameterCategorySet" minOccurs="0"/>
-					<xs:element ref="PageSet" minOccurs="0"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="TechniqueType">
-		<xs:annotation>
-			<xs:documentation>Reference to Technique used in this Experiment.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="Extension" type="ExtensionType" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItemWithName"/>
-		<xs:attribute name="uri" type="xs:anyURI" use="required">
-			<xs:annotation>
-				<xs:documentation>URI where Technique Definition file can be fetched.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ExtensionType">
-		<xs:annotation>
-			<xs:documentation>Reference to Extension to amend Technique.</xs:documentation>
-		</xs:annotation>
-		<xs:attribute name="uri" type="xs:anyURI" use="required">
-			<xs:annotation>
-				<xs:documentation>URI where Extension file can be fetched.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="name" type="xs:token" use="required">
-			<xs:annotation>
-				<xs:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:simpleType name="SamplePurpose">
-		<xs:annotation>
-			<xs:documentation>Specifies whether a sample is consumed or produced in an experiment.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="produced"/>
-			<xs:enumeration value="consumed"/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xsd:element name="ParameterCategorySet" type="ParameterCategorySetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for categorized and nested Name/Value Pairs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:unique name="parameterCategoryName">
+			<xsd:selector xpath="ParameterCategory"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="ParameterCategory" type="ParameterCategoryType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SamplePurpose">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="produced"/>
+			<xsd:enumeration value="consumed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- -->
 	<!--SimpleTypes for Vector definitions-->
-	<xs:simpleType name="Continuity">
-		<xs:annotation>
-			<xs:documentation>Specifies whether the data points should be connected or not.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="discrete"/>
-			<xs:enumeration value="continuous"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Dependency">
-		<xs:annotation>
-			<xs:documentation>Specified whether the Vector is independent or dependent.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="independent"/>
-			<xs:enumeration value="dependent"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Scale">
-		<xs:annotation>
-			<xs:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="linear"/>
-			<xs:enumeration value="logarithmic"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="PlotUse">
-		<xs:annotation>
-			<xs:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="dimension"/>
-			<xs:enumeration value="attribute"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Visibility">
-		<xs:annotation>
-			<xs:documentation>Specifes whether a Vector should be displayed by default.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:boolean"/>
-	</xs:simpleType>
+	<xsd:simpleType name="Continuity">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether the data points should be connected or not.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="discrete"/>
+			<xsd:enumeration value="continuous"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Dependency">
+		<xsd:annotation>
+			<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="independent"/>
+			<xsd:enumeration value="dependent"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Scale">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="linear"/>
+			<xsd:enumeration value="logarithmic"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PlotUse">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="dimension"/>
+			<xsd:enumeration value="attribute"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Visibility">
+		<xsd:annotation>
+			<xsd:documentation>Specifes whether a Vector should be displayed by default.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
 	<!-- -->
 	<!--Complex Types for Parameter and Vector values, Simple Types for Data Type names-->
-	<xs:complexType name="UnboundedValueType">
-		<xs:annotation>
-			<xs:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xs:documentation>
-		</xs:annotation>
-		<xs:choice maxOccurs="unbounded">
-			<xs:element name="int" type="xs:int">
-				<xs:annotation>
-					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="float32" type="xs:float">
-				<xs:annotation>
-					<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="float64" type="xs:double">
-				<xs:annotation>
-					<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="string" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Individual String Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="boolean" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Individual Boolean Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="dateTime" type="xs:dateTime">
-				<xs:annotation>
-					<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="png" type="xs:base64Binary">
-				<xs:annotation>
-					<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="xml" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="svg" type="xs:anyType">
-				<xs:annotation>
-					<xs:documentation>Value governed by the SVG  DTD. It is for representing images.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:choice>
-	</xs:complexType>
-	<xs:complexType name="SingleValueType">
-		<xs:annotation>
-			<xs:documentation>Elements for IndividualValueSets in Vectors.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="UnboundedValueType">
-				<xs:choice>
-					<xs:element name="int" type="xs:int">
-						<xs:annotation>
-							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float32" type="xs:float">
-						<xs:annotation>
-							<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float64" type="xs:double">
-						<xs:annotation>
-							<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="string" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>Individual String Value</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="boolean" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>Individual Boolean Value</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dateTime" type="xs:dateTime">
-						<xs:annotation>
-							<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="png" type="xs:base64Binary">
-						<xs:annotation>
-							<xs:documentation>Base 64 encoded PNG  image</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="xml" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="svg" type="xs:anyType">
-						<xs:annotation>
-							<xs:documentation>Value governed by the SVG  DTD. It is for representing images.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:choice>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="NumericValueType">
-		<xs:annotation>
-			<xs:documentation>Elements for numeric vector values.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="UnboundedValueType">
-				<xs:choice>
-					<xs:element name="int" type="xs:int">
-						<xs:annotation>
-							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float32" type="xs:float">
-						<xs:annotation>
-							<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float64" type="xs:double">
-						<xs:annotation>
-							<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:choice>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:simpleType name="ParameterTypeNames">
-		<xs:annotation>
-			<xs:documentation>Names of Data Types for Parameters</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="int"/>
-			<xs:enumeration value="long"/>
-			<xs:enumeration value="float32"/>
-			<xs:enumeration value="float64"/>
-			<xs:enumeration value="string"/>
-			<xs:enumeration value="boolean"/>
-			<xs:enumeration value="dateTime"/>
-			<xs:enumeration value="xml"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="VectorTypeNames">
-		<xs:annotation>
-			<xs:documentation>Names of Data Types for Vectors</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="ParameterTypeNames"/>
-	</xs:simpleType>
-	<xs:simpleType name="SIUnitNames">
-		<xs:annotation>
-			<xs:documentation>Names of all SI Units</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="1"/>
-			<xs:enumeration value="m"/>
-			<xs:enumeration value="kg"/>
-			<xs:enumeration value="s"/>
-			<xs:enumeration value="A"/>
-			<xs:enumeration value="K"/>
-			<xs:enumeration value="mol"/>
-			<xs:enumeration value="cd"/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xsd:complexType name="UnboundedValueType">
+		<xsd:annotation>
+			<xsd:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element ref="int"/>
+			<xsd:element ref="float32"/>
+			<xsd:element ref="float64"/>
+			<xsd:element ref="string"/>
+			<xsd:element ref="boolean"/>
+			<xsd:element ref="dateTime"/>
+			<xsd:element ref="png"/>
+			<xsd:element ref="xml"/>
+			<xsd:element ref="svg"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="int" type="xsd:int">
+		<xsd:annotation>
+			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="float32" type="xsd:float">
+		<xsd:annotation>
+			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="float64" type="xsd:double">
+		<xsd:annotation>
+			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="string" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Individual String Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="boolean" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>Individual Boolean Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="dateTime" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="png" type="xsd:base64Binary">
+		<xsd:annotation>
+			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="xml" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="svg" type="xsd:anyType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SingleValueType">
+		<xsd:annotation>
+			<xsd:documentation>Elements for IndividualValueSets in Vectors.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="UnboundedValueType">
+				<xsd:choice>
+					<xsd:element ref="int"/>
+					<xsd:element ref="float32"/>
+					<xsd:element ref="float64"/>
+					<xsd:element ref="string"/>
+					<xsd:element ref="boolean"/>
+					<xsd:element ref="dateTime"/>
+					<xsd:element ref="png"/>
+					<xsd:element ref="xml"/>
+					<xsd:element ref="svg"/>
+				</xsd:choice>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="NumericValueType">
+		<xsd:annotation>
+			<xsd:documentation>Elements for numeric vector values.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="UnboundedValueType">
+				<xsd:choice>
+					<xsd:element ref="int"/>
+					<xsd:element ref="float32"/>
+					<xsd:element ref="float64"/>
+				</xsd:choice>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="ParameterTypeNames">
+		<xsd:annotation>
+			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="int"/>
+			<xsd:enumeration value="long"/>
+			<xsd:enumeration value="float32"/>
+			<xsd:enumeration value="float64"/>
+			<xsd:enumeration value="string"/>
+			<xsd:enumeration value="boolean"/>
+			<xsd:enumeration value="dateTime"/>
+			<xsd:enumeration value="xml"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VectorTypeNames">
+		<xsd:annotation>
+			<xsd:documentation>Names of Data Types for Vectors</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ParameterTypeNames"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SIUnitNames">
+		<xsd:annotation>
+			<xsd:documentation>Names of all SI Units</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="m"/>
+			<xsd:enumeration value="kg"/>
+			<xsd:enumeration value="s"/>
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="K"/>
+			<xsd:enumeration value="mol"/>
+			<xsd:enumeration value="cd"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
-	<xs:attributeGroup name="ValueSet">
-		<xs:annotation>
-			<xs:documentation>Start and End Offsets for this Set of Values.</xs:documentation>
-		</xs:annotation>
-		<xs:attribute name="startOffset" type="xs:nonNegativeInteger" use="optional">
-			<xs:annotation>
-				<xs:documentation>Zero-based index where this Value Set starts. The specification is inclusive.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="endOffset" type="xs:nonNegativeInteger" use="optional">
-			<xs:annotation>
-				<xs:documentation>Zero-based Index of the last Entry in this Value Set.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
+	<xsd:attributeGroup name="ValueSet">
+		<xsd:annotation>
+			<xsd:documentation>Start and End Offsets for this Set of Values.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="startOffset" type="xsd:nonNegativeInteger" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Zero-based index where this Value Set starts. The specification is inclusive.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="endOffset" type="xsd:nonNegativeInteger" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Zero-based Index of the last Entry in this Value Set.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
 	<!---->
 	<!--Stuff for digital signatures and audit trail-->
-	<xs:attributeGroup name="SignableItem">
-		<xs:annotation>
-			<xs:documentation>ID for Signable Items.</xs:documentation>
-		</xs:annotation>
-		<xs:attribute name="id" type="xs:ID" use="optional">
-			<xs:annotation>
-				<xs:documentation>Anchor point for digital signature. This identifier is referred to from the "Reference" element in a Signature. Unique per document.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="SignableItemWithName">
-		<xs:annotation>
-			<xs:documentation>ID and Name attribute for Signable Items.</xs:documentation>
-		</xs:annotation>
-		<xs:attributeGroup ref="SignableItem"/>
-		<xs:attribute name="name" type="xs:token" use="required">
-			<xs:annotation>
-				<xs:documentation>Plain-text name of this item.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:simpleType name="ChangeType">
-		<xs:annotation>
-			<xs:documentation>Type of change described by an audit trail entry</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="created">
-				<xs:annotation>
-					<xs:documentation>The given user has created the references item(s).</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="modifed">
-				<xs:annotation>
-					<xs:documentation>Item already existed and has been modified. Modifications are explained in the Description element.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="read">
-				<xs:annotation>
-					<xs:documentation>The given user has exercised read access on the referenced item(s).</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="signed">
-				<xs:annotation>
-					<xs:documentation>The given user has attached a digital signature.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="deleted">
-				<xs:annotation>
-					<xs:documentation>The referenced items were deleted. No reference is specified. Description explains what was deleted.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
+	<xsd:attributeGroup name="SignableItem">
+		<xsd:annotation>
+			<xsd:documentation>ID for Signable Items.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="id" type="xsd:ID" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Anchor point for digital signature. This identifier is referred to from the "Reference" element in a Signature. Unique per document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+	<xsd:attributeGroup name="SignableItemWithName">
+		<xsd:annotation>
+			<xsd:documentation>ID and Name attribute for Signable Items.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="name" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Plain-text name of this item.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
 	<!---->
 	<!--Things used for multiple purposes-->
-	<xs:element name="Timestamp" type="xs:dateTime">
-		<xs:annotation>
-			<xs:documentation>Date and time of modification.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="UserInformationType">
-		<xs:annotation>
-			<xs:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="Name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Name of person or device.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="EMail" type="EMailType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>RFC822-compliant EMail address.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Phone" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Contact phone number.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Location" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Location or physical address.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attribute name="type" type="UserTypes" use="required">
-			<xs:annotation>
-				<xs:documentation>Type of user (human, device, software)</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:simpleType name="UserTypes">
-		<xs:annotation>
-			<xs:documentation>Specifies whether a user is a real person, a device, or a software program.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="human"/>
-			<xs:enumeration value="device"/>
-			<xs:enumeration value="software"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="AnIMLType">
-		<xs:sequence>
-			<xs:element ref="SampleSet" minOccurs="0"/>
-			<xs:element ref="ExperimentStepSet" minOccurs="0"/>
-			<xs:element ref="AuditTrail" minOccurs="0"/>
-			<xs:element ref="Signatures" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute name="version" type="xs:string" use="required" fixed="0.1">
-			<xs:annotation>
-				<xs:documentation>Version number of this AnIML document. Must be "0.1".</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="SampleSetType">
-		<xs:sequence>
-			<xs:element ref="Sample" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="Sample" type="SampleType">
-		<xs:annotation>
-			<xs:documentation>Individual Sample, referenced from other parts of this AnIML document.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="SampleType">
-		<xs:sequence>
-			<xs:element ref="ParameterCategorySet" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-		<xs:attribute name="sampleID" type="xs:token" use="required"/>
-		<xs:attribute name="barcode" type="xs:token" use="optional">
-			<xs:annotation>
-				<xs:documentation>Value of barcode label that is attached to sample container.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="derived" type="xs:boolean" use="optional" default="false">
-			<xs:annotation>
-				<xs:documentation>Indicates whether this is a derived Sample. A derived Sample is a Sample that has been created by applying a Technique. (Sub-Sampling, Processing, ...)</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ParameterCategorySetType">
-		<xs:sequence>
-			<xs:element ref="ParameterCategory" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:complexType name="ParameterCategoryType">
-		<xs:sequence>
-			<xs:element ref="ParameterSet" minOccurs="0"/>
-			<xs:element ref="ParameterCategorySet" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Contains multiple subcategories of ParameterCategory.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItemWithName"/>
-	</xs:complexType>
-	<xs:element name="ParameterSet" type="ParameterSetType">
-		<xs:annotation>
-			<xs:documentation>Container for Name/Value Pairs</xs:documentation>
-		</xs:annotation>
-		<xs:unique name="parameterName">
-			<xs:selector xpath="Parameter"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-	</xs:element>
-	<xs:complexType name="ParameterSetType">
-		<xs:sequence>
-			<xs:element ref="Parameter" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="Parameter" type="ParameterType">
-		<xs:annotation>
-			<xs:documentation>Name/Value Pair</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="ParameterType">
-		<xs:complexContent>
-			<xs:extension base="SingleValueType">
-				<xs:sequence>
-					<xs:element ref="Unit" minOccurs="0"/>
-				</xs:sequence>
-				<xs:attributeGroup ref="SignableItemWithName"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="UnitType">
-		<xs:sequence>
-			<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Combination of SI units used to represent measurement unit</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:extension base="SIUnitNames">
-							<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
-							<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
-							<xs:attribute name="offset" type="xs:float" use="optional" default="0"/>
-						</xs:extension>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-		<xs:attribute name="label" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:minLength value="1"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ExperimentStepSetType">
-		<xs:sequence>
-			<xs:element ref="Template" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element ref="ExperimentStep" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="Author" type="AuthorType">
-		<xs:annotation>
-			<xs:documentation>Person or device that created this ExperimentStep.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="AuthorType">
-		<xs:complexContent>
-			<xs:extension base="UserInformationType"/>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:simpleType name="EMailType">
-		<xs:restriction base="xs:string">
-			<xs:pattern value=".*@.*\..*"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:element name="SampleReferenceSet" type="SampleReferenceSetType">
-		<xs:annotation>
-			<xs:documentation>Set of Samples used in this Experiment.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="SampleReferenceSetType">
-		<xs:sequence>
-			<xs:element ref="SampleReference" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="SampleReference" type="SampleReferenceType">
-		<xs:annotation>
-			<xs:documentation>Reference to a Sample used in this Experiment.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="SampleReferenceType">
-		<xs:attributeGroup ref="SignableItem"/>
-		<xs:attribute name="sampleID" type="xs:token" use="required"/>
-		<xs:attribute name="role" type="xs:token" use="required"/>
-		<xs:attribute name="purpose" type="SamplePurpose" use="required"/>
-	</xs:complexType>
-	<xs:element name="Extension" type="ExtensionType">
-		<xs:annotation>
-			<xs:documentation>Reference to Extension to amend Technique.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="Technique" type="TechniqueType">
-		<xs:annotation>
-			<xs:documentation>Reference to Technique used in this Experiment.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="PageSetType">
-		<xs:sequence>
-			<xs:element ref="Page" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="Page" type="PageType">
-		<xs:annotation>
-			<xs:documentation>Container for Data derived from Experiment.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="PageType">
-		<xs:sequence>
-			<xs:element ref="SiblingDataPointReferenceSet" minOccurs="0"/>
-			<xs:element name="VectorSet" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Container for n-dimensional Data.</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Vector" maxOccurs="unbounded">
-							<xs:annotation>
-								<xs:documentation>Container for multiple Values.</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:choice>
-										<xs:element name="IndividualValueSet" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>Multiple Values explicitly specified.</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:complexContent>
-													<xs:extension base="UnboundedValueType">
-														<xs:attributeGroup ref="ValueSet"/>
-													</xs:extension>
-												</xs:complexContent>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="EncodedValueSet" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>Multiple Values encoded as a base64 binary string.</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:simpleContent>
-													<xs:extension base="xs:base64Binary">
-														<xs:attributeGroup ref="ValueSet"/>
-													</xs:extension>
-												</xs:simpleContent>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="AutoIncrementedValueSet" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>Multiple Values given in form of a start value and an increment.</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="StartValue" type="NumericValueType">
-														<xs:annotation>
-															<xs:documentation>First value of the incremented set</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="Increment" type="NumericValueType">
-														<xs:annotation>
-															<xs:documentation>Increment value</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-												</xs:sequence>
-												<xs:attributeGroup ref="ValueSet"/>
-											</xs:complexType>
-										</xs:element>
-									</xs:choice>
-									<xs:element ref="Unit" minOccurs="0"/>
-								</xs:sequence>
-								<xs:attributeGroup ref="SignableItemWithName"/>
-								<xs:attribute name="dependency" type="Dependency" use="required">
-									<xs:annotation>
-										<xs:documentation>Specified whether the Vector is independent or dependent.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="vectorID" type="xs:token" use="required">
-									<xs:annotation>
-										<xs:documentation>Identifies the Vector. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="plotUse" type="PlotUse" use="required">
-									<xs:annotation>
-										<xs:documentation>Specifies whether a new dimension should be created for this vector.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="visible" type="Visibility" use="optional" default="true">
-									<xs:annotation>
-										<xs:documentation>Specifies whether data in this Vector is to be displayed to the user by default.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="scale" type="Scale" use="optional" default="linear">
-									<xs:annotation>
-										<xs:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="type" type="VectorTypeNames" use="required"/>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-					<xs:attributeGroup ref="SignableItem"/>
-					<xs:attribute name="length" type="xs:nonNegativeInteger" use="required">
-						<xs:annotation>
-							<xs:documentation>Number of data points each vector contains.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:complexType>
-				<xs:key name="vectorID">
-					<xs:annotation>
-						<xs:documentation>Every Vector ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xs:documentation>
-					</xs:annotation>
-					<xs:selector xpath="Vector"/>
-					<xs:field xpath="@vectorID"/>
-				</xs:key>
-			</xs:element>
-			<xs:element ref="ParameterCategorySet" minOccurs="0"/>
-			<xs:element ref="PageSet" minOccurs="0"/>
-			<xs:element ref="ExperimentStepSet" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItemWithName"/>
-	</xs:complexType>
+	<xsd:simpleType name="UserTypes">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a user is a real person, a device, or a software program.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="human"/>
+			<xsd:enumeration value="device"/>
+			<xsd:enumeration value="software"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ParameterCategorySetType">
+		<xsd:sequence>
+			<xsd:element ref="ParameterCategory" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterCategoryType">
+		<xsd:sequence>
+			<xsd:element ref="ParameterSet" minOccurs="0"/>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+	</xsd:complexType>
+	<xsd:element name="ParameterSet" type="ParameterSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Name/Value Pairs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:unique name="parameterName">
+			<xsd:selector xpath="Parameter"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:complexType name="ParameterSetType">
+		<xsd:sequence>
+			<xsd:element ref="Parameter" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="Parameter" type="ParameterType">
+		<xsd:annotation>
+			<xsd:documentation>Name/Value Pair</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParameterType">
+		<xsd:complexContent>
+			<xsd:extension base="SingleValueType">
+				<xsd:sequence>
+					<xsd:element ref="Unit" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attributeGroup ref="SignableItemWithName"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!--
 THE ELEMENT IS NOT USED. 
-	<xs:element name="DataPointReference" type="DataPointReferenceType">
-		<xs:annotation>
-			<xs:documentation>Vector and Value in Super-Page being referenced.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+	<xsd:element name="DataPointReference" type="DataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Vector and Value in Super-Page being referenced.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 -->
-	<xs:complexType name="DataPointReferenceType">
-		<xs:attributeGroup ref="SignableItemWithName"/>
-		<xs:attribute name="vectorID" type="xs:string" use="required">
-			<xs:annotation>
-				<xs:documentation>Contains the ID of the vector referenced.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="startValue" type="xs:nonNegativeInteger" use="required">
-			<xs:annotation>
-				<xs:documentation>Specifies the start value of the vector referenced. It can be either a vector index or a value within the value range of the vector specified.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="range" type="xs:positiveInteger" use="optional" default="1">
-			<xs:annotation>
-				<xs:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:element name="ParentDataPointReference" type="ParentDataPointReferenceType"/>
-	<xs:complexType name="ParentDataPointReferenceType">
-		<xs:complexContent>
-			<xs:extension base="DataPointReferenceType"/>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType"/>
-	<xs:complexType name="SiblingDataPointReferenceType">
-		<xs:complexContent>
-			<xs:extension base="DataPointReferenceType"/>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:element name="ParentDataPointReferenceSet" type="ParentDataPointReferenceSetType">
-		<xs:annotation>
-			<xs:documentation>Establishes a reference to a data point or value range in the superordinate page.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="ParentDataPointReferenceSetType">
-		<xs:sequence>
-			<xs:element ref="ParentDataPointReference" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Vector and Value in superordinate being referenced.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-	</xs:complexType>
-	<xs:element name="SiblingDataPointReferenceSet" type="SiblingDataPointReferenceSetType">
-		<xs:annotation>
-			<xs:documentation>Establishes a reference to a data point or value range in the sibling  page within the same page set.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="SiblingDataPointReferenceSetType">
-		<xs:sequence>
-			<xs:element ref="SiblingDataPointReference" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Vector and Value in sibling page being referenced.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attributeGroup ref="SignableItem"/>
-		<xs:attribute name="pageID" type="xs:token" use="required">
-			<xs:annotation>
-				<xs:documentation>ID of the page refered to wihtin the same page set .</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-</xs:schema>
+	<xsd:complexType name="DataPointReferenceType">
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attribute name="vectorID" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Contains the ID of the vector referenced.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="startValue" type="xsd:nonNegativeInteger" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the start value of the vector referenced. It can be either a vector index or a value within the value range of the vector specified.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="range" type="xsd:positiveInteger" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>
