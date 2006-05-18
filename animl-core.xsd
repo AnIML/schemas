@@ -1,98 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by aroth (NIST) -->
 <!-- CHANGES:
-	- W3C XSD Namespace declaration changed from xs: to xsd:
-	- Elements within ExperimentStepSet/Template/Author defined globaly
-		- DataType EMailType defined globaly
-
-	- ComplexType VectorSetType defined globaly
-	- Element VectorSet defined globaly
-
-	- ComplexType VectorType defined globaly
-	- Element Vector defined globaly
-
-	- ComplexType IndividualValueSetType defined globaly
-	- Element IndividualValueSet defined globaly
-
-	- ComplexType EncodedValueSetType defined globaly
-	- Element EncodedValueSet defined globaly
-
-	- Element int defined globaly	
-	- Element float32 defined globaly	
-	- Element float64 defined globaly	
-	- Element string defined globaly	
-	- Element boolean defined globaly	
-	- Element int dateTime globaly	
-	- Element png defined globaly	
-	- Element xml defined globaly	
-	- Element svg defined globaly	
-
-	- ComplexType SingleValueType updated with references for elements used
-	- ComplexType UnboundedValueType updated with references for elements used
-
-	- ComplexType AutoIncrementedValueSetType defined globaly
-	- Element AutoIncrementedValueSet defined globaly
-	- ComplexType StartValueType defined globaly
-	- Element StartValue defined globaly
-	- ComplexType IncrementType defined globaly
-	- Element Increment defined globaly
-
-	- ComplexType LogEntryType defined globaly
-	- Element LogEntry defined globaly
-
-	- ComplexType ChangeType changed to ActionType
-	- ComplexType ActionType defined globaly
-	- Element Action defined globaly
-
-	- ComplexType ReasonType defined globaly
-	- Element Reason defined globaly
-
-	- ComplexType DescriptionType defined globaly
-	- Element Description defined globaly
-
-	- ComplexType ReferenceType defined globaly
-	- Element Reference defined globaly
-
-	- ComplexType SIUnitType defined globaly
-	- Element SIUnit defined globaly
-
-	- SimpleType LabelType defined globaly
-
-	- Element Signature defined globaly
-
-	- Element and declaration order changed in accordance to NDR for AnIML Schema.
-
-	- SimpleType ParameterTypeNames renamed to ParameterTypeList
-
-	- SimpleType VectorTypeNames renamed to VectorTypeList
-
-	- SimpleType SIUnitNames renamed to SIUnitList
-
-	- SimpleType UserTypes renamed to UserTypeList
-	
-	- SimpleType int renamed to INT
-	- Global simpletype INTType created
-
-
-
-
-
-
-	- Declaration of TemplateType changed. It doesn't derive from ExperimentStepType any more. 
-
-	- Attributes "SignableItemWithName" and "templateUsed" moved from element declaration "ExperimentStep" to the complex type declaration "ExperimentStepType". Because of this the derived type 
-
-
-				<xsd:attributeGroup ref="SignableItem"/>
-				
-				
-				
+- References cleaned up
+- Index-based referencing mechanism implemented
+- Removed Parent/SiblingDataPointReferenceSets and corresponding types
+- Using Parent/SiblingDataPointReference directly
 				
 - TODO:
+	- Constraints for new referencing mechanism need to be added
 	- If the draft for the new referencing model will be accepted then the schema must be reviewed for old IndexRef constraints.
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
 -->
-<xsd:schema xmlns="urn:org:astm:animl:schema:core:draft:0.1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:core:draft:0.1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.1" xmlns="urn:org:astm:animl:schema:core:draft:0.1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -220,7 +138,7 @@
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
-			<xsd:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
+			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
@@ -271,21 +189,6 @@
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:dateTime"/>
 		</xsd:simpleContent>
-	</xsd:complexType>
-	<xsd:element name="ParentDataPointReferenceSet" type="ParentDataPointReferenceSetType">
-		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the superordinate page.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="ParentDataPointReferenceSetType">
-		<xsd:sequence>
-			<xsd:element ref="ParentDataPointReference" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:documentation>Vector and Value in superordinate being referenced.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
 		<xsd:annotation>
@@ -387,7 +290,7 @@
 	</xsd:element>
 	<xsd:complexType name="PageType">
 		<xsd:sequence>
-			<xsd:element ref="SiblingDataPointReferenceSet" minOccurs="0"/>
+			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
 			<xsd:element ref="VectorSet" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
@@ -395,30 +298,16 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 	</xsd:complexType>
-	<xsd:element name="SiblingDataPointReferenceSet" type="SiblingDataPointReferenceSetType">
-		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the sibling  page within the same page set.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SiblingDataPointReferenceSetType">
-		<xsd:sequence>
-			<xsd:element ref="SiblingDataPointReference" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:documentation>Vector and Value in sibling page being referenced.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="pageID" type="xsd:token" use="required">
-			<xsd:annotation>
-				<xsd:documentation>ID of the page refered to wihtin the same page set .</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-	</xsd:complexType>
 	<xsd:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType"/>
 	<xsd:complexType name="SiblingDataPointReferenceType">
 		<xsd:complexContent>
-			<xsd:extension base="DataPointReferenceType"/>
+			<xsd:extension base="DataPointReferenceType">
+				<xsd:attribute name="pageID" type="xsd:token" use="required">
+					<xsd:annotation>
+						<xsd:documentation>ID of the page refered to wihtin the same page set .</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="VectorSet" type="VectorSetType">
@@ -1087,12 +976,12 @@ THE ELEMENT IS NOT USED.
 				<xsd:documentation>Contains the ID of the vector referenced.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="startValue" type="xsd:nonNegativeInteger" use="required">
+		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Specifies the start value of the vector referenced. It can be either a vector index or a value within the value range of the vector specified.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="range" type="xsd:positiveInteger" use="optional" default="1">
+		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
 			</xsd:annotation>
