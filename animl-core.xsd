@@ -53,10 +53,41 @@
 	- ComplexType ReferenceType defined globaly
 	- Element Reference defined globaly
 
+	- ComplexType SIUnitType defined globaly
+	- Element SIUnit defined globaly
+
+	- SimpleType LabelType defined globaly
+
 	- Element Signature defined globaly
 
 	- Element and declaration order changed in accordance to NDR for AnIML Schema.
 
+	- SimpleType ParameterTypeNames renamed to ParameterTypeList
+
+	- SimpleType VectorTypeNames renamed to VectorTypeList
+
+	- SimpleType SIUnitNames renamed to SIUnitList
+
+	- SimpleType UserTypes renamed to UserTypeList
+	
+	- SimpleType int renamed to INT
+	- Global simpletype INTType created
+
+
+
+
+
+
+	- Declaration of TemplateType changed. It doesn't derive from ExperimentStepType any more. 
+
+	- Attributes "SignableItemWithName" and "templateUsed" moved from element declaration "ExperimentStep" to the complex type declaration "ExperimentStepType". Because of this the derived type 
+
+
+				<xsd:attributeGroup ref="SignableItem"/>
+				
+				
+				
+				
 - TODO:
 	- If the draft for the new referencing model will be accepted then the schema must be reviewed for old IndexRef constraints.
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
@@ -167,23 +198,24 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:simpleType name="SamplePurpose">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="produced"/>
+			<xsd:enumeration value="consumed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!--Elements representing process information and data-->
-	<xsd:element name="ExperimentStep">
+	<xsd:element name="ExperimentStep" type="ExperimentStepType">
 		<xsd:annotation>
 			<xsd:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="ExperimentStepType">
-					<xsd:attributeGroup ref="SignableItemWithName"/>
-					<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="ExperimentStepType">
 		<xsd:annotation>
-			<xsd:documentation>Children of Experiment Step element</xsd:documentation>
+			<xsd:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
@@ -194,36 +226,28 @@
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
 	</xsd:complexType>
-	<xsd:element name="Template">
+	<xsd:element name="Template" type="TemplateType">
 		<xsd:annotation>
 			<xsd:documentation>ExperimentStep templates</xsd:documentation>
 			<xsd:documentation>Represents a container for ExperementStep templates</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="TemplateType">
-					<xsd:attributeGroup ref="SignableItem"/>
-					<xsd:attribute name="templateId" type="xsd:token" use="required"/>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="TemplateType">
 		<xsd:annotation>
 			<xsd:documentation>Children of Template element</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:restriction base="ExperimentStepType">
-				<xsd:sequence>
-					<xsd:element ref="Author" minOccurs="0"/>
-					<xsd:element ref="Timestamp" minOccurs="0"/>
-					<xsd:element ref="Technique" minOccurs="0"/>
-					<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
-					<xsd:element ref="PageSet" minOccurs="0"/>
-				</xsd:sequence>
-			</xsd:restriction>
-		</xsd:complexContent>
+		<xsd:sequence>
+			<xsd:element ref="Author" minOccurs="0"/>
+			<xsd:element ref="Timestamp" minOccurs="0"/>
+			<xsd:element ref="Technique" minOccurs="0"/>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="PageSet" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="templateId" type="xsd:token" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="Author" type="AuthorType">
 		<xsd:annotation>
@@ -287,7 +311,8 @@
 			<xsd:documentation>Reference to Technique used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="Extension" type="ExtensionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
+			<!--			<xsd:element name="Extension" type="ExtensionType" minOccurs="0" maxOccurs="unbounded"/> -->
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
@@ -459,7 +484,7 @@
 				<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="type" type="VectorTypeNames" use="required"/>
+		<xsd:attribute name="type" type="VectorTypeList" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="IndividualValueSet" type="IndividualValueSetType">
 		<xsd:annotation>
@@ -522,28 +547,9 @@
 	</xsd:element>
 	<xsd:complexType name="UnitType">
 		<xsd:sequence>
-			<xsd:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
-				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:simpleContent>
-						<xsd:extension base="SIUnitNames">
-							<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
-							<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
-							<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
-						</xsd:extension>
-					</xsd:simpleContent>
-				</xsd:complexType>
-			</xsd:element>
+			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="label" use="required">
-			<xsd:simpleType>
-				<xsd:restriction base="xsd:string">
-					<xsd:minLength value="1"/>
-				</xsd:restriction>
-			</xsd:simpleType>
-		</xsd:attribute>
+		<xsd:attribute name="label" type="LabelType" use="required"/>
 	</xsd:complexType>
 	<!--AuditTrail and LogEntry related information-->
 	<xsd:element name="LogEntry" type="LogEntryType">
@@ -600,7 +606,7 @@
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
-		<xsd:attribute name="type" type="UserTypes" use="required">
+		<xsd:attribute name="type" type="UserTypeList" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
 			</xsd:annotation>
@@ -767,6 +773,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		</xsd:complexType>
 	</xsd:element>
 -->
+	<!--Parameter related information-->
 	<xsd:element name="ParameterCategorySet" type="ParameterCategorySetType">
 		<xsd:annotation>
 			<xsd:documentation>Container for categorized and nested Name/Value Pairs.</xsd:documentation>
@@ -776,20 +783,58 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
 	</xsd:element>
+	<xsd:complexType name="ParameterCategorySetType">
+		<xsd:sequence>
+			<xsd:element ref="ParameterCategory" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
 	<xsd:element name="ParameterCategory" type="ParameterCategoryType">
 		<xsd:annotation>
 			<xsd:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="SamplePurpose">
+	<xsd:complexType name="ParameterCategoryType">
+		<xsd:sequence>
+			<xsd:element ref="ParameterSet" minOccurs="0"/>
+			<xsd:element ref="ParameterCategorySet" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
+	</xsd:complexType>
+	<xsd:element name="ParameterSet" type="ParameterSetType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+			<xsd:documentation>Container for Name/Value Pairs</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="produced"/>
-			<xsd:enumeration value="consumed"/>
-		</xsd:restriction>
-	</xsd:simpleType>
+		<xsd:unique name="parameterName">
+			<xsd:selector xpath="Parameter"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:complexType name="ParameterSetType">
+		<xsd:sequence>
+			<xsd:element ref="Parameter" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
+	</xsd:complexType>
+	<xsd:element name="Parameter" type="ParameterType">
+		<xsd:annotation>
+			<xsd:documentation>Name/Value Pair</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParameterType">
+		<xsd:complexContent>
+			<xsd:extension base="SingleValueType">
+				<xsd:sequence>
+					<xsd:element ref="Unit" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attributeGroup ref="SignableItemWithName"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- -->
 	<!--SimpleTypes for Vector definitions-->
 	<xsd:simpleType name="Continuity">
@@ -841,7 +886,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:choice maxOccurs="unbounded">
-			<xsd:element ref="int"/>
+			<xsd:element ref="INT"/>
 			<xsd:element ref="float32"/>
 			<xsd:element ref="float64"/>
 			<xsd:element ref="string"/>
@@ -852,11 +897,19 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:element ref="svg"/>
 		</xsd:choice>
 	</xsd:complexType>
-	<xsd:element name="int" type="xsd:int">
+	<xsd:element name="INT" type="INTType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:complexType name="INTType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:int"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<xsd:element name="float32" type="xsd:float">
 		<xsd:annotation>
 			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
@@ -904,7 +957,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
-					<xsd:element ref="int"/>
+					<xsd:element ref="INT"/>
 					<xsd:element ref="float32"/>
 					<xsd:element ref="float64"/>
 					<xsd:element ref="string"/>
@@ -924,14 +977,14 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
-					<xsd:element ref="int"/>
+					<xsd:element ref="INT"/>
 					<xsd:element ref="float32"/>
 					<xsd:element ref="float64"/>
 				</xsd:choice>
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="ParameterTypeNames">
+	<xsd:simpleType name="ParameterTypeList">
 		<xsd:annotation>
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
@@ -946,13 +999,13 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:enumeration value="xml"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="VectorTypeNames">
+	<xsd:simpleType name="VectorTypeList">
 		<xsd:annotation>
 			<xsd:documentation>Names of Data Types for Vectors</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ParameterTypeNames"/>
+		<xsd:restriction base="ParameterTypeList"/>
 	</xsd:simpleType>
-	<xsd:simpleType name="SIUnitNames">
+	<xsd:simpleType name="SIUnitList">
 		<xsd:annotation>
 			<xsd:documentation>Names of all SI Units</xsd:documentation>
 		</xsd:annotation>
@@ -1009,7 +1062,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:attributeGroup>
 	<!---->
 	<!--Things used for multiple purposes-->
-	<xsd:simpleType name="UserTypes">
+	<xsd:simpleType name="UserTypeList">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a user is a real person, a device, or a software program.</xsd:documentation>
 		</xsd:annotation>
@@ -1019,53 +1072,6 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:enumeration value="software"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:complexType name="ParameterCategorySetType">
-		<xsd:sequence>
-			<xsd:element ref="ParameterCategory" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
-	</xsd:complexType>
-	<xsd:complexType name="ParameterCategoryType">
-		<xsd:sequence>
-			<xsd:element ref="ParameterSet" minOccurs="0"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItemWithName"/>
-	</xsd:complexType>
-	<xsd:element name="ParameterSet" type="ParameterSetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for Name/Value Pairs</xsd:documentation>
-		</xsd:annotation>
-		<xsd:unique name="parameterName">
-			<xsd:selector xpath="Parameter"/>
-			<xsd:field xpath="@name"/>
-		</xsd:unique>
-	</xsd:element>
-	<xsd:complexType name="ParameterSetType">
-		<xsd:sequence>
-			<xsd:element ref="Parameter" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
-	</xsd:complexType>
-	<xsd:element name="Parameter" type="ParameterType">
-		<xsd:annotation>
-			<xsd:documentation>Name/Value Pair</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="ParameterType">
-		<xsd:complexContent>
-			<xsd:extension base="SingleValueType">
-				<xsd:sequence>
-					<xsd:element ref="Unit" minOccurs="0"/>
-				</xsd:sequence>
-				<xsd:attributeGroup ref="SignableItemWithName"/>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<!--
 THE ELEMENT IS NOT USED. 
 	<xsd:element name="DataPointReference" type="DataPointReferenceType">
@@ -1092,4 +1098,23 @@ THE ELEMENT IS NOT USED.
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:element name="SIUnit" type="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SIUnitType">
+		<xsd:simpleContent>
+			<xsd:extension base="SIUnitList">
+				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="LabelType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>
