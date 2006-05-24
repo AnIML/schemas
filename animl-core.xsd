@@ -1,16 +1,52 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES:
-- References cleaned up
-- Index-based referencing mechanism implemented
-- Removed Parent/SiblingDataPointReferenceSets and corresponding types
-- Using Parent/SiblingDataPointReference directly
-				
+
+- Global simpletype Float32Type created
+- Element float32 renamed to Float32
+
+- Global simpletype Float64Type created
+- Element float64 renamed to Float64
+
+- Global simpletype DateTimeType created
+- Element dateTime renamed to DateTime
+
+- Global simpletype PNGType created
+- Element png renamed to PNG
+
+- Global simpletype XMLType created
+- Element xml renamed to XML
+
+- Global simpletype SVGType created
+- Element svg renamed to SVG
+
+- Attribute name templateId changed to templateID for complextype TemplateType
+
+- SimpleType Dependency renamed to DependencyType
+
+- SimpleType PlotUse renamed to PlotUseType
+
+- SimpleType Visibility renamed to VisibleType
+
+- SimpleType Scale renamed to ScaleType
+
+- SimpleType SamplePurpose renamed to SamplePurposeType
+
+- Attribut type within the complextype VectorType changed to vectorType
+
+- Several enumeration elements provided with annotation elements.
+
+- ComplexType LongType created				
+
+- Element Long added to the ComplexType NumericValueType
+- Element Long added to the ComplexType UnboundedValueType
+
+
 - TODO:
 	- Constraints for new referencing mechanism need to be added
 	- If the draft for the new referencing model will be accepted then the schema must be reviewed for old IndexRef constraints.
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.1" xmlns="urn:org:astm:animl:schema:core:draft:0.1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
+<xsd:schema xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -51,6 +87,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SampleSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Samples used in this AnIML document.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Sample" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -66,6 +105,9 @@
 		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="ExperimentStepSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple ExperimentSteps that describe the process and results.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Template" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentStep" maxOccurs="unbounded"/>
@@ -78,6 +120,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AuditTrailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for log entries describing changes to this document.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="LogEntry" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -89,6 +134,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SignatureSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Signature" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -100,6 +148,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SampleType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Sample, referenced from other parts of this AnIML document.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 		</xsd:sequence>
@@ -116,13 +167,21 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:simpleType name="SamplePurpose">
+	<xsd:simpleType name="SamplePurposeType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="produced"/>
-			<xsd:enumeration value="consumed"/>
+			<xsd:enumeration value="produced">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="consumed">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is consumed in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!--Elements representing process information and data-->
@@ -149,13 +208,13 @@
 	</xsd:complexType>
 	<xsd:element name="Template" type="TemplateType">
 		<xsd:annotation>
-			<xsd:documentation>ExperimentStep templates</xsd:documentation>
+			<xsd:documentation>Represents an ExperimentStep template</xsd:documentation>
 			<xsd:documentation>Represents a container for ExperementStep templates</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="TemplateType">
 		<xsd:annotation>
-			<xsd:documentation>Children of Template element</xsd:documentation>
+			<xsd:documentation>Represents an ExperimentStep template</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
@@ -165,7 +224,7 @@
 			<xsd:element ref="PageSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="templateId" type="xsd:token" use="required"/>
+		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="Author" type="AuthorType">
 		<xsd:annotation>
@@ -173,6 +232,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AuthorType">
+		<xsd:annotation>
+			<xsd:documentation>Person or device that created this ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="UserInformationType"/>
 		</xsd:complexContent>
@@ -230,6 +292,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="PageSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Pages that contain the results gleaned from the Technique.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Page" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -256,10 +321,13 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SampleReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a Sample used in this Experiment.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
 		<xsd:attribute name="role" type="xsd:token" use="required"/>
-		<xsd:attribute name="purpose" type="SamplePurpose" use="required"/>
+		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required"/>
 	</xsd:complexType>
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
@@ -289,6 +357,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="PageType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Data derived from Experiment.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
 			<xsd:element ref="VectorSet" minOccurs="0"/>
@@ -298,8 +369,15 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 	</xsd:complexType>
-	<xsd:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType"/>
+	<xsd:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the page within the same page set</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="SiblingDataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Datatype which defines a reference to a data point or value range in the page within the same page set</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DataPointReferenceType">
 				<xsd:attribute name="pageID" type="xsd:token" use="required">
@@ -323,6 +401,9 @@
 		</xsd:key>
 	</xsd:element>
 	<xsd:complexType name="VectorSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for n-dimensional Data.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Vector" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -339,6 +420,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="VectorType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple Values.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:choice>
 				<xsd:element ref="IndividualValueSet" maxOccurs="unbounded"/>
@@ -348,7 +432,7 @@
 			<xsd:element ref="Unit" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="dependency" type="Dependency" use="required">
+		<xsd:attribute name="dependency" type="DependencyType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
 			</xsd:annotation>
@@ -358,22 +442,22 @@
 				<xsd:documentation>Identifies the Vector. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="plotUse" type="PlotUse" use="required">
+		<xsd:attribute name="plotUse" type="PlotUseType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Specifies whether a new dimension should be created for this vector.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="visible" type="Visibility" use="optional" default="true">
+		<xsd:attribute name="visible" type="VisibleType" use="optional" default="true">
 			<xsd:annotation>
 				<xsd:documentation>Specifies whether data in this Vector is to be displayed to the user by default.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="scale" type="Scale" use="optional" default="linear">
+		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear">
 			<xsd:annotation>
 				<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="type" type="VectorTypeList" use="required"/>
+		<xsd:attribute name="vectorType" type="VectorTypeType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="IndividualValueSet" type="IndividualValueSetType">
 		<xsd:annotation>
@@ -381,6 +465,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="IndividualValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values explicitly specified.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="UnboundedValueType">
 				<xsd:attributeGroup ref="ValueSet"/>
@@ -393,13 +480,20 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="EncodedValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values encoded as a base64 binary string.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:base64Binary">
 				<xsd:attributeGroup ref="ValueSet"/>
 			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:element name="StartValue" type="StartValueType"/>
+	<xsd:element name="StartValue" type="StartValueType">
+		<xsd:annotation>
+			<xsd:documentation>First value of the incremented set</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="StartValueType">
 		<xsd:annotation>
 			<xsd:documentation>First value of the incremented set</xsd:documentation>
@@ -408,7 +502,11 @@
 			<xsd:extension base="NumericValueType"/>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="Increment" type="IncrementType"/>
+	<xsd:element name="Increment" type="IncrementType">
+		<xsd:annotation>
+			<xsd:documentation>Increment value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="IncrementType">
 		<xsd:annotation>
 			<xsd:documentation>Increment value</xsd:documentation>
@@ -423,6 +521,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AutoIncrementedValueSetType">
+		<xsd:annotation>
+			<xsd:documentation>Multiple Values given in form of a start value and an increment.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="StartValue"/>
 			<xsd:element ref="Increment"/>
@@ -435,6 +536,9 @@
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -479,7 +583,7 @@
 					<xsd:documentation>Name of person or device.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="EMail" minOccurs="0">
+			<xsd:element ref="Email" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Contact email address.</xsd:documentation>
 				</xsd:annotation>
@@ -495,7 +599,7 @@
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
-		<xsd:attribute name="type" type="UserTypeList" use="required">
+		<xsd:attribute name="userType" type="UserTypeType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
 			</xsd:annotation>
@@ -514,12 +618,12 @@
 			<xsd:extension base="xsd:string"/>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:element name="EMail" type="EMailType">
+	<xsd:element name="Email" type="EmailType">
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="EMailType">
+	<xsd:simpleType name="EmailType">
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
 		</xsd:annotation>
@@ -726,43 +830,75 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:complexType>
 	<!-- -->
 	<!--SimpleTypes for Vector definitions-->
-	<xsd:simpleType name="Continuity">
+	<xsd:simpleType name="ContinuityType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether the data points should be connected or not.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="discrete"/>
-			<xsd:enumeration value="continuous"/>
+			<xsd:enumeration value="discrete">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether the data points shouldn't be connected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="continuous">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether the data points should be connected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="Dependency">
+	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
 			<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="independent"/>
-			<xsd:enumeration value="dependent"/>
+			<xsd:enumeration value="independent">
+				<xsd:annotation>
+					<xsd:documentation>Specified that the Vector is independent.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="dependent">
+				<xsd:annotation>
+					<xsd:documentation>Specified that the Vector is dependent.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="Scale">
+	<xsd:simpleType name="ScaleType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="linear"/>
-			<xsd:enumeration value="logarithmic"/>
+			<xsd:enumeration value="linear">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a linear scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="logarithmic">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a logarithmic scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="PlotUse">
+	<xsd:simpleType name="PlotUseType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="dimension"/>
-			<xsd:enumeration value="attribute"/>
+			<xsd:enumeration value="dimension">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that a new dimension will be created in the plot..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="attribute">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that no extra dimension is created and that the values a being ploted.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="Visibility">
+	<xsd:simpleType name="VisibleType">
 		<xsd:annotation>
 			<xsd:documentation>Specifes whether a Vector should be displayed by default.</xsd:documentation>
 		</xsd:annotation>
@@ -776,14 +912,15 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		</xsd:annotation>
 		<xsd:choice maxOccurs="unbounded">
 			<xsd:element ref="INT"/>
-			<xsd:element ref="float32"/>
-			<xsd:element ref="float64"/>
-			<xsd:element ref="string"/>
-			<xsd:element ref="boolean"/>
-			<xsd:element ref="dateTime"/>
-			<xsd:element ref="png"/>
-			<xsd:element ref="xml"/>
-			<xsd:element ref="svg"/>
+			<xsd:element ref="Long"/>
+			<xsd:element ref="Float32"/>
+			<xsd:element ref="Float64"/>
+			<xsd:element ref="String"/>
+			<xsd:element ref="Boolean"/>
+			<xsd:element ref="DateTime"/>
+			<xsd:element ref="PNG"/>
+			<xsd:element ref="XML"/>
+			<xsd:element ref="SVG"/>
 		</xsd:choice>
 	</xsd:complexType>
 	<xsd:element name="INT" type="INTType">
@@ -799,46 +936,109 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:extension base="xsd:int"/>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:element name="float32" type="xsd:float">
+	<xsd:element name="Long" type="LongType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LongType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:long"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="float64" type="xsd:double">
+	<xsd:simpleType name="Float32Type">
+		<xsd:annotation>
+			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:float"/>
+	</xsd:simpleType>
+	<xsd:element name="Float64" type="Float64Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="string" type="xsd:string">
+	<xsd:simpleType name="Float64Type">
+		<xsd:annotation>
+			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:element name="String" type="StringType">
 		<xsd:annotation>
 			<xsd:documentation>Individual String Value</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="boolean" type="xsd:boolean">
+	<xsd:simpleType name="StringType">
+		<xsd:annotation>
+			<xsd:documentation>Individual String Value</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Boolean Value</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="dateTime" type="xsd:dateTime">
+	<xsd:simpleType name="BooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Boolean Value</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:element name="DateTime" type="DateTimeType">
 		<xsd:annotation>
 			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="png" type="xsd:base64Binary">
+	<xsd:simpleType name="DateTimeType">
+		<xsd:annotation>
+			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:element name="PNG" type="PNGType">
 		<xsd:annotation>
 			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="xml" type="xsd:string">
+	<xsd:simpleType name="PNGType">
+		<xsd:annotation>
+			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:base64Binary"/>
+	</xsd:simpleType>
+	<xsd:element name="XML" type="XMLType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="svg" type="xsd:anyType">
+	<xsd:simpleType name="XMLType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:complexType name="SVGType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="xsd:anyType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:complexType name="SingleValueType">
 		<xsd:annotation>
 			<xsd:documentation>Elements for IndividualValueSets in Vectors.</xsd:documentation>
@@ -847,14 +1047,15 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
 					<xsd:element ref="INT"/>
-					<xsd:element ref="float32"/>
-					<xsd:element ref="float64"/>
-					<xsd:element ref="string"/>
-					<xsd:element ref="boolean"/>
-					<xsd:element ref="dateTime"/>
-					<xsd:element ref="png"/>
-					<xsd:element ref="xml"/>
-					<xsd:element ref="svg"/>
+					<xsd:element ref="Long"/>
+					<xsd:element ref="Float32"/>
+					<xsd:element ref="Float64"/>
+					<xsd:element ref="String"/>
+					<xsd:element ref="Boolean"/>
+					<xsd:element ref="DateTime"/>
+					<xsd:element ref="PNG"/>
+					<xsd:element ref="XML"/>
+					<xsd:element ref="SVG"/>
 				</xsd:choice>
 			</xsd:restriction>
 		</xsd:complexContent>
@@ -867,46 +1068,111 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
 					<xsd:element ref="INT"/>
-					<xsd:element ref="float32"/>
-					<xsd:element ref="float64"/>
+					<xsd:element ref="Long"/>
+					<xsd:element ref="Float32"/>
+					<xsd:element ref="Float64"/>
 				</xsd:choice>
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="ParameterTypeList">
+	<xsd:simpleType name="ParameterTypeType">
 		<xsd:annotation>
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="int"/>
-			<xsd:enumeration value="long"/>
-			<xsd:enumeration value="float32"/>
-			<xsd:enumeration value="float64"/>
-			<xsd:enumeration value="string"/>
-			<xsd:enumeration value="boolean"/>
-			<xsd:enumeration value="dateTime"/>
-			<xsd:enumeration value="xml"/>
+			<xsd:enumeration value="int">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="long">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="float32">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual 32-bit Floating Point Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="float64">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual 64-bit Floating Point Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="string">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual String Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="boolean">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual Boolean Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Represents an individual ISO Date/Time Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="xml">
+				<xsd:annotation>
+					<xsd:documentation>Represents a Value governed by a different XML Schema..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="VectorTypeList">
+	<xsd:simpleType name="VectorTypeType">
 		<xsd:annotation>
 			<xsd:documentation>Names of Data Types for Vectors</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ParameterTypeList"/>
+		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
-	<xsd:simpleType name="SIUnitList">
+	<xsd:simpleType name="SIUnitNameList">
 		<xsd:annotation>
 			<xsd:documentation>Names of all SI Units</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="1"/>
-			<xsd:enumeration value="m"/>
-			<xsd:enumeration value="kg"/>
-			<xsd:enumeration value="s"/>
-			<xsd:enumeration value="A"/>
-			<xsd:enumeration value="K"/>
-			<xsd:enumeration value="mol"/>
-			<xsd:enumeration value="cd"/>
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>Represents a dimensionless unit.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="m">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit meter.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="kg">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit kilogram.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="s">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit second.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="A">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit ampere.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="K">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit kelvin.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="mol">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit mole.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="cd">
+				<xsd:annotation>
+					<xsd:documentation>Represents a SIUnit candela.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- -->
@@ -951,14 +1217,26 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:attributeGroup>
 	<!---->
 	<!--Things used for multiple purposes-->
-	<xsd:simpleType name="UserTypeList">
+	<xsd:simpleType name="UserTypeType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a user is a real person, a device, or a software program.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="human"/>
-			<xsd:enumeration value="device"/>
-			<xsd:enumeration value="software"/>
+			<xsd:enumeration value="human">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the user is a real person.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="device">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the user is a device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="software">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the user is a software system.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!--
@@ -970,6 +1248,9 @@ THE ELEMENT IS NOT USED.
 	</xsd:element>
 -->
 	<xsd:complexType name="DataPointReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Basis type for a reference to a data point or value range.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="vectorID" type="xsd:string" use="required">
 			<xsd:annotation>
@@ -993,8 +1274,11 @@ THE ELEMENT IS NOT USED.
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
+		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:extension base="SIUnitList">
+			<xsd:extension base="SIUnitNameList">
 				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
@@ -1002,6 +1286,9 @@ THE ELEMENT IS NOT USED.
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:simpleType name="LabelType">
+		<xsd:annotation>
+			<xsd:documentation>Contains a name/symbol to discribe a scientific unit of measure.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
