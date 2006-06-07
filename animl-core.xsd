@@ -73,9 +73,9 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.1">
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.2">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.1".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.2".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -1031,14 +1031,12 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="SVGType">
+	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="xsd:anyType"/>
-		</xsd:complexContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="XMLType"/>
+	</xsd:simpleType>
 	<xsd:complexType name="SingleValueType">
 		<xsd:annotation>
 			<xsd:documentation>Elements for IndividualValueSets in Vectors.</xsd:documentation>
@@ -1080,42 +1078,42 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="int">
+			<xsd:enumeration value="INT">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="long">
+			<xsd:enumeration value="Long">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="float32">
+			<xsd:enumeration value="Float32">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual 32-bit Floating Point Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="float64">
+			<xsd:enumeration value="Float64">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual 64-bit Floating Point Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="string">
+			<xsd:enumeration value="String">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual String Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="boolean">
+			<xsd:enumeration value="Boolean">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual Boolean Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="dateTime">
+			<xsd:enumeration value="DateTime">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual ISO Date/Time Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="xml">
+			<xsd:enumeration value="XML">
 				<xsd:annotation>
 					<xsd:documentation>Represents a Value governed by a different XML Schema..</xsd:documentation>
 				</xsd:annotation>
