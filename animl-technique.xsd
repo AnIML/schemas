@@ -1,460 +1,640 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!-- CHANGES
+
+- ParameterCategoryBlueprint changed. See row 211
+
+- Since the element Module has been deleted there is no attribute name for the technique name available. Were should the name of the Technique be documented.
+
+- Element ParameterCategoryBlueprint has been changed
+
+- ParameterCategoryBlueprint changed. See rows 222-223
+
+- TypeElement MaxOccurs changed. Attribute name="unboundedOnly" deleted in row 450
+
+- Attribute name added to the complex type "Technique"
+
+- Prefix xs changed to xsd
+
+- Namespace urn:org:astm:animl:schema:technique:draft:1.2
+
+- Complex type "SampleRoleType" decleared globaly
+- Element "SampleRole" decleared globaly
+
+- Simple type "DocumentationType" decleared globaly
+- Element "Documentation" decleared globaly
+
+- Complex type "ParameterCategoryBlueprintType" decleared globaly
+- Element "ParameterCategoryBlueprint" decleared globaly
+
+- Complex type "ParameterBlueprintType" decleared globaly
+- Element "ParameterBlueprint" decleared globaly
+
+- Complex type "VectorBlueprintType" decleared globaly
+- Element "VectorBlueprint" decleared globaly
+
+- Complex type "PageBlueprintType" decleared globaly
+- Element "PageBlueprint" decleared globaly
+
+- Complex type "Unit" decleared globaly
+
+- Complex type "SIUnitType" decleared globaly
+- Element "SIUnit" decleared globaly
+
+- Complex type "AllowedValueType" decleared globaly
+- Element "AllowedValue" decleared globaly
+
+- Element "float32" decleared globaly
+- Element "float64" decleared globaly
+- Element "string" decleared globaly
+- Element "boolean" decleared globaly
+- Element "dateTime" decleared globaly
+- Element "png" decleared globaly
+- Element "xml" decleared globaly
+- Element "svg" decleared globaly
+
+- Complex type "AllowedRangeType" decleared globaly
+- Element "AllowedRange" decleared globaly
+
+- Element "Min" renamed to "MIN"
+- Element "MIN" decleared globaly
+- Complex type "MINType" decleared globaly
+
+
+- Element "Max" renamed to "MAX"
+- Element "MAX" decleared globaly
+- Complex type "MAXType" decleared globaly
+
+- Simple type "UnboundedType" declared globaly
+
+- Simple type "LabelType" declared globaly
+
+- Simple type "AllTypeNames" renamed to "AllTypeNameList"
+
+- Simple type "VectorTypeNames" renamed to "VectorTypeType"
+
+- Attribute "type" within the complex type "VectorBlueprintType" renamed to "vectorType"
+
+- Simple type "SIUnitNames" renamed to "SIUnitNameList"
+
+- Simple type "ParameterTypeNames" renamed to "ParameterTypeType"
+
+- Attribute "type" within the complex type "ParameterBlueprintType" renamed to "parameterType"
+
+- Element "int" renamed to "INT"
+- Simple type "INTType" created.
+
+- Element "svg" renamed to "SVG"
+- Simple type "SVGType" created.
+
+- Element "xml" renamed to "XML"
+- Simple type "XMLType" created.
+
+- Element "png" renamed to "PNG"
+- Simple type "PNGType" created.
+
+
+
+TODO:
+- is the name "maxOccurs" allowed or is there also a singular form available?
+- what to do with the container Unit? Actually it must be called SIUnitSet because it looks like it groups elements of type SIUnit only. But actually this element doesn't have a grouping or container function.
+- 
+
+
+ -->
+<xsd:schema xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
-	<xs:element name="Technique">
-		<xs:annotation>
-			<xs:documentation>Root Element of an AnIML Technique Definition.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:element name="SampleRole" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Role that a specific Sample plays in the Technique.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-						</xs:sequence>
-						<xs:attribute name="name" type="xs:token" use="required">
-							<xs:annotation>
-								<xs:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="purpose" type="SamplePurpose" use="required">
-							<xs:annotation>
-								<xs:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="modality" type="Modality" use="optional" default="required">
-							<xs:annotation>
-								<xs:documentation>States if a sample with this role is required.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-							<xs:annotation>
-								<xs:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true">
-							<xs:annotation>
-								<xs:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="upwardsInherited" type="xs:boolean" use="optional" default="false">
-							<xs:annotation>
-								<xs:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
-				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="1.1"/>
-			<xs:attribute name="name" type="xs:string" use="required">
-				<xs:annotation>
-					<xs:documentation>Human-readable name of this Technique Definition</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-		<xs:unique name="topParameterCategoryName">
-			<xs:selector xpath="ParameterCategoryBlueprint"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-		<xs:unique name="sampleName">
-			<xs:selector xpath="SampleRole"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-		<xs:unique name="pageName">
-			<xs:selector xpath="PageBlueprint"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-	</xs:element>
-	<xs:element name="PageBlueprint">
-		<xs:annotation>
-			<xs:documentation>Description of a Page that is to be attached at this hierarchy level.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:element name="VectorBlueprint" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Description of Vector that needs to be attached to this Page.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element ref="Documentation" minOccurs="0"/>
-							<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
-						</xs:sequence>
-						<xs:attribute name="name" type="xs:token" use="required">
-							<xs:annotation>
-								<xs:documentation>Name this Vector needs to bear.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="type" type="VectorTypeNames" use="required">
-							<xs:annotation>
-								<xs:documentation>Data type this Vector needs to have.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="modality" type="Modality" use="optional" default="required">
-							<xs:annotation>
-								<xs:documentation>Description if this Vector is optional or required.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-							<xs:annotation>
-								<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="scale" type="Scale" use="optional" default="linear"/>
-						<xs:attribute name="plotUse" type="PlotUse" use="required"/>
-						<xs:attribute name="dependency" type="Dependency" use="required"/>
-					</xs:complexType>
-				</xs:element>
-				<xs:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="name" type="xs:token" use="required">
-				<xs:annotation>
-					<xs:documentation>Name that the Page needs to receive.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="modality" type="Modality" use="optional" default="required">
-				<xs:annotation>
-					<xs:documentation>Specifies if Page is optional or required.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
+	<xsd:element name="Technique" type="TechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Root Element of an AnIML Technique Definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:unique name="topParameterCategoryName">
+			<xsd:selector xpath="ParameterCategoryBlueprint"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+		<xsd:unique name="sampleName">
+			<xsd:selector xpath="SampleRole"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+		<xsd:unique name="pageName">
+			<xsd:selector xpath="PageBlueprint"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:complexType name="TechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Root Element of an AnIML Technique Definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="SampleRole" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="1.2"/>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Human-readable name of this Technique Definition</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="SampleRole" type="SampleRoleType">
+		<xsd:annotation>
+			<xsd:documentation>Role that a specific Sample plays in the Technique.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleRoleType">
+		<xsd:annotation>
+			<xsd:documentation>Role that a specific Sample plays in the Technique.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="purpose" type="SamplePurpose" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="modality" type="Modality" use="optional" default="required">
+			<xsd:annotation>
+				<xsd:documentation>States if a sample with this role is required.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Specifies how many samples with this role may exist. In an AnIML file, the Role name must then be suffixed with a number, starting with 1.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="inheritable" type="xsd:boolean" use="optional" default="true">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether this role is required if this PageSet is nested under a Page. If true, the sample is inherited from the superordinate Page.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="upwardsInherited" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether this Sample serves as an implicit Sample to the superordinate Page/PageSet. Useful for Injections.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="PageBlueprint" type="PageBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of a Page that is to be attached at this hierarchy level.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PageBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of a Page that is to be attached at this hierarchy level.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="VectorBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name that the Page needs to receive.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="modality" type="Modality" use="optional" default="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies if Page is optional or required.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="VectorBlueprint" type="VectorBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of Vector that needs to be attached to this Page.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VectorBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of Vector that needs to be attached to this Page.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name this Vector needs to bear.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="vectorType" type="VectorTypeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Data type this Vector needs to have.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="modality" type="Modality" use="optional" default="required">
+			<xsd:annotation>
+				<xsd:documentation>Description if this Vector is optional or required.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="scale" type="Scale" use="optional" default="linear"/>
+		<xsd:attribute name="plotUse" type="PlotUse" use="required"/>
+		<xsd:attribute name="dependency" type="Dependency" use="required"/>
+	</xsd:complexType>
 	<!-- -->
 	<!--Elements for Parameters-->
-	<xs:element name="ParameterBlueprint">
-		<xs:annotation>
-			<xs:documentation>Name-value pair to be stored in current Parameter Category.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element name="AllowedValue" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:complexContent>
-							<xs:extension base="ParameterValueType">
-								<xs:attribute name="unit" type="xs:string" use="optional">
-									<xs:annotation>
-										<xs:documentation>Label of Unit that applies to this allowed value
-</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-							</xs:extension>
-						</xs:complexContent>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="AllowedRange" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Range of Permitted Values for Parameters.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="Min">
-								<xs:annotation>
-									<xs:documentation>Lower Boundary of Range.</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:complexContent>
-										<xs:extension base="NumericValueType">
-											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
-												<xs:annotation>
-													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
-												</xs:annotation>
-											</xs:attribute>
-										</xs:extension>
-									</xs:complexContent>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="Max">
-								<xs:annotation>
-									<xs:documentation>Upper Boundary of Range.</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:complexContent>
-										<xs:extension base="NumericValueType">
-											<xs:attribute name="included" type="xs:boolean" use="optional" default="true">
-												<xs:annotation>
-													<xs:documentation>Specifies whether the given value is part of the interval.</xs:documentation>
-												</xs:annotation>
-											</xs:attribute>
-										</xs:extension>
-									</xs:complexContent>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-						<xs:attribute name="unit" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation>Label of Unit that applies to this allowed range of values
-</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="name" type="xs:string" use="required"/>
-			<xs:attribute name="type" type="ParameterTypeNames" use="required"/>
-			<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-			<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
-				<xs:annotation>
-					<xs:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="ParameterCategoryBlueprint">
-		<xs:annotation>
-			<xs:documentation>Collection of Parameters to be used on this hierarchy level.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Documentation" minOccurs="0"/>
-				<xs:choice>
-					<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-					<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
-					<xs:sequence>
-						<xs:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-						<xs:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:choice>
-			</xs:sequence>
-			<xs:attribute name="name" type="xs:token" use="required"/>
-			<xs:attribute name="modality" type="Modality" use="optional" default="required"/>
-			<xs:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1"/>
-		</xs:complexType>
-		<xs:unique name="parameterName">
-			<xs:selector xpath="ParameterBlueprint"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
-	</xs:element>
+	<xsd:element name="ParameterBlueprint" type="ParameterBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Name-value pair to be stored in current Parameter Category.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParameterBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Name-value pair to be stored in current Parameter Category.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="parameterType" type="ParameterTypeType" use="required"/>
+		<xsd:attribute name="modality" type="Modality" use="optional" default="required"/>
+		<xsd:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ParameterCategoryBlueprint" type="ParameterCategoryBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:unique name="parameterName">
+			<xsd:selector xpath="ParameterBlueprint"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:complexType name="ParameterCategoryBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:choice>
+				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
+				<xsd:element ref="ParameterCategoryBlueprint" minOccurs="2" maxOccurs="unbounded"/>
+				<xsd:sequence>
+					<xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
+					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required"/>
+		<xsd:attribute name="modality" type="Modality" use="optional" default="required"/>
+		<xsd:attribute name="maxOccurs" type="MaxOccurs" use="optional" default="1"/>
+	</xsd:complexType>
 	<!-- -->
 	<!--Type definitions-->
-	<xs:simpleType name="SamplePurpose">
-		<xs:annotation>
-			<xs:documentation>Boolean data type indicating whether a sample is consumed or produced in an experiment.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="produced"/>
-			<xs:enumeration value="consumed"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Dependency">
-		<xs:annotation>
-			<xs:documentation>Specified whether the Vector is independent or dependent.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="independent"/>
-			<xs:enumeration value="dependent"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Scale">
-		<xs:annotation>
-			<xs:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="linear"/>
-			<xs:enumeration value="logarithmic"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="PlotUse">
-		<xs:annotation>
-			<xs:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="dimension"/>
-			<xs:enumeration value="attribute"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Modality">
-		<xs:annotation>
-			<xs:documentation>String with two allowed values: "required" and "optional"</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="required"/>
-			<xs:enumeration value="optional"/>
-		</xs:restriction>
-	</xs:simpleType>
+	<xsd:simpleType name="SamplePurpose">
+		<xsd:annotation>
+			<xsd:documentation>Boolean data type indicating whether a sample is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="produced"/>
+			<xsd:enumeration value="consumed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Dependency">
+		<xsd:annotation>
+			<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="independent"/>
+			<xsd:enumeration value="dependent"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Scale">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="linear"/>
+			<xsd:enumeration value="logarithmic"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PlotUse">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="dimension"/>
+			<xsd:enumeration value="attribute"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Modality">
+		<xsd:annotation>
+			<xsd:documentation>String with two allowed values: "required" and "optional"</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="required"/>
+			<xsd:enumeration value="optional"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- -->
 	<!--Type definitions for basic data types-->
-	<xs:simpleType name="AllTypeNames">
-		<xs:annotation>
-			<xs:documentation>Names of all data types used in AnIML</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="int"/>
-			<xs:enumeration value="float"/>
-			<xs:enumeration value="string"/>
-			<xs:enumeration value="boolean"/>
-			<xs:enumeration value="dateTime"/>
-			<xs:enumeration value="xml"/>
-			<xs:enumeration value="png"/>
-			<xs:enumeration value="svg"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="VectorTypeNames">
-		<xs:annotation>
-			<xs:documentation>Names of Data types usable for Vectors</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="AllTypeNames"/>
-	</xs:simpleType>
-	<xs:simpleType name="ParameterTypeNames">
-		<xs:annotation>
-			<xs:documentation>Names of Data types usable for Parameters</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="AllTypeNames"/>
-	</xs:simpleType>
-	<xs:complexType name="ParameterValueType">
-		<xs:annotation>
-			<xs:documentation>Elements for allowed values in Parameters.</xs:documentation>
-		</xs:annotation>
-		<xs:choice>
-			<xs:element name="int" type="xs:int">
-				<xs:annotation>
-					<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="float32" type="xs:float">
-				<xs:annotation>
-					<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="float64" type="xs:double">
-				<xs:annotation>
-					<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="string" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Individual String Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="boolean" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Individual Boolean Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="dateTime" type="xs:dateTime">
-				<xs:annotation>
-					<xs:documentation>Individual ISO Date/Time Value</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="png" type="xs:base64Binary">
-				<xs:annotation>
-					<xs:documentation>Base 64 encoded PNG image</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="xml" type="xs:anyType">
-				<xs:annotation>
-					<xs:documentation>Value governed by a different XML Schema.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="svg" type="xs:anyType">
-				<xs:annotation>
-					<xs:documentation>Value governed by the SVG DTD. It is for representing images.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:choice>
-	</xs:complexType>
-	<xs:complexType name="NumericValueType">
-		<xs:annotation>
-			<xs:documentation>Elements for allowed numeric values in Parameters.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="ParameterValueType">
-				<xs:choice>
-					<xs:element name="int" type="xs:int">
-						<xs:annotation>
-							<xs:documentation>Individual Integer Value (32 bits, signed).</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float32" type="xs:float">
-						<xs:annotation>
-							<xs:documentation>Individual 32-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="float64" type="xs:double">
-						<xs:annotation>
-							<xs:documentation>Individual 64-bit Floating Point Value.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:choice>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+	<xsd:simpleType name="AllTypeNameList">
+		<xsd:annotation>
+			<xsd:documentation>Names of all data types used in AnIML</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="int"/>
+			<xsd:enumeration value="float32"/>
+			<xsd:enumeration value="float64"/>
+			<xsd:enumeration value="string"/>
+			<xsd:enumeration value="boolean"/>
+			<xsd:enumeration value="dateTime"/>
+			<xsd:enumeration value="xml"/>
+			<xsd:enumeration value="png"/>
+			<xsd:enumeration value="svg"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VectorTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Names of Data types usable for Vectors</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="AllTypeNameList"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ParameterTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Names of Data types usable for Parameters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="AllTypeNameList"/>
+	</xsd:simpleType>
+	<xsd:complexType name="ParameterValueType">
+		<xsd:annotation>
+			<xsd:documentation>Elements for allowed values in Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element ref="INT"/>
+			<xsd:element ref="float32"/>
+			<xsd:element ref="float64"/>
+			<xsd:element ref="string"/>
+			<xsd:element ref="boolean"/>
+			<xsd:element ref="dateTime"/>
+			<xsd:element ref="PNG"/>
+			<xsd:element ref="XML"/>
+			<xsd:element ref="SVG"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="NumericValueType">
+		<xsd:annotation>
+			<xsd:documentation>Elements for allowed numeric values in Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="ParameterValueType">
+				<xsd:choice>
+					<xsd:element ref="INT">
+						<xsd:annotation>
+							<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="float32">
+						<xsd:annotation>
+							<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="float64">
+						<xsd:annotation>
+							<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- -->
 	<!--Miscellaneous-->
-	<xs:element name="Documentation" type="xs:string">
-		<xs:annotation>
-			<xs:documentation>Description of the Element it is nested under.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="Unit">
-		<xs:annotation>
-			<xs:documentation>Definition of Measurement Unit</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="SIUnit" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Combination of SI units used to represent measurement unit</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:simpleContent>
-							<xs:extension base="SIUnitNames">
-								<xs:attribute name="factor" type="xs:float" use="optional" default="1"/>
-								<xs:attribute name="exponent" type="xs:float" use="optional" default="1"/>
-								<xs:attribute name="offset" type="xs:float" use="optional" default="0"/>
-							</xs:extension>
-						</xs:simpleContent>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="label" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:minLength value="1"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:simpleType name="SIUnitNames">
-		<xs:annotation>
-			<xs:documentation>Names of all SI Units</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="1"/>
-			<xs:enumeration value="m"/>
-			<xs:enumeration value="kg"/>
-			<xs:enumeration value="s"/>
-			<xs:enumeration value="A"/>
-			<xs:enumeration value="K"/>
-			<xs:enumeration value="mol"/>
-			<xs:enumeration value="cd"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="MaxOccurs">
-		<xs:annotation>
-			<xs:documentation>Positive Integers and "unbounded" for multiplicity.</xs:documentation>
-		</xs:annotation>
-		<xs:union memberTypes="xs:positiveInteger">
-			<xs:simpleType name="unboundedOnly">
-				<xs:restriction base="xs:token">
-					<xs:enumeration value="unbounded"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:union>
-	</xs:simpleType>
-</xs:schema>
+	<xsd:simpleType name="SIUnitNameList">
+		<xsd:annotation>
+			<xsd:documentation>Names of all SI Units</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="m"/>
+			<xsd:enumeration value="kg"/>
+			<xsd:enumeration value="s"/>
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="K"/>
+			<xsd:enumeration value="mol"/>
+			<xsd:enumeration value="cd"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaxOccurs">
+		<xsd:annotation>
+			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UnboundedType">
+		<xsd:annotation>
+			<xsd:documentation>Represents the list value "unbounded"</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="unbounded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LabelType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Documentation" type="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Unit" type="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="label" type="LabelType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="SIUnit" type="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="SIUnitNameList">
+				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="AllowedValue" type="AllowedValueType">
+		<xsd:annotation>
+			<xsd:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AllowedValueType">
+		<xsd:annotation>
+			<xsd:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ParameterValueType">
+				<xsd:attribute name="unit" type="xsd:string" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Label of Unit that applies to this allowed value
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="INT" type="xsd:int">
+		<xsd:annotation>
+			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="float32" type="xsd:float">
+		<xsd:annotation>
+			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="float64" type="xsd:double">
+		<xsd:annotation>
+			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="string" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Individual String Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="boolean" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>Individual Boolean Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="dateTime" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PNG" type="xsd:base64Binary">
+		<xsd:annotation>
+			<xsd:documentation>Base 64 encoded PNG image</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="XML" type="XMLType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="XMLType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="SVG" type="SVGType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by the SVG DTD. It is for representing images.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SVGType">
+		<xsd:annotation>
+			<xsd:documentation>Value governed by the SVG DTD. It is for representing images.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="MIN" type="MINType">
+		<xsd:annotation>
+			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MINType">
+		<xsd:annotation>
+			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType">
+				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
+					<xsd:annotation>
+						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="MAX" type="MAXType">
+		<xsd:annotation>
+			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MAXType">
+		<xsd:annotation>
+			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType">
+				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
+					<xsd:annotation>
+						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="AllowedRange" type="AllowedRangeType">
+		<xsd:annotation>
+			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AllowedRangeType">
+		<xsd:annotation>
+			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="MIN"/>
+			<xsd:element ref="MAX"/>
+		</xsd:sequence>
+		<xsd:attribute name="unit" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Label of Unit that applies to this allowed range of values
+</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>
