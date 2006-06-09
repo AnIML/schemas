@@ -1,44 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES:
 
-- Global simpletype Float32Type created
-- Element float32 renamed to Float32
+- Complex type TimestampType modified to simple type
+- Complex type NameType modified to simple type
+- Complex type PhoneType modified to simple type
+- Complex type LocationType modified to simple type
+- Complex type ReasonType modified to simple type
+- Complex type DescriptionType modified to simple type
+- Complex type LongType modified to simple type
 
-- Global simpletype Float64Type created
-- Element float64 renamed to Float64
 
-- Global simpletype DateTimeType created
-- Element dateTime renamed to DateTime
-
-- Global simpletype PNGType created
-- Element png renamed to PNG
-
-- Global simpletype XMLType created
-- Element xml renamed to XML
-
-- Global simpletype SVGType created
-- Element svg renamed to SVG
-
-- Attribute name templateId changed to templateID for complextype TemplateType
-
-- SimpleType Dependency renamed to DependencyType
-
-- SimpleType PlotUse renamed to PlotUseType
-
-- SimpleType Visibility renamed to VisibleType
-
-- SimpleType Scale renamed to ScaleType
-
-- SimpleType SamplePurpose renamed to SamplePurposeType
-
-- Attribut type within the complextype VectorType changed to vectorType
-
-- Several enumeration elements provided with annotation elements.
-
-- ComplexType LongType created				
-
-- Element Long added to the ComplexType NumericValueType
-- Element Long added to the ComplexType UnboundedValueType
 
 
 - TODO:
@@ -244,14 +215,12 @@
 			<xsd:documentation>Date and time of modification.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="TimestampType">
+	<xsd:simpleType name="TimestampType">
 		<xsd:annotation>
 			<xsd:documentation>Date and time of modification.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:dateTime"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+			<xsd:union memberTypes="xsd:dateTime"/>
+	</xsd:simpleType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
 		<xsd:annotation>
 			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
@@ -610,14 +579,12 @@
 			<xsd:documentation>Name of person or device.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="NameType">
+	<xsd:simpleType name="NameType">
 		<xsd:annotation>
 			<xsd:documentation>Name of person or device.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:string"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+			<xsd:restriction  base="xsd:string"/>
+	</xsd:simpleType>
 	<xsd:element name="Email" type="EmailType">
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
@@ -636,27 +603,23 @@
 			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="PhoneType">
+	<xsd:simpleType name="PhoneType">
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:string"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
 	<xsd:element name="Location" type="LocationType">
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="LocationType">
+	<xsd:simpleType name="LocationType">
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:string"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
 	<xsd:element name="Action" type="ActionType">
 		<xsd:annotation>
 			<xsd:documentation>Type of change made (created, modified, ...)</xsd:documentation>
@@ -699,40 +662,34 @@
 			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="ReasonType">
+	<xsd:simpleType name="ReasonType">
 		<xsd:annotation>
 			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:string"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
 	<xsd:element name="Description" type="DescriptionType">
 		<xsd:annotation>
 			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="DescriptionType">
+	<xsd:simpleType name="DescriptionType">
 		<xsd:annotation>
 			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:string"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
 	<xsd:element name="Reference" type="ReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="ReferenceType">
+	<xsd:simpleType name="ReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:IDREF"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:IDREF"/>
+	</xsd:simpleType>
 	<xsd:element name="Signature" type="ds:SignatureType">
 		<xsd:annotation>
 			<xsd:documentation>Digital Signature that has been applied to a part of this AnIML document. Uses the W3C XML-DSIG specification.</xsd:documentation>
@@ -902,7 +859,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:annotation>
 			<xsd:documentation>Specifes whether a Vector should be displayed by default.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:boolean"/>
+		<xsd:union memberTypes="xsd:boolean"/>
 	</xsd:simpleType>
 	<!-- -->
 	<!--Complex Types for Parameter and Vector values, Simple Types for Data Type names-->
@@ -928,27 +885,23 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="INTType">
+	<xsd:simpleType name="INTType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:int"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:int"/>
+	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="LongType">
+	<xsd:simpleType name="LongType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="xsd:long"/>
-		</xsd:simpleContent>
-	</xsd:complexType>
+		<xsd:union memberTypes="xsd:long"/>
+	</xsd:simpleType>
 	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
