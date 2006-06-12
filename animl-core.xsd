@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES:
 
-- Complex type TimestampType modified to simple type
-- Complex type NameType modified to simple type
-- Complex type PhoneType modified to simple type
-- Complex type LocationType modified to simple type
-- Complex type ReasonType modified to simple type
-- Complex type DescriptionType modified to simple type
-- Complex type LongType modified to simple type
-
-
-
+- Contraint "sampleIDUsage" updated according to changes of involved elements "SampleReferenceSet" and "SampleReference"
+- Contraint "vectorIDRef" updated according to changes of involved element "ParentDataPointReference"
 
 - TODO:
-	- Constraints for new referencing mechanism need to be added
-	- If the draft for the new referencing model will be accepted then the schema must be reviewed for old IndexRef constraints.
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
 -->
 <xsd:schema xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
@@ -29,7 +19,7 @@
 			<xsd:field xpath="@sampleID"/>
 		</xsd:key>
 		<xsd:keyref name="sampleIDUsage" refer="sampleID">
-			<xsd:selector xpath=".//ExperimentStep/SamplesUsed/SampleRef"/>
+			<xsd:selector xpath=".//ExperimentStep/SampleReferenceSet/SampleReference"/>
 			<xsd:field xpath="@sampleID"/>
 		</xsd:keyref>
 		<!-- annotation -->
@@ -71,7 +61,7 @@
 			<xsd:documentation>Container for multiple ExperimentSteps that describe the process and results.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:keyref name="vectorIDRef" refer="vectorID">
-			<xsd:selector xpath=".//ExperimentStep/References/IndexRef"/>
+			<xsd:selector xpath=".//ExperimentStep/ParentDataPointReference"/>
 			<xsd:field xpath="@vector"/>
 		</xsd:keyref>
 	</xsd:element>
@@ -219,7 +209,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Date and time of modification.</xsd:documentation>
 		</xsd:annotation>
-			<xsd:union memberTypes="xsd:dateTime"/>
+		<xsd:union memberTypes="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
 		<xsd:annotation>
@@ -583,7 +573,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Name of person or device.</xsd:documentation>
 		</xsd:annotation>
-			<xsd:restriction  base="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Email" type="EmailType">
 		<xsd:annotation>
