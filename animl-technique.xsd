@@ -1,46 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES
-
-- Element "float32" renamed to "Float32"
-
-- Element "float64" renamed to "Float64"
-
-- Element "string" renamed to "String"
-
-- Element "boolean" renamed to "Boolean"
-
-- Element "dateTime" renamed to "DateTime"
-
-- Complex type "LongType" created
-- Element "Long" created
-
-- Simple type "SamplePurpose" renamed to "SamplePurposeType"
-- Attribute "purpose" within the complex type "SampleRoleType" renamed to "samplePurpose"
-
-- Simple type "Dependency" renamed to "DependencyType"
-
-- Simple type "Scale" renamed to "ScaleType"
-
-- Simple type "PlotUse" renamed to "PlotUseType"
-
-- Simple type "Modality" renamed to "ModalityType"
-
-- Simple type "MaxOccurs" renamed to "MaxOccursType"
-
-- Restriction base changed from xsd:string to xsd:token within the simple type
-"SIUnitNameList"
-
-- All enumeration elements provided with a documentation element
-
-- Complex type INTType for the element INT decleared globaly
-- Complex type LongType for the element Long decleared globaly
-- Complex type Float32Type for the element Float32 decleared globaly
-- Complex type Float64Type for the element Float64 decleared globaly
-- Complex type StringType for the element String decleared globaly
-- Complex type BooleanType for the element Boolean decleared globaly
-- Complex type DataTimeType for the element DataTime decleared globaly
-
-
+- Reordered the element and type definitions. 
+- Improved annotations/documentation
 
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
@@ -49,7 +10,7 @@ TODO:
 
 
  -->
-<xsd:schema xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -234,12 +195,12 @@ TODO:
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:choice>
-				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
 				<xsd:element ref="ParameterCategoryBlueprint" minOccurs="2" maxOccurs="unbounded"/>
 				<xsd:sequence>
 					<xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
 					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
+				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
 			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
@@ -247,7 +208,7 @@ TODO:
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1"/>
 	</xsd:complexType>
 	<!-- -->
-	<!--Type definitions-->
+	<!--Type definitions for sample attributes-->
 	<xsd:simpleType name="SamplePurposeType">
 		<xsd:annotation>
 			<xsd:documentation>Data type which indicates whether a sample is consumed or produced in an experiment.</xsd:documentation>
@@ -265,6 +226,8 @@ TODO:
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!---->
+	<!--Type definitions for vector attributes-->
 	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether the Vector is independent or dependent.</xsd:documentation>
@@ -316,28 +279,11 @@ TODO:
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="ModalityType">
-		<xsd:annotation>
-			<xsd:documentation>String with two allowed values: "required" and "optional"</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="required">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is required.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="optional">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is optional.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- -->
 	<!--Type definitions for basic data types-->
 	<xsd:simpleType name="AllTypeNameList">
 		<xsd:annotation>
-			<xsd:documentation>Names of all data types used in AnIML</xsd:documentation>
+			<xsd:documentation>Names of all data types used in AnIML.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="INT">
@@ -394,13 +340,13 @@ TODO:
 	</xsd:simpleType>
 	<xsd:simpleType name="VectorTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Names of Data types usable for Vectors</xsd:documentation>
+			<xsd:documentation>Names of Data types usable for Vectors.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="AllTypeNameList"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="ParameterTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Names of Data types usable for Parameters</xsd:documentation>
+			<xsd:documentation>Names of Data types usable for Parameters.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="AllTypeNameList"/>
 	</xsd:simpleType>
@@ -448,6 +394,93 @@ TODO:
 	</xsd:complexType>
 	<!-- -->
 	<!--Miscellaneous-->
+	<xsd:simpleType name="ModalityType">
+		<xsd:annotation>
+			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="required">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the use of the according data element is required.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="optional">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the use of the according data element is optional.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UnboundedType">
+		<xsd:annotation>
+			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="unbounded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaxOccursType">
+		<xsd:annotation>
+			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
+	</xsd:simpleType>
+	<xsd:element name="Documentation" type="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<!---->
+	<!--Units-->
+	<xsd:element name="Unit" type="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UnitType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="label" type="LabelType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="LabelType">
+		<xsd:annotation>
+			<xsd:documentation>String representation of a particular Unit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="SIUnit" type="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI Units used to represent Scientific Unit.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI Units used to represent Scientific unit</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="SIUnitNameList">
+				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<xsd:simpleType name="SIUnitNameList">
 		<xsd:annotation>
 			<xsd:documentation>Names of all SI Units</xsd:documentation>
@@ -495,74 +528,7 @@ TODO:
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="MaxOccursType">
-		<xsd:annotation>
-			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="UnboundedType">
-		<xsd:annotation>
-			<xsd:documentation>Represents the list value "unbounded"</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="unbounded"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="LabelType">
-		<xsd:annotation>
-			<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:minLength value="1"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:element name="Documentation" type="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the Element it is nested under.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
-	</xsd:simpleType>
-	<xsd:element name="Unit" type="UnitType">
-		<xsd:annotation>
-			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="UnitType">
-		<xsd:annotation>
-			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attribute name="label" type="LabelType" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-	</xsd:complexType>
-	<xsd:element name="SIUnit" type="SIUnitType">
-		<xsd:annotation>
-			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SIUnitType">
-		<xsd:annotation>
-			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="SIUnitNameList">
-				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
-			</xsd:extension>
-		</xsd:simpleContent>
-	</xsd:complexType>
+	<!--Sets of permitted values-->
 	<xsd:element name="AllowedValue" type="AllowedValueType">
 		<xsd:annotation>
 			<xsd:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xsd:documentation>
@@ -667,7 +633,7 @@ TODO:
 	</xsd:element>
 	<xsd:simpleType name="PNGType">
 		<xsd:annotation>
-			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+			<xsd:documentation>Base 64 encoded PNG image</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:base64Binary"/>
 	</xsd:simpleType>
@@ -684,12 +650,12 @@ TODO:
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG DTD. It is for representing images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Represents vector images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG DTD. It is for representing images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Represents vector images.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
