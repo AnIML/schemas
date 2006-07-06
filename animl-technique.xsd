@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
 - Reordered the element and type definitions. 
 - Improved annotations/documentation
@@ -10,7 +11,7 @@ TODO:
 
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -43,6 +44,11 @@ TODO:
 		<xsd:attribute name="name" type="xsd:string" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Human-readable name of this Technique Definition</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="extension" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>Specifies if this document describes an extension. If false, this is a Technique Definition. If true, this is a Technique Extension.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -528,6 +534,7 @@ TODO:
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!---->
 	<!--Sets of permitted values-->
 	<xsd:element name="AllowedValue" type="AllowedValueType">
 		<xsd:annotation>
@@ -548,6 +555,26 @@ TODO:
 				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="AllowedRange" type="AllowedRangeType">
+		<xsd:annotation>
+			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AllowedRangeType">
+		<xsd:annotation>
+			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="MIN"/>
+			<xsd:element ref="MAX"/>
+		</xsd:sequence>
+		<xsd:attribute name="unit" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Label of Unit that applies to this allowed range of values
+</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="INT" type="INTType">
 		<xsd:annotation>
@@ -696,25 +723,5 @@ TODO:
 				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:element name="AllowedRange" type="AllowedRangeType">
-		<xsd:annotation>
-			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="AllowedRangeType">
-		<xsd:annotation>
-			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="MIN"/>
-			<xsd:element ref="MAX"/>
-		</xsd:sequence>
-		<xsd:attribute name="unit" type="xsd:string" use="optional">
-			<xsd:annotation>
-				<xsd:documentation>Label of Unit that applies to this allowed range of values
-</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
 	</xsd:complexType>
 </xsd:schema>
