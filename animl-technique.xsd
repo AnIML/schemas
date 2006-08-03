@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
-- Reordered the element and type definitions. 
-- Improved annotations/documentation
-
+- changed maxOccurs on 1st alternative within ParameterCategoryBlueprint choice
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
 - what to do with the container Unit? Actually it must be called SIUnitSet because it looks like it groups elements of type SIUnit only. But actually this element doesn't have a grouping or container function.
@@ -201,7 +198,7 @@ TODO:
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:choice>
-				<xsd:element ref="ParameterCategoryBlueprint" minOccurs="2" maxOccurs="unbounded"/>
+				<xsd:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
 				<xsd:sequence>
 					<xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
 					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
