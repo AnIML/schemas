@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES
-- changed maxOccurs on 1st alternative within ParameterCategoryBlueprint choice
+- added maxOccurs attribute to PageBlueprint
+- updated maxOccurs documentation for Vector
+
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
-- what to do with the container Unit? Actually it must be called SIUnitSet because it looks like it groups elements of type SIUnit only. But actually this element doesn't have a grouping or container function.
-- 
-
 
  -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
@@ -118,6 +117,11 @@ TODO:
 				<xsd:documentation>Specifies if Page is optional or required.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Maximum number of occurences of the Page. If set to > 1, the index attribute (1+) must be used in the AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="VectorBlueprint" type="VectorBlueprintType">
 		<xsd:annotation>
@@ -149,7 +153,7 @@ TODO:
 		</xsd:attribute>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
-				<xsd:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xsd:documentation>
+				<xsd:documentation>Maximum number of occurences of the Vector. If > 1, the index attribute must be used in the AnIML document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear"/>
