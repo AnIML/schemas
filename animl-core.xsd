@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
 - Contraint "sampleIDUsage" updated according to changes of involved elements "SampleReferenceSet" and "SampleReference"
@@ -7,7 +8,7 @@
 - TODO:
 	- The ordering of global ComplexType declarations and global Element definitions must be reviewed
 -->
-<xsd:schema xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -284,9 +285,21 @@
 			<xsd:documentation>Reference to a Sample used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
-		<xsd:attribute name="role" type="xsd:token" use="required"/>
-		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required"/>
+		<xsd:attribute name="sampleID" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>SampleID of the Sample used in the current ExperimentStep. Refers to the sampleID within the SampleSet section of the document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="role" type="xsd:token" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Role this sample plays within the current ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies whether the referenced sample is produced or consumed by the current ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
