@@ -879,7 +879,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:element ref="Boolean"/>
 			<xsd:element ref="DateTime"/>
 			<xsd:element ref="PNG"/>
-			<xsd:element ref="XML"/>
+			<xsd:element ref="EmbeddedXML"/>
 			<xsd:element ref="SVG"/>
 		</xsd:choice>
 	</xsd:complexType>
@@ -971,12 +971,12 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:base64Binary"/>
 	</xsd:simpleType>
-	<xsd:element name="XML" type="XMLType">
+	<xsd:element name="EmbeddedXML" type="EmbeddedXMLType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="XMLType">
+	<xsd:simpleType name="EmbeddedXMLType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
@@ -991,7 +991,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:annotation>
 			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="XMLType"/>
+		<xsd:union memberTypes="EmbeddedXMLType"/>
 	</xsd:simpleType>
 	<xsd:complexType name="SingleValueType">
 		<xsd:annotation>
@@ -1008,7 +1008,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 					<xsd:element ref="Boolean"/>
 					<xsd:element ref="DateTime"/>
 					<xsd:element ref="PNG"/>
-					<xsd:element ref="XML"/>
+					<xsd:element ref="EmbeddedXML"/>
 					<xsd:element ref="SVG"/>
 				</xsd:choice>
 			</xsd:restriction>
