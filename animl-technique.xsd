@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- CHANGES
-- added maxOccurs attribute to PageBlueprint
-- updated maxOccurs documentation for Vector
+
+- renamed elements and type name prefixes from XML to EmbeddedXML to comply with XML Schema specification
 
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -328,7 +328,7 @@ TODO:
 					<xsd:documentation>Represents an individual ISO Date/Time Value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="XML">
+			<xsd:enumeration value="EmbeddedXML">
 				<xsd:annotation>
 					<xsd:documentation>Represents a Value governed by a different XML Schema..</xsd:documentation>
 				</xsd:annotation>
@@ -369,7 +369,7 @@ TODO:
 			<xsd:element ref="Boolean"/>
 			<xsd:element ref="DateTime"/>
 			<xsd:element ref="PNG"/>
-			<xsd:element ref="XML"/>
+			<xsd:element ref="EmbeddedXML"/>
 			<xsd:element ref="SVG"/>
 		</xsd:choice>
 	</xsd:complexType>
@@ -665,12 +665,12 @@ TODO:
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:base64Binary"/>
 	</xsd:simpleType>
-	<xsd:element name="XML" type="XMLType">
+	<xsd:element name="EmbeddedXML" type="EmbeddedXMLType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="XMLType">
+	<xsd:simpleType name="EmbeddedXMLType">
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
