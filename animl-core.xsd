@@ -2,10 +2,10 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- XML renamed to EmbeddedXML in ParameterTypeType
+- *ValueSet attributes renamed: startOffset->startIndex, endOffset->endIndex
 
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -1130,16 +1130,16 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	<!--AttributeGroup for sparse data-->
 	<xsd:attributeGroup name="ValueSet">
 		<xsd:annotation>
-			<xsd:documentation>Start and End Offsets for this Set of Values.</xsd:documentation>
+			<xsd:documentation>Start and End Index for this Set of Values (zero-based).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attribute name="startOffset" type="xsd:nonNegativeInteger" use="optional">
+		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Zero-based index where this Value Set starts. The specification is inclusive.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="endOffset" type="xsd:nonNegativeInteger" use="optional">
+		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Zero-based Index of the last Entry in this Value Set.</xsd:documentation>
+				<xsd:documentation>Zero-based Index of the last Entry in this Value Set. The specification is inclusive.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:attributeGroup>
