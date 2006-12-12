@@ -2,10 +2,10 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- *ValueSet attributes renamed: startOffset->startIndex, endOffset->endIndex
+- Tracking Tags implemented
 
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns="urn:org:astm:animl:schema:core:draft:0.2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -111,6 +111,7 @@
 			<xsd:documentation>Individual Sample, referenced from other parts of this AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
@@ -161,6 +162,7 @@
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
+			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
@@ -1244,4 +1246,31 @@ THE ELEMENT IS NOT USED.
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!---->
+	<!--Tracking Tag Elements and Types-->
+	<xsd:element name="TrackingTagSet" type="TrackingTagSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Tracking Tags</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TrackingTagSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Tracking Tags</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TrackingTag" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TrackingTag" type="TrackingTagType">
+		<xsd:annotation>
+			<xsd:documentation>Tag to mark related data items. When a value is given, it may also serve as a reference to an external data system.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TrackingTagType">
+		<xsd:annotation>
+			<xsd:documentation>Tag to mark related data items. When a value is given, it may also serve as a reference to an external data system.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="xsd:token" use="required"/>
+		<xsd:attribute name="value" type="xsd:string" use="optional"/>
+	</xsd:complexType>
 </xsd:schema>
