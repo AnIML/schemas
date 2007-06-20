@@ -2,13 +2,13 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
 
-- renamed elements and type name prefixes from XML to EmbeddedXML to comply with XML Schema specification
+- renamed MAX element to Max and MIN element to Min
 
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -569,8 +569,8 @@ TODO:
 			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="MIN"/>
-			<xsd:element ref="MAX"/>
+			<xsd:element ref="Min"/>
+			<xsd:element ref="Max"/>
 		</xsd:sequence>
 		<xsd:attribute name="unit" type="xsd:string" use="optional">
 			<xsd:annotation>
@@ -689,12 +689,12 @@ TODO:
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
-	<xsd:element name="MIN" type="MINType">
+	<xsd:element name="Min" type="MinType">
 		<xsd:annotation>
 			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="MINType">
+	<xsd:complexType name="MinType">
 		<xsd:annotation>
 			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
 		</xsd:annotation>
@@ -708,12 +708,12 @@ TODO:
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="MAX" type="MAXType">
+	<xsd:element name="Max" type="MaxType">
 		<xsd:annotation>
 			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="MAXType">
+	<xsd:complexType name="MaxType">
 		<xsd:annotation>
 			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
 		</xsd:annotation>
