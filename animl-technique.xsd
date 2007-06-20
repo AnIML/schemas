@@ -8,7 +8,7 @@ TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -364,7 +364,7 @@ TODO:
 			<xsd:documentation>Elements for allowed values in Parameters.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:choice>
-			<xsd:element ref="INT"/>
+			<xsd:element ref="Int"/>
 			<xsd:element ref="Float32"/>
 			<xsd:element ref="Float64"/>
 			<xsd:element ref="String"/>
@@ -382,7 +382,7 @@ TODO:
 		<xsd:complexContent>
 			<xsd:restriction base="ParameterValueType">
 				<xsd:choice>
-					<xsd:element ref="INT">
+					<xsd:element ref="Int">
 						<xsd:annotation>
 							<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 						</xsd:annotation>
@@ -579,12 +579,12 @@ TODO:
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="INT" type="INTType">
+	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="INTType">
+	<xsd:simpleType name="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
