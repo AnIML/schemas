@@ -3,9 +3,13 @@
 <!-- CHANGES:
 
 - Tracking Tags implemented
+- Consolidated AuthorType and UserInformationType to AuthorType
+- Using Author instead of UserInformation in AuditTrail LogEntrys
+- VectorSet added to ParameterCategoryType
+- name attribute added to VectorSetType (using SignableItemWithName)
 
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -156,6 +160,8 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
+			<xsd:element ref="Software" minOccurs="0"/>
+			<xsd:element ref="Device" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
@@ -179,6 +185,8 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
+			<xsd:element ref="Software" minOccurs="0"/>
+			<xsd:element ref="Device" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
@@ -189,16 +197,40 @@
 	</xsd:complexType>
 	<xsd:element name="Author" type="AuthorType">
 		<xsd:annotation>
-			<xsd:documentation>Person or device that created this ExperimentStep.</xsd:documentation>
+			<xsd:documentation>User responsible.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AuthorType">
 		<xsd:annotation>
-			<xsd:documentation>Person or device that created this ExperimentStep.</xsd:documentation>
+			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="UserInformationType"/>
-		</xsd:complexContent>
+		<xsd:sequence>
+			<xsd:element ref="Name">
+				<xsd:annotation>
+					<xsd:documentation>Name of person or device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Email" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact email address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Phone" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact phone number.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Location" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Location or physical address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="userType" type="UserTypeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="Timestamp" type="TimestampType">
 		<xsd:annotation>
@@ -378,7 +410,7 @@
 		<xsd:sequence>
 			<xsd:element ref="Vector" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="length" type="xsd:nonNegativeInteger" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Number of data points each vector contains.</xsd:documentation>
@@ -527,11 +559,8 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Timestamp"/>
-			<xsd:element ref="UserInformation">
-				<xsd:annotation>
-					<xsd:documentation>User or device responsible for the changes.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="Author"/>
+			<xsd:element ref="Software" minOccurs="0"/>
 			<xsd:element ref="Action"/>
 			<xsd:element ref="Reason" minOccurs="0"/>
 			<xsd:element ref="Description" minOccurs="0"/>
@@ -539,46 +568,9 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<xsd:element name="UserInformation" type="UserInformationType">
-		<xsd:annotation>
-			<xsd:documentation>User or device responsible for the changes.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="UserInformationType">
-		<xsd:annotation>
-			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Name">
-				<xsd:annotation>
-					<xsd:documentation>Name of person or device.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Email" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact email address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Phone" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact phone number.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Location" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Location or physical address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attribute name="userType" type="UserTypeType" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-	</xsd:complexType>
 	<xsd:element name="Name" type="NameType">
 		<xsd:annotation>
-			<xsd:documentation>Name of person or device.</xsd:documentation>
+			<xsd:documentation>Common name.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="NameType">
@@ -749,6 +741,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	<xsd:complexType name="ParameterCategoryType">
 		<xsd:sequence>
 			<xsd:element ref="ParameterSet" minOccurs="0"/>
+			<xsd:element ref="VectorSet" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
@@ -870,7 +863,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:choice maxOccurs="unbounded">
-			<xsd:element ref="INT"/>
+			<xsd:element ref="Int"/>
 			<xsd:element ref="Long"/>
 			<xsd:element ref="Float32"/>
 			<xsd:element ref="Float64"/>
@@ -882,12 +875,12 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:element ref="SVG"/>
 		</xsd:choice>
 	</xsd:complexType>
-	<xsd:element name="INT" type="INTType">
+	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="INTType">
+	<xsd:simpleType name="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
@@ -999,7 +992,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
-					<xsd:element ref="INT"/>
+					<xsd:element ref="Int"/>
 					<xsd:element ref="Long"/>
 					<xsd:element ref="Float32"/>
 					<xsd:element ref="Float64"/>
@@ -1020,7 +1013,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:choice>
-					<xsd:element ref="INT"/>
+					<xsd:element ref="Int"/>
 					<xsd:element ref="Long"/>
 					<xsd:element ref="Float32"/>
 					<xsd:element ref="Float64"/>
@@ -1273,4 +1266,46 @@ THE ELEMENT IS NOT USED.
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 		<xsd:attribute name="value" type="xsd:string" use="optional"/>
 	</xsd:complexType>
+	<xsd:element name="Manufacturer" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>Company name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Version">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of software release.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SoftwareType">
+		<xsd:sequence>
+			<xsd:element ref="Manufacturer" minOccurs="0"/>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="Version" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Software" type="SoftwareType">
+		<xsd:annotation>
+			<xsd:documentation>Software used to create this.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DeviceType">
+		<xsd:sequence>
+			<xsd:element ref="Manufacturer"/>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="FirmwareVersion" minOccurs="0"/>
+			<xsd:element ref="SerialNumber" minOccurs="0"/>
+			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FirmwareVersion" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of firmware software release</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SerialNumber" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>Unique serial number of device.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Device" type="DeviceType"/>
 </xsd:schema>
