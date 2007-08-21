@@ -3,12 +3,14 @@
 <!-- CHANGES
 
 - renamed MAX element to Max and MIN element to Min
+- VectorSetBlueprint added, available under PageBlueprint and ParameterCategoryBlueprint
+- Renamed INT to Int
 
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -104,7 +106,7 @@ TODO:
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="VectorBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="VectorSetBlueprint" minOccurs="0"/>
 			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -124,14 +126,29 @@ TODO:
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:element name="VectorSetBlueprint" type="VectorSetBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of VectorSet that needs to be attached at this point.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VectorSetBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Description of VectorSet that needs to be attached at this point.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="VectorBlueprint" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required"/>
+	</xsd:complexType>
 	<xsd:element name="VectorBlueprint" type="VectorBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of Vector that needs to be attached to this Page.</xsd:documentation>
+			<xsd:documentation>Description of Vector that needs to be attached to this VectorSet.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="VectorBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of Vector that needs to be attached to this Page.</xsd:documentation>
+			<xsd:documentation>Description of Vector that needs to be attached to this VectorSet.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
@@ -205,8 +222,15 @@ TODO:
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:choice>
 				<xsd:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
+				<xsd:element ref="VectorSetBlueprint" maxOccurs="unbounded"/>
 				<xsd:sequence>
 					<xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
+					<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="VectorSetBlueprint" maxOccurs="unbounded"/>
 					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
@@ -295,7 +319,7 @@ TODO:
 			<xsd:documentation>Names of all data types used in AnIML.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="INT">
+			<xsd:enumeration value="Int">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
 				</xsd:annotation>
