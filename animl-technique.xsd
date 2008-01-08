@@ -2,9 +2,8 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
 
-- renamed MAX element to Max and MIN element to Min
-- VectorSetBlueprint added, available under PageBlueprint and ParameterCategoryBlueprint
-- Renamed INT to Int
+- Changed ScaleType to distinguish between log and ln logarithms
+- Changed ParameterCategoryBlueprint to choice without nesting
 
 TODO:
 - is the name "maxOccurs" allowed or is there also a singular form available?
@@ -221,18 +220,9 @@ TODO:
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:choice>
-				<xsd:element ref="ParameterCategoryBlueprint" maxOccurs="unbounded"/>
-				<xsd:element ref="VectorSetBlueprint" maxOccurs="unbounded"/>
-				<xsd:sequence>
-					<xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/>
-					<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-				<xsd:sequence>
-					<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:element ref="VectorSetBlueprint" maxOccurs="unbounded"/>
-					<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
+				<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
 			</xsd:choice>
 		</xsd:sequence>
@@ -288,9 +278,14 @@ TODO:
 					<xsd:documentation>Specifies that data in this Vector is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="logarithmic">
+			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Vector is typically plotted on a logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that data in this Vector is typically plotted on a common logarithmic scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ln">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that data in this Vector is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
