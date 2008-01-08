@@ -2,14 +2,13 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- Tracking Tags implemented
-- Consolidated AuthorType and UserInformationType to AuthorType
-- Using Author instead of UserInformation in AuditTrail LogEntrys
-- VectorSet added to ParameterCategoryType
-- name attribute added to VectorSetType (using SignableItemWithName)
+- Added PNG and SVG to list of allowable Vector types (VectorTypeType simpleType)
+- Moved vectorID key to ExperimentStepSet to fix VisualStudio issue
+- Changed ScaleType to distinguish between log and ln logarithms
+- Changed "INT" to "Int"
 
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -62,9 +61,16 @@
 		<xsd:annotation>
 			<xsd:documentation>Container for multiple ExperimentSteps that describe the process and results.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:key name="vectorID">
+			<xsd:annotation>
+				<xsd:documentation>Every Vector ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//Vector"/>
+			<xsd:field xpath="@vectorID"/>
+		</xsd:key>
 		<xsd:keyref name="vectorIDRef" refer="vectorID">
 			<xsd:selector xpath=".//ExperimentStep/ParentDataPointReference"/>
-			<xsd:field xpath="@vector"/>
+			<xsd:field xpath="@vectorID"/>
 		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="ExperimentStepSetType">
@@ -395,13 +401,6 @@
 		<xsd:annotation>
 			<xsd:documentation>Container for n-dimensional Data.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:key name="vectorID">
-			<xsd:annotation>
-				<xsd:documentation>Every Vector ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
-			</xsd:annotation>
-			<xsd:selector xpath="Vector"/>
-			<xsd:field xpath="@vectorID"/>
-		</xsd:key>
 	</xsd:element>
 	<xsd:complexType name="VectorSetType">
 		<xsd:annotation>
@@ -826,9 +825,14 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="logarithmic">
+			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a common logarithmic scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ln">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -1026,7 +1030,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="INT">
+			<xsd:enumeration value="Int">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
 				</xsd:annotation>
@@ -1064,6 +1068,16 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:enumeration value="EmbeddedXML">
 				<xsd:annotation>
 					<xsd:documentation>Represents a Value governed by a different XML Schema..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="PNG">
+				<xsd:annotation>
+					<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="SVG">
+				<xsd:annotation>
+					<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
