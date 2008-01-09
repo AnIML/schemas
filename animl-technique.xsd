@@ -2,14 +2,12 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
 
-- Changed ScaleType to distinguish between log and ln logarithms
-- Changed ParameterCategoryBlueprint to choice without nesting
-
-TODO:
-- is the name "maxOccurs" allowed or is there also a singular form available?
+- Fixed order of child elements (ParameterCategoryBlueprint)
+- Converted choice into sequence (ParameterCategoryBlueprint)
+- Fixed order of child elements (ParameterBlueprint)
 
  -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -153,6 +151,7 @@ TODO:
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedRange" minOccurs="0"/>
+			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
@@ -192,8 +191,8 @@ TODO:
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:string" use="required"/>
 		<xsd:attribute name="parameterType" type="ParameterTypeType" use="required"/>
@@ -219,12 +218,9 @@ TODO:
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:choice>
-				<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-				<!-- <xsd:element ref="ParameterBlueprint" maxOccurs="unbounded"/> -->
-			</xsd:choice>
+			<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
