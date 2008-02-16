@@ -2,7 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- Documentation fixes
+- added parameterType attribute to ParameterType complex type
 
 -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
@@ -774,9 +774,14 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:extension base="SingleValueType">
 				<xsd:sequence>
-					<xsd:element ref="Unit" minOccurs="0"/>
+					<xsd:element ref="Unit" minOccurs="0" />
 				</xsd:sequence>
-				<xsd:attributeGroup ref="SignableItemWithName"/>
+				<xsd:attributeGroup ref="SignableItemWithName" />
+				<xsd:attribute name="parameterType" type="ParameterTypeType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Data type of this parameter</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
