@@ -2,9 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES
 
-- Fixed order of child elements (ParameterCategoryBlueprint)
-- Converted choice into sequence (ParameterCategoryBlueprint)
-- Fixed order of child elements (ParameterBlueprint)
+- fixed documentation of SIUnitNameList enumeration
 
  -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
@@ -517,37 +515,37 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="m">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit meter.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "meter".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="kg">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit kilogram.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "kilogram".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="s">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit second.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "second".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="A">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit ampere.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "ampere".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="K">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit kelvin.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "kelvin".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="mol">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit mole.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "mol".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="cd">
 				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit candela.</xsd:documentation>
+					<xsd:documentation>Represents the SI unit "candela".</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
