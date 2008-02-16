@@ -2,10 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- Added PNG and SVG to list of allowable Vector types (VectorTypeType simpleType)
-- Moved vectorID key to ExperimentStepSet to fix VisualStudio issue
-- Changed ScaleType to distinguish between log and ln logarithms
-- Changed "INT" to "Int"
+- Documentation fixes
 
 -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
@@ -459,7 +456,11 @@
 				<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="vectorType" type="VectorTypeType" use="required"/>
+		<xsd:attribute name="vectorType" type="VectorTypeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Data type used by all values in this Vector.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="IndividualValueSet" type="IndividualValueSetType">
 		<xsd:annotation>
@@ -985,7 +986,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Used for representing images.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="EmbeddedXMLType"/>
 	</xsd:simpleType>
