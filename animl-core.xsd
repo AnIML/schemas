@@ -2,10 +2,11 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- added parameterType attribute to ParameterType complex type
+- added support for sample containers
+- moved a few types around to keep things organized
 
 -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -133,20 +134,40 @@
 				<xsd:documentation>Indicates whether this is a derived Sample. A derived Sample is a Sample that has been created by applying a Technique. (Sub-Sampling, Processing, ...)</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="containerType" type="ContainerTypeType" use="optional" default="simple">
+			<xsd:annotation>
+				<xsd:documentation>Whether this sample is also a container for other samples. Set to "simple" if not.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="containerID" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Sample ID of container in which this sample is located.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="comtainerCoordinate" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Coordinates of this sample within the parent container.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:simpleType name="SamplePurposeType">
+	<xsd:simpleType name="ContainerTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+			<xsd:documentation>Describes what kind of container the current sample is.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="produced">
+			<xsd:enumeration value="simple">
 				<xsd:annotation>
-					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
+					<xsd:documentation>This container holds exactly one sample (e.g. well, vial, tube).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="consumed">
+			<xsd:enumeration value="determinate">
 				<xsd:annotation>
-					<xsd:documentation>Specifies whether a sample is consumed in an experiment.</xsd:documentation>
+					<xsd:documentation>Positions within this container are precisely defined and known in advance (e.g. microtiter plates, racks, ...)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="indeterminate">
+				<xsd:annotation>
+					<xsd:documentation>Positions within this container are not precisely defined or known in advance (e.g. gels, surfaces)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -335,6 +356,23 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:simpleType name="SamplePurposeType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="produced">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="consumed">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is consumed in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
 		<xsd:annotation>
@@ -774,9 +812,9 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		<xsd:complexContent>
 			<xsd:extension base="SingleValueType">
 				<xsd:sequence>
-					<xsd:element ref="Unit" minOccurs="0" />
+					<xsd:element ref="Unit" minOccurs="0"/>
 				</xsd:sequence>
-				<xsd:attributeGroup ref="SignableItemWithName" />
+				<xsd:attributeGroup ref="SignableItemWithName"/>
 				<xsd:attribute name="parameterType" type="ParameterTypeType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Data type of this parameter</xsd:documentation>
