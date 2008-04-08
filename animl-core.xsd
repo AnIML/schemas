@@ -2,8 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- added support for sample containers
-- moved a few types around to keep things organized
+- fixed version number (bug #10)
 
 -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
@@ -33,9 +32,9 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.2">
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.2".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.3".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
