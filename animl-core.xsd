@@ -2,7 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <!-- CHANGES:
 
-- fixed version number (bug #10)
+- renamed Vector to Series, including all variations (bug #20)
 
 -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
@@ -58,16 +58,16 @@
 		<xsd:annotation>
 			<xsd:documentation>Container for multiple ExperimentSteps that describe the process and results.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:key name="vectorID">
+		<xsd:key name="seriesID">
 			<xsd:annotation>
-				<xsd:documentation>Every Vector ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
+				<xsd:documentation>Every Series ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//Vector"/>
-			<xsd:field xpath="@vectorID"/>
+			<xsd:selector xpath=".//Series"/>
+			<xsd:field xpath="@seriesID"/>
 		</xsd:key>
-		<xsd:keyref name="vectorIDRef" refer="vectorID">
+		<xsd:keyref name="seriesIDRef" refer="seriesID">
 			<xsd:selector xpath=".//ExperimentStep/ParentDataPointReference"/>
-			<xsd:field xpath="@vectorID"/>
+			<xsd:field xpath="@seriesID"/>
 		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="ExperimentStepSetType">
@@ -405,7 +405,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
-			<xsd:element ref="VectorSet" minOccurs="0"/>
+			<xsd:element ref="SeriesSet" minOccurs="0"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
@@ -431,31 +431,31 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="VectorSet" type="VectorSetType">
+	<xsd:element name="SeriesSet" type="SeriesSetType">
 		<xsd:annotation>
 			<xsd:documentation>Container for n-dimensional Data.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="VectorSetType">
+	<xsd:complexType name="SeriesSetType">
 		<xsd:annotation>
 			<xsd:documentation>Container for n-dimensional Data.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Vector" maxOccurs="unbounded"/>
+			<xsd:element ref="Series" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="length" type="xsd:nonNegativeInteger" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Number of data points each vector contains.</xsd:documentation>
+				<xsd:documentation>Number of data points each Series contains.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="Vector" type="VectorType">
+	<xsd:element name="Series" type="SeriesType">
 		<xsd:annotation>
 			<xsd:documentation>Container for multiple Values.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="VectorType">
+	<xsd:complexType name="SeriesType">
 		<xsd:annotation>
 			<xsd:documentation>Container for multiple Values.</xsd:documentation>
 		</xsd:annotation>
@@ -470,32 +470,32 @@
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="dependency" type="DependencyType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
+				<xsd:documentation>Specified whether the Series is independent or dependent.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="vectorID" type="xsd:token" use="required">
+		<xsd:attribute name="seriesID" type="xsd:token" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Identifies the Vector. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xsd:documentation>
+				<xsd:documentation>Identifies the Series. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="plotUse" type="PlotUseType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Specifies whether a new dimension should be created for this vector.</xsd:documentation>
+				<xsd:documentation>Specifies whether a new dimension should be created for this Series.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="visible" type="VisibleType" use="optional" default="true">
 			<xsd:annotation>
-				<xsd:documentation>Specifies whether data in this Vector is to be displayed to the user by default.</xsd:documentation>
+				<xsd:documentation>Specifies whether data in this Series is to be displayed to the user by default.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear">
 			<xsd:annotation>
-				<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+				<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="vectorType" type="VectorTypeType" use="required">
+		<xsd:attribute name="seriesType" type="SeriesTypeType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Data type used by all values in this Vector.</xsd:documentation>
+				<xsd:documentation>Data type used by all values in this Series.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -736,11 +736,11 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			<xsd:sequence>
 				<xsd:element name="IndexRef" maxOccurs="unbounded">
 					<xsd:annotation>
-						<xsd:documentation>Vector and Value in Super-Page being referenced.</xsd:documentation>
+						<xsd:documentation>Series and Value in Super-Page being referenced.</xsd:documentation>
 					</xsd:annotation>
 					<xsd:complexType>
 						<xsd:attributeGroup ref="SignableItemWithName"/>
-						<xsd:attribute name="vectorID" type="xsd:string" use="required"/>
+						<xsd:attribute name="seriesID" type="xsd:string" use="required"/>
 						<xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
 						<xsd:attribute name="refWidth" type="xsd:positiveInteger" use="optional" default="1">
 							<xsd:annotation>
@@ -778,7 +778,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	<xsd:complexType name="ParameterCategoryType">
 		<xsd:sequence>
 			<xsd:element ref="ParameterSet" minOccurs="0"/>
-			<xsd:element ref="VectorSet" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="SeriesSet" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterCategorySet" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
@@ -823,7 +823,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- -->
-	<!--SimpleTypes for Vector definitions-->
+	<!--SimpleTypes for Series definitions-->
 	<xsd:simpleType name="ContinuityType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether the data points should be connected or not.</xsd:documentation>
@@ -843,46 +843,46 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:simpleType>
 	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
-			<xsd:documentation>Specified whether the Vector is independent or dependent.</xsd:documentation>
+			<xsd:documentation>Specified whether the Series is independent or dependent.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="independent">
 				<xsd:annotation>
-					<xsd:documentation>Specified that the Vector is independent.</xsd:documentation>
+					<xsd:documentation>Specified that the Series is independent.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="dependent">
 				<xsd:annotation>
-					<xsd:documentation>Specified that the Vector is dependent.</xsd:documentation>
+					<xsd:documentation>Specified that the Series is dependent.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="ScaleType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+			<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a linear scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the data in this Series is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the data in this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Vector is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the data in this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="PlotUseType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
+			<xsd:documentation>Specifies whether a Series should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="dimension">
@@ -899,15 +899,15 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:simpleType>
 	<xsd:simpleType name="VisibleType">
 		<xsd:annotation>
-			<xsd:documentation>Specifes whether a Vector should be displayed by default.</xsd:documentation>
+			<xsd:documentation>Specifes whether a Series should be displayed by default.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:boolean"/>
 	</xsd:simpleType>
 	<!-- -->
-	<!--Complex Types for Parameter and Vector values, Simple Types for Data Type names-->
+	<!--Complex Types for Parameter and Series values, Simple Types for Data Type names-->
 	<xsd:complexType name="UnboundedValueType">
 		<xsd:annotation>
-			<xsd:documentation>Base type for all value elements for use in vectors and parameters. To be restricted.</xsd:documentation>
+			<xsd:documentation>Base type for all value elements for use in Series and parameters. To be restricted.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:choice maxOccurs="unbounded">
 			<xsd:element ref="Int"/>
@@ -1034,7 +1034,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:simpleType>
 	<xsd:complexType name="SingleValueType">
 		<xsd:annotation>
-			<xsd:documentation>Elements for IndividualValueSets in Vectors.</xsd:documentation>
+			<xsd:documentation>Elements for IndividualValueSets in Series.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
@@ -1055,7 +1055,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:complexType>
 	<xsd:complexType name="NumericValueType">
 		<xsd:annotation>
-			<xsd:documentation>Elements for numeric vector values.</xsd:documentation>
+			<xsd:documentation>Elements for numeric Series values.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
@@ -1125,9 +1125,9 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="VectorTypeType">
+	<xsd:simpleType name="SeriesTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Names of Data Types for Vectors</xsd:documentation>
+			<xsd:documentation>Names of Data Types for Series</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
@@ -1246,7 +1246,7 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 THE ELEMENT IS NOT USED. 
 	<xsd:element name="DataPointReference" type="DataPointReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Vector and Value in Super-Page being referenced.</xsd:documentation>
+			<xsd:documentation>Series and Value in Super-Page being referenced.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 -->
@@ -1255,14 +1255,14 @@ THE ELEMENT IS NOT USED.
 			<xsd:documentation>Basis type for a reference to a data point or value range.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="vectorID" type="xsd:string" use="required">
+		<xsd:attribute name="seriesID" type="xsd:string" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Contains the ID of the vector referenced.</xsd:documentation>
+				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Specifies the start value of the vector referenced. It can be either a vector index or a value within the value range of the vector specified.</xsd:documentation>
+				<xsd:documentation>Specifies the start value of the Series referenced. It can be either a Series index or a value within the value range of the Series specified.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">

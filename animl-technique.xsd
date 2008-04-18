@@ -101,7 +101,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="VectorSetBlueprint" minOccurs="0"/>
+			<xsd:element ref="SeriesSetBlueprint" minOccurs="0"/>
 			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -121,29 +121,29 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="VectorSetBlueprint" type="VectorSetBlueprintType">
+	<xsd:element name="SeriesSetBlueprint" type="SeriesSetBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of VectorSet that needs to be attached at this point.</xsd:documentation>
+			<xsd:documentation>Description of SeriesSet that needs to be attached at this point.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="VectorSetBlueprintType">
+	<xsd:complexType name="SeriesSetBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of VectorSet that needs to be attached at this point.</xsd:documentation>
+			<xsd:documentation>Description of SeriesSet that needs to be attached at this point.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="VectorBlueprint" maxOccurs="unbounded"/>
+			<xsd:element ref="SeriesBlueprint" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 	</xsd:complexType>
-	<xsd:element name="VectorBlueprint" type="VectorBlueprintType">
+	<xsd:element name="SeriesBlueprint" type="SeriesBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of Vector that needs to be attached to this VectorSet.</xsd:documentation>
+			<xsd:documentation>Description of Series that needs to be attached to this SeriesSet.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="VectorBlueprintType">
+	<xsd:complexType name="SeriesBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Description of Vector that needs to be attached to this VectorSet.</xsd:documentation>
+			<xsd:documentation>Description of Series that needs to be attached to this SeriesSet.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
@@ -153,22 +153,22 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Name this Vector needs to bear.</xsd:documentation>
+				<xsd:documentation>Name this Series needs to bear.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="vectorType" type="VectorTypeType" use="required">
+		<xsd:attribute name="seriesType" type="SeriesTypeType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Data type this Vector needs to have.</xsd:documentation>
+				<xsd:documentation>Data type this Series needs to have.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
 			<xsd:annotation>
-				<xsd:documentation>Description if this Vector is optional or required.</xsd:documentation>
+				<xsd:documentation>Description if this Series is optional or required.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
-				<xsd:documentation>Maximum number of occurences of the Vector. If > 1, the index attribute must be used in the AnIML document.</xsd:documentation>
+				<xsd:documentation>Maximum number of occurences of the Series. If > 1, the index attribute must be used in the AnIML document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear"/>
@@ -197,7 +197,7 @@
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
-				<xsd:documentation>Maximum number of occurences of the Vector. If multiple occurrence is uses, an index (1+) must be appended to the Vector's name in the AnIML document.</xsd:documentation>
+				<xsd:documentation>Maximum number of occurences of the Series. If multiple occurrence is uses, an index (1+) must be appended to the Series's name in the AnIML document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -216,7 +216,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="VectorSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="SeriesSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -244,59 +244,59 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!---->
-	<!--Type definitions for vector attributes-->
+	<!--Type definitions for Series attributes-->
 	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether the Vector is independent or dependent.</xsd:documentation>
+			<xsd:documentation>Specifies whether the Series is independent or dependent.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="independent">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the Vector is independent.</xsd:documentation>
+					<xsd:documentation>Specifies that the Series is independent.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="dependent">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the Vector is dependent.</xsd:documentation>
+					<xsd:documentation>Specifies that the Series is dependent.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="ScaleType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether the data in this Vector is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+			<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Vector is typically plotted on a linear scale.</xsd:documentation>
+					<xsd:documentation>Specifies that data in this Series is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Vector is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that data in this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Vector is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that data in this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="PlotUseType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether a Vector should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
+			<xsd:documentation>Specifies whether a Series should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="dimension">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that a new dimension (axis) will be created in the plot for this vector.</xsd:documentation>
+					<xsd:documentation>Specifies that a new dimension (axis) will be created in the plot for this Series.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="attribute">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that no extra dimension (axis) will be created in the plot for this vector.</xsd:documentation>
+					<xsd:documentation>Specifies that no extra dimension (axis) will be created in the plot for this Series.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -360,9 +360,9 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="VectorTypeType">
+	<xsd:simpleType name="SeriesTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Names of Data types usable for Vectors.</xsd:documentation>
+			<xsd:documentation>Names of Data types usable for Series.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="AllTypeNameList"/>
 	</xsd:simpleType>
@@ -693,12 +693,12 @@
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG DTD. Represents vector images.</xsd:documentation>
+			<xsd:documentation>Vector graphic data governed by the SVG DTD.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG DTD. Represents vector images.</xsd:documentation>
+			<xsd:documentation>Vector graphic data governed by the SVG DTD.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
