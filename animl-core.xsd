@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<!-- CHANGES:
-
-- renamed Vector to Series, including all variations (bug #20)
-
--->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
@@ -119,7 +114,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="CategorySet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
@@ -189,7 +184,7 @@
 			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
@@ -212,7 +207,7 @@
 			<xsd:element ref="Device" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
@@ -406,7 +401,7 @@
 		<xsd:sequence>
 			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SeriesSet" minOccurs="0"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0"/>
+			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
 		</xsd:sequence>
@@ -755,33 +750,33 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:element>
 -->
 	<!--Parameter related information-->
-	<xsd:element name="ParameterCategorySet" type="ParameterCategorySetType">
+	<xsd:element name="CategorySet" type="CategorySetType">
 		<xsd:annotation>
 			<xsd:documentation>Container for categorized and nested Name/Value Pairs.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:unique name="parameterCategoryName">
-			<xsd:selector xpath="ParameterCategory"/>
+		<xsd:unique name="categoryName">
+			<xsd:selector xpath="Category"/>
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
 	</xsd:element>
-	<xsd:complexType name="ParameterCategorySetType">
+	<xsd:complexType name="CategorySetType">
 		<xsd:sequence>
-			<xsd:element ref="ParameterCategory" maxOccurs="unbounded"/>
+			<xsd:element ref="Category" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<xsd:element name="ParameterCategory" type="ParameterCategoryType">
+	<xsd:element name="Category" type="CategoryType">
 		<xsd:annotation>
 			<xsd:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="ParameterCategoryType">
+	<xsd:complexType name="CategoryType">
 		<xsd:sequence>
 			<xsd:element ref="ParameterSet" minOccurs="0"/>
 			<xsd:element ref="SeriesSet" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="ParameterCategorySet" minOccurs="0">
+			<xsd:element ref="CategorySet" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Contains multiple subcategories of ParameterCategory.</xsd:documentation>
+					<xsd:documentation>Contains multiple subcategories of Category.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

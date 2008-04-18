@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<!-- CHANGES
-
-- fixed documentation of SIUnitNameList enumeration
-
- -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
 			<xsd:documentation>Root Element of an AnIML Technique Definition.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:unique name="topParameterCategoryName">
-			<xsd:selector xpath="ParameterCategoryBlueprint"/>
+		<xsd:unique name="topCategoryName">
+			<xsd:selector xpath="CategoryBlueprint"/>
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
 		<xsd:unique name="sampleName">
@@ -32,7 +27,7 @@
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="SampleRole" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="version" type="xsd:string" use="required" fixed="1.2"/>
 		<xsd:attribute name="name" type="xsd:string" use="required">
@@ -57,7 +52,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
@@ -103,7 +98,7 @@
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="SeriesSetBlueprint" minOccurs="0"/>
 			<xsd:element ref="PageBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
@@ -179,12 +174,12 @@
 	<!--Elements for Parameters-->
 	<xsd:element name="ParameterBlueprint" type="ParameterBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Name-value pair to be stored in current Parameter Category.</xsd:documentation>
+			<xsd:documentation>Name-value pair to be stored in current Category.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ParameterBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Name-value pair to be stored in current Parameter Category.</xsd:documentation>
+			<xsd:documentation>Name-value pair to be stored in current Category.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
@@ -201,7 +196,7 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="ParameterCategoryBlueprint" type="ParameterCategoryBlueprintType">
+	<xsd:element name="CategoryBlueprint" type="CategoryBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
 		</xsd:annotation>
@@ -210,7 +205,7 @@
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
 	</xsd:element>
-	<xsd:complexType name="ParameterCategoryBlueprintType">
+	<xsd:complexType name="CategoryBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
 		</xsd:annotation>
@@ -218,7 +213,7 @@
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="SeriesSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="ParameterCategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
