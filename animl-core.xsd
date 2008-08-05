@@ -930,12 +930,12 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+			<xsd:documentation>Individual Long Integer Value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
+			<xsd:documentation>Individual Long Integer Value (64 bits, signed, maxInclusive is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:long"/>
 	</xsd:simpleType>
