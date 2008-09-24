@@ -402,7 +402,6 @@
 			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SeriesSet" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
-			<xsd:element ref="PageSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
