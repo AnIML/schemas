@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -102,6 +102,7 @@
 			<xsd:element ref="Signature" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
+	<!-- -->
 	<!-- SampleSet information-->
 	<xsd:element name="Sample" type="SampleType">
 		<xsd:annotation>
@@ -166,6 +167,7 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- -->
 	<!--Elements representing process information and data-->
 	<xsd:element name="ExperimentStep" type="ExperimentStepType">
 		<xsd:annotation>
@@ -183,6 +185,7 @@
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
+			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
@@ -309,7 +312,8 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<!-- ParentDataPointReferenceSet related information-->
+	<!---->
+	<!--ParentDataPointReferenceSet related information-->
 	<xsd:element name="ParentDataPointReference" type="ParentDataPointReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>Establishes a reference to a data point or value range in the page within the super-ordinate page set</xsd:documentation>
@@ -323,6 +327,7 @@
 			<xsd:extension base="DataPointReferenceType"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!---->
 	<!--SampleReferenceSet related information-->
 	<xsd:element name="SampleReference" type="SampleReferenceType">
 		<xsd:annotation>
@@ -367,6 +372,32 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:element name="ExperimentDataReferenceSet" type="ExperimentDataReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Experiment Steps consumed by this Experiment Step.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExperimentDataReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Set of Experiment Steps consumed by this Experiment Step.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ExperimentDataReference"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Experiment Step whose data is consumed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExperimentDataReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to Experiment Step whose data is consumed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="experimentStepID" type="xsd:token" use="required"/>
+		<xsd:attribute name="role" type="xsd:token" use="required"/>
+	</xsd:complexType>
+	<!-- -->
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
 		<xsd:annotation>
@@ -388,6 +419,7 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<!-- -->
 	<!--Page related information-->
 	<xsd:element name="Page" type="PageType">
 		<xsd:annotation>
@@ -695,12 +727,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Description" type="DescriptionType">
 		<xsd:annotation>
-			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="DescriptionType">
 		<xsd:annotation>
-			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
@@ -711,7 +743,7 @@
 	</xsd:element>
 	<xsd:simpleType name="ReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Detailed description of changes were made.</xsd:documentation>
+			<xsd:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:IDREF"/>
 	</xsd:simpleType>
@@ -720,34 +752,7 @@
 			<xsd:documentation>Digital Signature that has been applied to a part of this AnIML document. Uses the W3C XML-DSIG specification.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!--
-THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and ParentDataPointReferenceType
-	<xsd:element name="ReferencesOLD">
-		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the superordinate page.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="IndexRef" maxOccurs="unbounded">
-					<xsd:annotation>
-						<xsd:documentation>Series and Value in Super-Page being referenced.</xsd:documentation>
-					</xsd:annotation>
-					<xsd:complexType>
-						<xsd:attributeGroup ref="SignableItemWithName"/>
-						<xsd:attribute name="seriesID" type="xsd:string" use="required"/>
-						<xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
-						<xsd:attribute name="refWidth" type="xsd:positiveInteger" use="optional" default="1">
-							<xsd:annotation>
-								<xsd:documentation>Specifies how many values, starting from the index, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:attribute>
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:sequence>
-			<xsd:attributeGroup ref="SignableItem"/>
-		</xsd:complexType>
-	</xsd:element>
--->
+	<!-- -->
 	<!--Parameter related information-->
 	<xsd:element name="CategorySet" type="CategorySetType">
 		<xsd:annotation>
@@ -1236,14 +1241,6 @@ THE ELEMENT AND DATA TYPE HAS BEEN REPLACED BY SiblingDataPointReferenceType and
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!--
-THE ELEMENT IS NOT USED. 
-	<xsd:element name="DataPointReference" type="DataPointReferenceType">
-		<xsd:annotation>
-			<xsd:documentation>Series and Value in Super-Page being referenced.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
--->
 	<xsd:complexType name="DataPointReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>Basis type for a reference to a data point or value range.</xsd:documentation>
@@ -1290,7 +1287,7 @@ THE ELEMENT IS NOT USED.
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!---->
+	<!-- -->
 	<!--Tracking Tag Elements and Types-->
 	<xsd:element name="TrackingTagSet" type="TrackingTagSetType">
 		<xsd:annotation>
@@ -1317,6 +1314,7 @@ THE ELEMENT IS NOT USED.
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 		<xsd:attribute name="value" type="xsd:string" use="optional"/>
 	</xsd:complexType>
+	<!-- -->
 	<xsd:element name="Manufacturer" type="xsd:token">
 		<xsd:annotation>
 			<xsd:documentation>Company name.</xsd:documentation>
@@ -1327,25 +1325,16 @@ THE ELEMENT IS NOT USED.
 			<xsd:documentation>Version identifier of software release.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="SoftwareType">
-		<xsd:sequence>
-			<xsd:element ref="Manufacturer" minOccurs="0"/>
-			<xsd:element ref="Name"/>
-			<xsd:element ref="Version" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:complexType>
 	<xsd:element name="Software" type="SoftwareType">
 		<xsd:annotation>
 			<xsd:documentation>Software used to create this.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="DeviceType">
+	<xsd:complexType name="SoftwareType">
 		<xsd:sequence>
-			<xsd:element ref="Manufacturer"/>
+			<xsd:element ref="Manufacturer" minOccurs="0"/>
 			<xsd:element ref="Name"/>
-			<xsd:element ref="FirmwareVersion" minOccurs="0"/>
-			<xsd:element ref="SerialNumber" minOccurs="0"/>
-			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
+			<xsd:element ref="Version" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="FirmwareVersion" type="xsd:token">
@@ -1359,4 +1348,12 @@ THE ELEMENT IS NOT USED.
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="Device" type="DeviceType"/>
+	<xsd:complexType name="DeviceType">
+		<xsd:sequence>
+			<xsd:element ref="Manufacturer"/>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="FirmwareVersion" minOccurs="0"/>
+			<xsd:element ref="SerialNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>
