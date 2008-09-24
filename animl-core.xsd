@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -215,43 +215,6 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
-	</xsd:complexType>
-	<xsd:element name="Author" type="AuthorType">
-		<xsd:annotation>
-			<xsd:documentation>User responsible.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="AuthorType">
-		<xsd:annotation>
-			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Name">
-				<xsd:annotation>
-					<xsd:documentation>Name of person or device.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Email" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact email address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Phone" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact phone number.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Location" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Location or physical address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attribute name="userType" type="UserTypeType" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="Timestamp" type="TimestampType">
 		<xsd:annotation>
@@ -631,52 +594,6 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<xsd:element name="Name" type="NameType">
-		<xsd:annotation>
-			<xsd:documentation>Common name.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="NameType">
-		<xsd:annotation>
-			<xsd:documentation>Name of person or device.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string"/>
-	</xsd:simpleType>
-	<xsd:element name="Email" type="EmailType">
-		<xsd:annotation>
-			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="EmailType">
-		<xsd:annotation>
-			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:pattern value=".*@.*\..*"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:element name="Phone" type="PhoneType">
-		<xsd:annotation>
-			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="PhoneType">
-		<xsd:annotation>
-			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
-	</xsd:simpleType>
-	<xsd:element name="Location" type="LocationType">
-		<xsd:annotation>
-			<xsd:documentation>Location or physical address.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="LocationType">
-		<xsd:annotation>
-			<xsd:documentation>Location or physical address.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
-	</xsd:simpleType>
 	<xsd:element name="Action" type="ActionType">
 		<xsd:annotation>
 			<xsd:documentation>Type of change made (created, modified, ...)</xsd:documentation>
@@ -684,7 +601,7 @@
 	</xsd:element>
 	<xsd:simpleType name="ActionType">
 		<xsd:annotation>
-			<xsd:documentation>Type of action described by an audit trail entry</xsd:documentation>
+			<xsd:documentation>Type of change made (created, modified, ...)</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="created">
@@ -756,7 +673,7 @@
 	<!--Parameter related information-->
 	<xsd:element name="CategorySet" type="CategorySetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for categorized and nested Name/Value Pairs.</xsd:documentation>
+			<xsd:documentation>Container for categorized and nested Parameters and SeriesSets.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:unique name="categoryName">
 			<xsd:selector xpath="Category"/>
@@ -764,6 +681,9 @@
 		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="CategorySetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for categorized and nested Parameters and SeriesSets.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Category" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -771,10 +691,13 @@
 	</xsd:complexType>
 	<xsd:element name="Category" type="CategoryType">
 		<xsd:annotation>
-			<xsd:documentation>Defines a category of Parameters. Used to model hierarchies among Parameters.</xsd:documentation>
+			<xsd:documentation>Defines a category of Parameters and SeriesSets. Used to model hierarchies.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="CategoryType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a category of Parameters and SeriesSets. Used to model hierarchies.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="ParameterSet" minOccurs="0"/>
 			<xsd:element ref="SeriesSet" minOccurs="0" maxOccurs="unbounded"/>
@@ -788,7 +711,7 @@
 	</xsd:complexType>
 	<xsd:element name="ParameterSet" type="ParameterSetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for Name/Value Pairs</xsd:documentation>
+			<xsd:documentation>Container for Name/Value Pairs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:unique name="parameterName">
 			<xsd:selector xpath="Parameter"/>
@@ -796,6 +719,9 @@
 		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="ParameterSetType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Name/Value Pairs.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Parameter" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -803,10 +729,13 @@
 	</xsd:complexType>
 	<xsd:element name="Parameter" type="ParameterType">
 		<xsd:annotation>
-			<xsd:documentation>Name/Value Pair</xsd:documentation>
+			<xsd:documentation>Name/Value Pair.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ParameterType">
+		<xsd:annotation>
+			<xsd:documentation>Name/Value Pair.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="SingleValueType">
 				<xsd:sequence>
@@ -1315,40 +1244,99 @@
 		<xsd:attribute name="value" type="xsd:string" use="optional"/>
 	</xsd:complexType>
 	<!-- -->
-	<xsd:element name="Manufacturer" type="xsd:token">
+	<!--Humans, Device and Software involved in recording the data-->
+	<xsd:element name="Author" type="AuthorType">
 		<xsd:annotation>
-			<xsd:documentation>Company name.</xsd:documentation>
+			<xsd:documentation>User responsible.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="Version">
+	<xsd:complexType name="AuthorType">
 		<xsd:annotation>
-			<xsd:documentation>Version identifier of software release.</xsd:documentation>
+			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
 		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="Software" type="SoftwareType">
-		<xsd:annotation>
-			<xsd:documentation>Software used to create this.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SoftwareType">
 		<xsd:sequence>
-			<xsd:element ref="Manufacturer" minOccurs="0"/>
-			<xsd:element ref="Name"/>
-			<xsd:element ref="Version" minOccurs="0"/>
+			<xsd:element ref="Name">
+				<xsd:annotation>
+					<xsd:documentation>Name of person or device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Email" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact email address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Phone" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact phone number.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="Location" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Location or physical address.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
+		<xsd:attribute name="userType" type="UserTypeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Type of user (human, device, software)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="FirmwareVersion" type="xsd:token">
+	<xsd:element name="Name" type="NameType">
 		<xsd:annotation>
-			<xsd:documentation>Version identifier of firmware software release</xsd:documentation>
+			<xsd:documentation>Common name.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="SerialNumber" type="xsd:token">
+	<xsd:simpleType name="NameType">
 		<xsd:annotation>
-			<xsd:documentation>Unique serial number of device.</xsd:documentation>
+			<xsd:documentation>Name of person or device.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Email" type="EmailType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="Device" type="DeviceType"/>
+	<xsd:simpleType name="EmailType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value=".*@.*\..*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Phone" type="PhoneType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="PhoneType">
+		<xsd:annotation>
+			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Location" type="LocationType">
+		<xsd:annotation>
+			<xsd:documentation>Location or physical address.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="LocationType">
+		<xsd:annotation>
+			<xsd:documentation>Location or physical address.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Device" type="DeviceType">
+		<xsd:annotation>
+			<xsd:documentation>Device used for experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="DeviceType">
+		<xsd:annotation>
+			<xsd:documentation>Device used for experiment.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Manufacturer"/>
 			<xsd:element ref="Name"/>
@@ -1356,4 +1344,63 @@
 			<xsd:element ref="SerialNumber" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
+	<xsd:element name="Software" type="SoftwareType">
+		<xsd:annotation>
+			<xsd:documentation>Software used to create this.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SoftwareType">
+		<xsd:annotation>
+			<xsd:documentation>Software used to create this.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Manufacturer" minOccurs="0"/>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="Version" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Manufacturer" type="ManufacturerType">
+		<xsd:annotation>
+			<xsd:documentation>Company name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ManufacturerType">
+		<xsd:annotation>
+			<xsd:documentation>Company name.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token"/>
+	</xsd:simpleType>
+	<xsd:element name="Version" type="VersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of software release.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="VersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of software release.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token"/>
+	</xsd:simpleType>
+	<xsd:element name="FirmwareVersion" type="FirmwareVersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of firmware release.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="FirmwareVersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of firmware release.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token"/>
+	</xsd:simpleType>
+	<xsd:element name="SerialNumber" type="SerialNumberType">
+		<xsd:annotation>
+			<xsd:documentation>Unique serial number of device.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SerialNumberType">
+		<xsd:annotation>
+			<xsd:documentation>Unique serial number of device.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token"/>
+	</xsd:simpleType>
 </xsd:schema>
