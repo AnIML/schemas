@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -320,24 +320,19 @@
 					<xsd:documentation>Represents an individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="Float32">
+			<xsd:enumeration value="Float">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual 32-bit Floating Point Value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="Float64">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual 64-bit Floating Point Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual floating point value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="String">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual String Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual string value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Boolean">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual Boolean Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual boolean value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="DateTime">
@@ -479,10 +474,23 @@
 				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="quantity" type="QuantityType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Quantity the unit can be applied to</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:simpleType name="LabelType">
 		<xsd:annotation>
 			<xsd:documentation>String representation of a particular Unit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity a Unit is applicable to.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:minLength value="1"/>
@@ -553,7 +561,7 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!---->
-	<!--Sets of permitted values-->
+	<!--Lists of permitted values and ranges-->
 	<xsd:element name="AllowedValue" type="AllowedValueType">
 		<xsd:annotation>
 			<xsd:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xsd:documentation>
@@ -594,6 +602,8 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<!---->
+	<!--Atomic data types-->
 	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
@@ -704,6 +714,8 @@
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
+	<!---->
+	<!--Ranges-->
 	<xsd:element name="Min" type="MinType">
 		<xsd:annotation>
 			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
