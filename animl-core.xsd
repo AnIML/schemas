@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -55,7 +55,7 @@
 		</xsd:annotation>
 		<xsd:key name="seriesID">
 			<xsd:annotation>
-				<xsd:documentation>Every Series ID must be unique within a Page. Duplicates in sub-Pages are permitted.</xsd:documentation>
+				<xsd:documentation>Every Series ID must be unique within a SeriesSet.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//Series"/>
 			<xsd:field xpath="@seriesID"/>
@@ -196,13 +196,12 @@
 	</xsd:complexType>
 	<xsd:element name="Template" type="TemplateType">
 		<xsd:annotation>
-			<xsd:documentation>Represents an ExperimentStep template</xsd:documentation>
-			<xsd:documentation>Represents a container for ExperementStep templates</xsd:documentation>
+			<xsd:documentation>Represents a template for an ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="TemplateType">
 		<xsd:annotation>
-			<xsd:documentation>Represents an ExperimentStep template</xsd:documentation>
+			<xsd:documentation>Represents a template for an ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
@@ -263,15 +262,15 @@
 	</xsd:complexType>
 	<xsd:element name="PageSet" type="PageSetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for Pages that contain the results gleaned from the Technique.</xsd:documentation>
+			<xsd:documentation>Container for Results that contain the results obtained from the experiment.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="PageSetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for Pages that contain the results gleaned from the Technique.</xsd:documentation>
+			<xsd:documentation>Container for Results that contain the results obtaines from the experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Page" maxOccurs="unbounded"/>
+			<xsd:element ref="Result" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
@@ -279,12 +278,12 @@
 	<!--ParentDataPointReferenceSet related information-->
 	<xsd:element name="ParentDataPointReference" type="ParentDataPointReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the page within the super-ordinate page set</xsd:documentation>
+			<xsd:documentation>Establishes a reference to a data point or value range in the parent Result.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ParentDataPointReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Datatype which defines a reference to a data point or value range in the page within the super-ordinate page set</xsd:documentation>
+			<xsd:documentation>Datatype which defines a reference to a data point or value range in the parent Result.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DataPointReferenceType"/>
@@ -383,42 +382,22 @@
 		</xsd:attribute>
 	</xsd:complexType>
 	<!-- -->
-	<!--Page related information-->
-	<xsd:element name="Page" type="PageType">
+	<!--Result related information-->
+	<xsd:element name="Result" type="ResultType">
 		<xsd:annotation>
 			<xsd:documentation>Container for Data derived from Experiment.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="PageType">
+	<xsd:complexType name="ResultType">
 		<xsd:annotation>
 			<xsd:documentation>Container for Data derived from Experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="SiblingDataPointReference" minOccurs="0"/>
 			<xsd:element ref="SeriesSet" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-	</xsd:complexType>
-	<xsd:element name="SiblingDataPointReference" type="SiblingDataPointReferenceType">
-		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the page within the same page set</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SiblingDataPointReferenceType">
-		<xsd:annotation>
-			<xsd:documentation>Datatype which defines a reference to a data point or value range in the page within the same page set</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="DataPointReferenceType">
-				<xsd:attribute name="pageID" type="xsd:token" use="required">
-					<xsd:annotation>
-						<xsd:documentation>ID of the page refered to wihtin the same page set .</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="SeriesSet" type="SeriesSetType">
 		<xsd:annotation>
@@ -464,7 +443,7 @@
 		</xsd:attribute>
 		<xsd:attribute name="seriesID" type="xsd:token" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Identifies the Series. Used in References from sub-Pages and sub-PageSets. Unique per Page.</xsd:documentation>
+				<xsd:documentation>Identifies the Series. Used in References from subordinate ExperimentSteps. Unique per SeriesSet.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="plotUse" type="PlotUseType" use="required">
@@ -559,20 +538,112 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="ValueSet"/>
 	</xsd:complexType>
+	<!---->
+	<!--Units-->
 	<xsd:element name="Unit" type="UnitType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="UnitType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of Measurement Unit</xsd:documentation>
+			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="label" type="LabelType" use="required"/>
+		<xsd:attribute name="label" type="LabelType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="quantity" type="QuantityType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Quantity the unit can be applied to</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:simpleType name="LabelType">
+		<xsd:annotation>
+			<xsd:documentation>String representation of a particular Unit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity a Unit is applicable to.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="SIUnit" type="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI Units used to represent Scientific Unit.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SIUnitType">
+		<xsd:annotation>
+			<xsd:documentation>Combination of SI Units used to represent Scientific unit</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="SIUnitNameList">
+				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
+				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="SIUnitNameList">
+		<xsd:annotation>
+			<xsd:documentation>Names of all SI Units</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>Represents a dimensionless unit.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="m">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "meter".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="kg">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "kilogram".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="s">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "second".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="A">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "ampere".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="K">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "kelvin".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="mol">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "mol".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="cd">
+				<xsd:annotation>
+					<xsd:documentation>Represents the SI unit "candela".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!---->
 	<!--AuditTrail and LogEntry related information-->
 	<xsd:element name="LogEntry" type="LogEntryType">
 		<xsd:annotation>
@@ -1059,53 +1130,6 @@
 		</xsd:annotation>
 		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
-	<xsd:simpleType name="SIUnitNameList">
-		<xsd:annotation>
-			<xsd:documentation>Names of all SI Units</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="1">
-				<xsd:annotation>
-					<xsd:documentation>Represents a dimensionless unit.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="m">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit meter.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="kg">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit kilogram.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="s">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit second.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="A">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit ampere.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="K">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit kelvin.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="mol">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit mole.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="cd">
-				<xsd:annotation>
-					<xsd:documentation>Represents a SIUnit candela.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
 	<xsd:attributeGroup name="ValueSet">
@@ -1191,31 +1215,6 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="SIUnit" type="SIUnitType">
-		<xsd:annotation>
-			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SIUnitType">
-		<xsd:annotation>
-			<xsd:documentation>Combination of SI units used to represent measurement unit</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:extension base="SIUnitNameList">
-				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
-			</xsd:extension>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<xsd:simpleType name="LabelType">
-		<xsd:annotation>
-			<xsd:documentation>Contains a name/symbol to discribe a scientific unit of measure.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:minLength value="1"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- -->
 	<!--Tracking Tag Elements and Types-->
 	<xsd:element name="TrackingTagSet" type="TrackingTagSetType">
@@ -1338,6 +1337,7 @@
 			<xsd:documentation>Device used for experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="DeviceIdentifier" minOccurs="0"/>
 			<xsd:element ref="Manufacturer"/>
 			<xsd:element ref="Name"/>
 			<xsd:element ref="FirmwareVersion" minOccurs="0"/>
@@ -1400,6 +1400,17 @@
 	<xsd:simpleType name="SerialNumberType">
 		<xsd:annotation>
 			<xsd:documentation>Unique serial number of device.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token"/>
+	</xsd:simpleType>
+	<xsd:element name="DeviceIdentifier" type="DeviceIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DeviceIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token"/>
 	</xsd:simpleType>
