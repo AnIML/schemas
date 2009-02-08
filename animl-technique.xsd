@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -173,8 +173,7 @@
 				<xsd:documentation>Maximum number of occurences of the Series. If > 1, the index attribute must be used in the AnIML document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear"/>
-		<xsd:attribute name="plotUse" type="PlotUseType" use="required"/>
+		<xsd:attribute name="plotScale" type="PlotScaleType" use="optional" default="linear"/>
 		<xsd:attribute name="dependency" type="DependencyType" use="required"/>
 	</xsd:complexType>
 	<!-- -->
@@ -264,41 +263,29 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="ScaleType">
+	<xsd:simpleType name="PlotScaleType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Series is typically plotted on a linear scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that data in this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="PlotUseType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies whether a Series should be used for plotting or not. If set to "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="dimension">
+			<xsd:enumeration value="none">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that a new dimension (axis) will be created in the plot for this Series.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="attribute">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that no extra dimension (axis) will be created in the plot for this Series.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is not plottable.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
