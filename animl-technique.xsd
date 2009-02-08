@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
 <xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
@@ -149,7 +149,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="Quantity" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedRange" minOccurs="0"/>
 			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -189,7 +189,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="Quantity" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -443,15 +443,34 @@
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
 	<!---->
-	<!--Units-->
+	<!--Quantities and Units-->
+	<xsd:element name="Quantity">
+		<xsd:annotation>
+			<xsd:documentation>Definition of an allowable Quantity and its associated Units.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="QuantityType"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="QuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of an allowable Quantity and its associated Units.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="QuantityNameType" use="required"/>
+	</xsd:complexType>
 	<xsd:element name="Unit" type="UnitType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
+			<xsd:documentation>Definition of a supported Scientific Unit.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="UnitType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of a Scientific Unit.</xsd:documentation>
+			<xsd:documentation>Definition of a supported Scientific Unit.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SIUnit" minOccurs="0" maxOccurs="unbounded"/>
@@ -459,11 +478,6 @@
 		<xsd:attribute name="label" type="LabelType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Defines the visual representation of a particular Unit.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="quantity" type="QuantityType" use="optional">
-			<xsd:annotation>
-				<xsd:documentation>Quantity the unit can be applied to</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -475,9 +489,9 @@
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="QuantityType">
+	<xsd:simpleType name="QuantityNameType">
 		<xsd:annotation>
-			<xsd:documentation>Quantity a Unit is applicable to.</xsd:documentation>
+			<xsd:documentation>Human-readable name of a Quantity.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:minLength value="1"/>
