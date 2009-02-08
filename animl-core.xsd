@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.31" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns="urn:org:astm:animl:schema:core:draft:0.31" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -1181,7 +1181,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Basis type for a reference to a data point or value range.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="seriesID" type="xsd:string" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
@@ -1312,12 +1312,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Device" type="DeviceType">
 		<xsd:annotation>
-			<xsd:documentation>Device used for experiment.</xsd:documentation>
+			<xsd:documentation>Device used to author experiment step.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="DeviceType">
 		<xsd:annotation>
-			<xsd:documentation>Device used for experiment.</xsd:documentation>
+			<xsd:documentation>Device used to author experiment step.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DeviceIdentifier" minOccurs="0"/>
@@ -1329,12 +1329,12 @@
 	</xsd:complexType>
 	<xsd:element name="Software" type="SoftwareType">
 		<xsd:annotation>
-			<xsd:documentation>Software used to create this.</xsd:documentation>
+			<xsd:documentation>Software used to author this.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SoftwareType">
 		<xsd:annotation>
-			<xsd:documentation>Software used to create this.</xsd:documentation>
+			<xsd:documentation>Software used to author this.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Manufacturer" minOccurs="0"/>
