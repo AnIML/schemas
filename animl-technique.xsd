@@ -29,7 +29,7 @@
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="1.2"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3"/>
 		<xsd:attribute name="name" type="xsd:string" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Human-readable name of this Technique Definition</xsd:documentation>
@@ -41,6 +41,8 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<!---->
+	<!--Basic Layout of an Experiment Step-->
 	<xsd:element name="SampleRoleBlueprint" type="SampleRoleBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Definition of Parameters and role that the referenced Sample plays in the ExperimentStep.</xsd:documentation>
@@ -123,6 +125,8 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<!---->
+	<!--Series Sets and Series Definitions-->
 	<xsd:element name="SeriesSetBlueprint" type="SeriesSetBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Definition of SeriesSet that needs to be attached at this point.</xsd:documentation>
@@ -134,7 +138,10 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="SeriesBlueprint" maxOccurs="unbounded"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="SeriesBlueprint"/>
+				<xsd:element ref="SeriesBlueprintChoice"/>
+			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 	</xsd:complexType>
@@ -176,8 +183,22 @@
 		<xsd:attribute name="plotScale" type="PlotScaleType" use="optional" default="linear"/>
 		<xsd:attribute name="dependency" type="DependencyType" use="required"/>
 	</xsd:complexType>
+	<xsd:element name="SeriesBlueprintChoice" type="SeriesBlueprintChoiceType">
+		<xsd:annotation>
+			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SeriesBlueprintChoiceType">
+		<xsd:annotation>
+			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="SeriesBlueprint" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	<!-- -->
-	<!--Elements for Parameters-->
+	<!--Parameters and Categories-->
 	<xsd:element name="ParameterBlueprint" type="ParameterBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Name-value pair to be stored in current Category.</xsd:documentation>
@@ -398,50 +419,6 @@
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- -->
-	<!--Miscellaneous-->
-	<xsd:simpleType name="ModalityType">
-		<xsd:annotation>
-			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="required">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is required.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="optional">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is optional.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="UnboundedType">
-		<xsd:annotation>
-			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="unbounded"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="MaxOccursType">
-		<xsd:annotation>
-			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
-	</xsd:simpleType>
-	<xsd:element name="Documentation" type="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
-	</xsd:simpleType>
 	<!---->
 	<!--Quantities and Units-->
 	<xsd:element name="Quantity">
@@ -755,4 +732,48 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- -->
+	<!--Miscellaneous-->
+	<xsd:simpleType name="ModalityType">
+		<xsd:annotation>
+			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="required">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the use of the according data element is required.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="optional">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the use of the according data element is optional.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UnboundedType">
+		<xsd:annotation>
+			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="unbounded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaxOccursType">
+		<xsd:annotation>
+			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
+	</xsd:simpleType>
+	<xsd:element name="Documentation" type="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
 </xsd:schema>
