@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.3" xmlns="urn:org:astm:animl:schema:core:draft:0.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.31" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -27,9 +27,9 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3">
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.31">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.3".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.31".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -212,7 +212,7 @@
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 			<xsd:element ref="PageSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="Timestamp" type="TimestampType">
@@ -446,17 +446,12 @@
 				<xsd:documentation>Identifies the Series. Used in References from subordinate ExperimentSteps. Unique per SeriesSet.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="plotUse" type="PlotUseType" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Specifies whether a new dimension should be created for this Series.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
 		<xsd:attribute name="visible" type="VisibleType" use="optional" default="true">
 			<xsd:annotation>
 				<xsd:documentation>Specifies whether data in this Series is to be displayed to the user by default.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="scale" type="ScaleType" use="optional" default="linear">
+		<xsd:attribute name="plotScale" type="PlotScaleType" use="optional" default="linear">
 			<xsd:annotation>
 				<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
 			</xsd:annotation>
@@ -484,12 +479,12 @@
 	</xsd:complexType>
 	<xsd:element name="EncodedValueSet" type="EncodedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values encoded as a base64 binary string.</xsd:documentation>
+			<xsd:documentation>Multiple Values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="EncodedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values encoded as a base64 binary string.</xsd:documentation>
+			<xsd:documentation>Multiple Values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:base64Binary">
@@ -857,41 +852,29 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="ScaleType">
+	<xsd:simpleType name="PlotScaleType">
 		<xsd:annotation>
-			<xsd:documentation>Specifies whether the data in this Series is typically plotted on a linear or logarithmic scale.</xsd:documentation>
+			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Series is typically plotted on a linear scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a linear scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the data in this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="PlotUseType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies whether a Series should be used for plotting or not. If set so "dimension", a new dimension will be created in the plot. If set to "attribute", no extra dimension is created.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="dimension">
+			<xsd:enumeration value="none">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that a new dimension will be created in the plot..</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="attribute">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that no extra dimension is created and that the values a being ploted.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is not plottable.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
