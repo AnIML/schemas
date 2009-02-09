@@ -131,6 +131,13 @@
 		<xsd:annotation>
 			<xsd:documentation>Definition of SeriesSet that needs to be attached at this point.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:unique name="seriesName">
+			<xsd:annotation>
+				<xsd:documentation>Series names must be unique per SeriesSet.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//Series"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="SeriesSetBlueprintType">
 		<xsd:annotation>
