@@ -12,10 +12,26 @@
 			<xsd:field xpath="@sampleID"/>
 		</xsd:key>
 		<xsd:keyref name="sampleIDUsage" refer="sampleID">
+			<xsd:annotation>
+				<xsd:documentation>An ExperimentStep may only reference samples which are actually declared in the SampleSet section of the document.</xsd:documentation>
+			</xsd:annotation>
 			<xsd:selector xpath=".//ExperimentStep/SampleReferenceSet/SampleReference"/>
 			<xsd:field xpath="@sampleID"/>
 		</xsd:keyref>
-		<!-- annotation -->
+		<xsd:unique name="experimentStepID">
+			<xsd:annotation>
+				<xsd:documentation>If an ExperimentStep carries an experimentStepID attribute, its value must be unique across the entire document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//ExperimentStep"/>
+			<xsd:field xpath="@experimentStepID"/>
+		</xsd:unique>
+		<xsd:keyref name="experimentStepIDUsage" refer="experimentStepID">
+			<xsd:annotation>
+				<xsd:documentation>An ExperimentDataReference may only reference ExperimentSteps that carry a valid experimentStepID.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//ExperimentStep/ExperimentDataReferenceSet/ExperimentDataReference"/>
+			<xsd:field xpath="@experimentStepID"/>
+		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="AnIMLType">
 		<xsd:annotation>
@@ -188,11 +204,16 @@
 			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
-			<xsd:element ref="PageSet" minOccurs="0"/>
+			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
+		<xsd:attribute name="experimentStepID" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Unique identifier for this ExperimentStep. Used to point to this step from an ExperimentDataReference.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="Template" type="TemplateType">
 		<xsd:annotation>
@@ -210,7 +231,7 @@
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
-			<xsd:element ref="PageSet" minOccurs="0"/>
+			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
@@ -259,20 +280,6 @@
 				<xsd:documentation>URI where Technique Definition file can be fetched.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-	</xsd:complexType>
-	<xsd:element name="PageSet" type="PageSetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for Results that contain the results obtained from the experiment.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="PageSetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for Results that contain the results obtaines from the experiment.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Result" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<!---->
 	<!--ParentDataPointReferenceSet related information-->
@@ -741,10 +748,6 @@
 		<xsd:annotation>
 			<xsd:documentation>Container for categorized and nested Parameters and SeriesSets.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:unique name="categoryName">
-			<xsd:selector xpath="Category"/>
-			<xsd:field xpath="@name"/>
-		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="CategorySetType">
 		<xsd:annotation>
@@ -779,10 +782,6 @@
 		<xsd:annotation>
 			<xsd:documentation>Container for Name/Value Pairs.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:unique name="parameterName">
-			<xsd:selector xpath="Parameter"/>
-			<xsd:field xpath="@name"/>
-		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="ParameterSetType">
 		<xsd:annotation>
@@ -1005,12 +1004,12 @@
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG  DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG DTD. Used for representing images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="EmbeddedXMLType"/>
 	</xsd:simpleType>
