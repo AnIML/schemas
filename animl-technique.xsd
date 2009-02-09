@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
@@ -133,9 +133,9 @@
 		</xsd:annotation>
 		<xsd:unique name="seriesName">
 			<xsd:annotation>
-				<xsd:documentation>Series names must be unique per SeriesSet.</xsd:documentation>
+				<xsd:documentation>SeriesBlueprint names must be unique per SeriesSetBlueprint.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//Series"/>
+			<xsd:selector xpath=".//SeriesBlueprint"/>
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
 	</xsd:element>
@@ -156,6 +156,13 @@
 		<xsd:annotation>
 			<xsd:documentation>Definition of Series that needs to be attached to this SeriesSet.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:unique name="quantityNameUniquePerSeriesBlueprint">
+			<xsd:annotation>
+				<xsd:documentation>A Quantity may not be listed multiple times per SeriesBlueprint.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath="Quantity"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="SeriesBlueprintType">
 		<xsd:annotation>
@@ -211,6 +218,13 @@
 		<xsd:annotation>
 			<xsd:documentation>Name-value pair to be stored in current Category.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:unique name="quantityNameUniquePerParameterBlueprint">
+			<xsd:annotation>
+				<xsd:documentation>A Quantity may not be listed multiple times per ParameterBlueprint.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath="Quantity"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>		
 	</xsd:element>
 	<xsd:complexType name="ParameterBlueprintType">
 		<xsd:annotation>
@@ -438,6 +452,14 @@
 				<xsd:extension base="QuantityType"/>
 			</xsd:complexContent>
 		</xsd:complexType>
+		<xsd:unique name="unitLabelUniquePerQuantity">
+			<xsd:selector xpath="Unit"/>
+			<xsd:field xpath="@label">
+				<xsd:annotation>
+					<xsd:documentation>A Quantity may not have multiple Units with the same label.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:field>
+		</xsd:unique>
 	</xsd:element>
 	<xsd:complexType name="QuantityType">
 		<xsd:annotation>
