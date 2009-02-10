@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -344,60 +344,7 @@
 	</xsd:simpleType>
 	<!---->
 	<!--Type definitions for Series attributes-->
-	<!-- -->
-	<!--Type definitions for basic data types-->
-	<xsd:simpleType name="AllTypeNameList">
-		<xsd:annotation>
-			<xsd:documentation>Names of all data types used in AnIML.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="Int">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="Long">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="Float">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual floating point value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="String">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual string value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="Boolean">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual boolean value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="DateTime">
-				<xsd:annotation>
-					<xsd:documentation>Represents an individual ISO Date/Time Value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="EmbeddedXML">
-				<xsd:annotation>
-					<xsd:documentation>Represents a Value governed by a different XML Schema..</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="PNG">
-				<xsd:annotation>
-					<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="SVG">
-				<xsd:annotation>
-					<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
+	<!--Miscellaneous-->
 	<xsd:simpleType name="SeriesTypeType">
 		<xsd:annotation>
 			<xsd:documentation>Names of Data types usable for Series.</xsd:documentation>
@@ -452,6 +399,50 @@
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:simpleType name="ModalityType">
+		<xsd:annotation>
+			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="required">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the corresponding entity is required.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="optional">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the corresponding entity is optional.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UnboundedType">
+		<xsd:annotation>
+			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="unbounded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaxOccursType">
+		<xsd:annotation>
+			<xsd:documentation>A positive Integer or "unbounded" (see UnboundedType)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
+	</xsd:simpleType>
+	<xsd:element name="Documentation" type="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DocumentationType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	<!-- -->
+	<!--Type definitions for basic data types-->
 	<!---->
 	<!--Quantities and Units-->
 	<xsd:element name="Quantity">
@@ -616,13 +607,102 @@
 		</xsd:sequence>
 		<xsd:attribute name="unit" type="xsd:string" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Label of Unit that applies to this allowed range of values
-</xsd:documentation>
+				<xsd:documentation>Label of Unit that applies to this allowed range of values.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:element name="Min" type="MinType">
+		<xsd:annotation>
+			<xsd:documentation>Lower range boundary; may be marked as inclusive or exclusive.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MinType">
+		<xsd:annotation>
+			<xsd:documentation>Lower range boundary; may be marked as inclusive or exclusive.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType">
+				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
+					<xsd:annotation>
+						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Max" type="MaxType">
+		<xsd:annotation>
+			<xsd:documentation>Upper range boundary; may be marked as inclusive or exclusive.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MaxType">
+		<xsd:annotation>
+			<xsd:documentation>Upper range boundary; may be marked as inclusive or exclusive.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType">
+				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
+					<xsd:annotation>
+						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!---->
 	<!--Atomic data types-->
+	<xsd:simpleType name="AllTypeNameList">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of data types used in AnIML.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Int">
+				<xsd:annotation>
+					<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Long">
+				<xsd:annotation>
+					<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Float">
+				<xsd:annotation>
+					<xsd:documentation>Single 32-bit or 64-bit floating point value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="String">
+				<xsd:annotation>
+					<xsd:documentation>Single string value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Boolean">
+				<xsd:annotation>
+					<xsd:documentation>Single Boolean value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="DateTime">
+				<xsd:annotation>
+					<xsd:documentation>Single ISO date and time Value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="EmbeddedXML">
+				<xsd:annotation>
+					<xsd:documentation>Single XML value governed by a non-AnIML XML schema.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="PNG">
+				<xsd:annotation>
+					<xsd:documentation>Single Base64 binary encoded PNG image.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="SVG">
+				<xsd:annotation>
+					<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
 			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
@@ -724,96 +804,12 @@
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Vector graphic data governed by the SVG DTD.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Vector graphic data governed by the SVG DTD.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
-	</xsd:simpleType>
-	<!---->
-	<!--Ranges-->
-	<xsd:element name="Min" type="MinType">
-		<xsd:annotation>
-			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="MinType">
-		<xsd:annotation>
-			<xsd:documentation>Lower Boundary of Range.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="NumericValueType">
-				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
-					<xsd:annotation>
-						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:element name="Max" type="MaxType">
-		<xsd:annotation>
-			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="MaxType">
-		<xsd:annotation>
-			<xsd:documentation>Upper Boundary of Range.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="NumericValueType">
-				<xsd:attribute name="included" type="xsd:boolean" use="optional" default="true">
-					<xsd:annotation>
-						<xsd:documentation>Specifies whether the given value is part of the interval.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<!--Miscellaneous-->
-	<xsd:simpleType name="ModalityType">
-		<xsd:annotation>
-			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="required">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is required.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="optional">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the use of the according data element is optional.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="UnboundedType">
-		<xsd:annotation>
-			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="unbounded"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="MaxOccursType">
-		<xsd:annotation>
-			<xsd:documentation>Positive Integers and "unbounded" for multiplicity.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
-	</xsd:simpleType>
-	<xsd:element name="Documentation" type="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="DocumentationType">
-		<xsd:annotation>
-			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
