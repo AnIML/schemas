@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
+	<!-- -->
+	<!-- * Top-Level document elements * -->
+	<!-- ================== -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>Root Element of an AnIML Technique Definition.</xsd:documentation>
+			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are  typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:unique name="sampleRoleName">
 			<xsd:selector xpath="SampleRole"/>
@@ -17,7 +20,7 @@
 	</xsd:element>
 	<xsd:complexType name="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>Root Element of an AnIML Technique Definition.</xsd:documentation>
+			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are  typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
@@ -28,12 +31,12 @@
 		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3"/>
 		<xsd:attribute name="name" type="xsd:string" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Human-readable name of this Technique Definition</xsd:documentation>
+				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="extension" type="xsd:boolean" use="optional" default="false">
 			<xsd:annotation>
-				<xsd:documentation>Specifies if this document describes an extension. If false, this is a Technique Definition. If true, this is a Technique Extension.</xsd:documentation>
+				<xsd:documentation>Is this document an extension?  If false, it is a Technique Definition. If true, it is a Technique Extension.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -54,17 +57,17 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Name of the SampleRole. Used in the "role" attribute of the Sample element in an AnIML document.</xsd:documentation>
+				<xsd:documentation>SampleRole name used in the Sample element's role attribute.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Describes whether the sample playing this role is consumed or produced by this Technique.</xsd:documentation>
+				<xsd:documentation>Is the sample in this role produced or consumed by the Technique? (see SamplePurposeType).</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
 			<xsd:annotation>
-				<xsd:documentation>States if a sample with this role is required.</xsd:documentation>
+				<xsd:documentation>Is a sample in this role required?</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
@@ -74,7 +77,7 @@
 		</xsd:attribute>
 		<xsd:attribute name="inheritable" type="xsd:boolean" use="optional" default="true">
 			<xsd:annotation>
-				<xsd:documentation>Specifies whether this role is required if this ExperimentStep is nested under a Result. If true, the sample is inherited from the superordinate ExperimentStep.</xsd:documentation>
+				<xsd:documentation>Is the role required when this ExperimentStep is nested under a Result?  If true, the sample is inherited from the superordinate ExperimentStep.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -120,7 +123,7 @@
 		</xsd:attribute>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
 			<xsd:annotation>
-				<xsd:documentation>Specifies if Result is optional or required.</xsd:documentation>
+				<xsd:documentation>Is the Result optional or required?</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
@@ -156,13 +159,28 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required"/>
 	</xsd:complexType>
+	<xsd:element name="SeriesBlueprintChoice" type="SeriesBlueprintChoiceType">
+		<xsd:annotation>
+			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SeriesBlueprintChoiceType">
+		<xsd:annotation>
+			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="SeriesBlueprint" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
+	</xsd:complexType>
 	<xsd:element name="SeriesBlueprint" type="SeriesBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Definition of Series that needs to be attached to this SeriesSet.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:unique name="quantityNameUniquePerSeriesBlueprint">
 			<xsd:annotation>
-				<xsd:documentation>A Quantity may not be listed multiple times per SeriesBlueprint.</xsd:documentation>
+				<xsd:documentation>A Quantity must be unique per SeriesBlueprint.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath="Quantity"/>
 			<xsd:field xpath="@name"/>
@@ -180,44 +198,100 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="xsd:token" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Name this Series needs to have.</xsd:documentation>
+				<xsd:documentation>Name the Series shall have.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="seriesType" type="SeriesTypeType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>Data type this Series needs to have.</xsd:documentation>
+				<xsd:documentation>Data type this Series shall have.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
 			<xsd:annotation>
-				<xsd:documentation>Defines whether this Series is optional or required.</xsd:documentation>
+				<xsd:documentation>Is the Series optional or required?</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="plotScale" type="PlotScaleType" use="optional" default="linear"/>
+		<xsd:attribute name="dependency" type="DependencyType" use="required"/>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
 				<xsd:documentation>Maximum number of occurences of the Series. If > 1, the index attribute must be used in the AnIML document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="plotScale" type="PlotScaleType" use="optional" default="linear"/>
-		<xsd:attribute name="dependency" type="DependencyType" use="required"/>
 	</xsd:complexType>
-	<xsd:element name="SeriesBlueprintChoice" type="SeriesBlueprintChoiceType">
+	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
-			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+			<xsd:documentation>Does the Series represent an independent or dependent variable?</xsd:documentation>
 		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="SeriesBlueprintChoiceType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="independent">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series represents an independent variable.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="dependent">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series represents a dependent variable..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PlotScaleType">
 		<xsd:annotation>
-			<xsd:documentation>Set of alternative Series which need to be attached to this SeriesSet.</xsd:documentation>
+			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="linear">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series data is typically plotted on a linear scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="log">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series data is typically plotted on a common logarithmic scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ln">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series data is typically plotted on a natural logarithmic scale.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>Specifies that the Series data is typically not plotted.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- -->
+	<!--Parameters and Categories-->
+	<xsd:element name="CategoryBlueprint" type="CategoryBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:unique name="parameterBlueprintName">
+			<xsd:selector xpath="ParameterBlueprint"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+		<xsd:unique name="subCategoryBlueprintName">
+			<xsd:selector xpath="CategoryBlueprint"/>
+			<xsd:field xpath="@name"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:complexType name="CategoryBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="SeriesBlueprint" maxOccurs="unbounded"/>
+			<xsd:element ref="SeriesSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:token" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
+		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1"/>
 	</xsd:complexType>
-	<!-- -->
-	<!--Parameters and Categories-->
 	<xsd:element name="ParameterBlueprint" type="ParameterBlueprintType">
 		<xsd:annotation>
 			<xsd:documentation>Name-value pair to be stored in current Category.</xsd:documentation>
@@ -249,33 +323,6 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<xsd:element name="CategoryBlueprint" type="CategoryBlueprintType">
-		<xsd:annotation>
-			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:unique name="parameterBlueprintName">
-			<xsd:selector xpath="ParameterBlueprint"/>
-			<xsd:field xpath="@name"/>
-		</xsd:unique>
-		<xsd:unique name="subCategoryBlueprintName">
-			<xsd:selector xpath="CategoryBlueprint"/>
-			<xsd:field xpath="@name"/>
-		</xsd:unique>
-	</xsd:element>
-	<xsd:complexType name="CategoryBlueprintType">
-		<xsd:annotation>
-			<xsd:documentation>Collection of Parameters to be used on this hierarchy level.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="SeriesSetBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required"/>
-		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
-		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1"/>
-	</xsd:complexType>
 	<!-- -->
 	<!--Type definitions for sample attributes-->
 	<xsd:simpleType name="SamplePurposeType">
@@ -297,50 +344,6 @@
 	</xsd:simpleType>
 	<!---->
 	<!--Type definitions for Series attributes-->
-	<xsd:simpleType name="DependencyType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies whether the Series is independent or dependent.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="independent">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the Series is independent.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="dependent">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that the Series is dependent.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="PlotScaleType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="linear">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is typically plotted on a linear scale.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="log">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="ln">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="none">
-				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is not plottable.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- -->
 	<!--Type definitions for basic data types-->
 	<xsd:simpleType name="AllTypeNameList">
@@ -432,17 +435,17 @@
 				<xsd:choice>
 					<xsd:element ref="Int">
 						<xsd:annotation>
-							<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+							<xsd:documentation>Single 32-bit signed Integer value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 					<xsd:element ref="Float32">
 						<xsd:annotation>
-							<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+							<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 					<xsd:element ref="Float64">
 						<xsd:annotation>
-							<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+							<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:choice>
@@ -600,12 +603,12 @@
 	</xsd:complexType>
 	<xsd:element name="AllowedRange" type="AllowedRangeType">
 		<xsd:annotation>
-			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+			<xsd:documentation>Allowed value range for a Parameter or Series.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AllowedRangeType">
 		<xsd:annotation>
-			<xsd:documentation>Range of Permitted Values for Parameters.</xsd:documentation>
+			<xsd:documentation>Allowed value range for a Parameter or Series.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Min"/>
@@ -622,100 +625,100 @@
 	<!--Atomic data types-->
 	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="IntType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:int"/>
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Long Integer Value (64 bits, signed).</xsd:documentation>
+			<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Long Integer Value (64 bits, signed).</xsd:documentation>
+			<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:long"/>
 	</xsd:simpleType>
 	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="Float32Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:float"/>
 	</xsd:simpleType>
 	<xsd:element name="Float64" type="Float64Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="Float64Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:double"/>
 	</xsd:simpleType>
 	<xsd:element name="String" type="StringType">
 		<xsd:annotation>
-			<xsd:documentation>Individual String Value.</xsd:documentation>
+			<xsd:documentation>Single string value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="StringType">
 		<xsd:annotation>
-			<xsd:documentation>Individual String Value.</xsd:documentation>
+			<xsd:documentation>Single string value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean Value.</xsd:documentation>
+			<xsd:documentation>Single Boolean value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean Value.</xsd:documentation>
+			<xsd:documentation>Single Boolean value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:boolean"/>
 	</xsd:simpleType>
 	<xsd:element name="DateTime" type="DateTimeType">
 		<xsd:annotation>
-			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+			<xsd:documentation>Single ISO date and time value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="DateTimeType">
 		<xsd:annotation>
-			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+			<xsd:documentation>Single ISO date and time value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="PNG" type="PNGType">
 		<xsd:annotation>
-			<xsd:documentation>Base 64 encoded PNG image</xsd:documentation>
+			<xsd:documentation>Base64 binary encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="PNGType">
 		<xsd:annotation>
-			<xsd:documentation>Base 64 encoded PNG image</xsd:documentation>
+			<xsd:documentation>Base64 binary encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:base64Binary"/>
 	</xsd:simpleType>
 	<xsd:element name="EmbeddedXML" type="EmbeddedXMLType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+			<xsd:documentation>Value governed by a non-AnIML XML Schema.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="EmbeddedXMLType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
+			<xsd:documentation>Value governed by a non-AnIML XML Schema.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
