@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns="urn:org:astm:animl:schema:core:draft:0.31" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.31" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -1011,7 +1011,11 @@
 		<xsd:annotation>
 			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="EmbeddedXMLType"/>
+		<xsd:restriction>
+			<xsd:simpleType>
+				<xsd:restriction base="EmbeddedXMLType"/>
+			</xsd:simpleType>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="SingleValueType">
 		<xsd:annotation>
