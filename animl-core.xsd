@@ -195,15 +195,10 @@
 			<xsd:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Author" minOccurs="0"/>
-			<xsd:element ref="Software" minOccurs="0"/>
-			<xsd:element ref="Device" minOccurs="0"/>
-			<xsd:element ref="Timestamp" minOccurs="0"/>
-			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
-			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
-			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="CategorySet" minOccurs="0"/>
+			<xsd:element ref="Timestamp" minOccurs="0"/>
+			<xsd:element ref="Infrastructure"/>
+			<xsd:element ref="Method"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
@@ -247,6 +242,23 @@
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:dateTime"/>
 	</xsd:simpleType>
+	<xsd:element name="Method" type="MethodType"/>
+	<xsd:complexType name="MethodType">
+		<xsd:sequence>
+			<xsd:element ref="Author" minOccurs="0"/>
+			<xsd:element ref="Device" minOccurs="0"/>
+			<xsd:element ref="Software" minOccurs="0"/>
+			<xsd:element ref="CategorySet" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Infrastructure" type="InfrastructureType"/>
+	<xsd:complexType name="InfrastructureType">
+		<xsd:sequence>
+			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
+			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
+			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
 		<xsd:annotation>
 			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
@@ -256,9 +268,10 @@
 		<xsd:annotation>
 			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="SampleReference" maxOccurs="unbounded"/>
-		</xsd:sequence>
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element ref="SampleReference"/>
+			<xsd:element ref="SampleInheritance"/>
+		</xsd:choice>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="Technique" type="TechniqueType">
@@ -324,6 +337,13 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:element name="SampleInheritance" type="SampleInheritanceType"/>
+	<xsd:complexType name="SampleInheritanceType">
+		<xsd:complexContent>
+			<xsd:restriction base="SampleReferenceType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SampleReferenceMasterType"/>
 	<xsd:simpleType name="SamplePurposeType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
@@ -356,12 +376,12 @@
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Experiment Step whose data is consumed.</xsd:documentation>
+			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ExperimentDataReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Experiment Step whose data is consumed.</xsd:documentation>
+			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attribute name="experimentStepID" type="xsd:token" use="required"/>
 		<xsd:attribute name="role" type="xsd:token" use="required"/>
@@ -501,12 +521,12 @@
 	</xsd:complexType>
 	<xsd:element name="StartValue" type="StartValueType">
 		<xsd:annotation>
-			<xsd:documentation>First value of the incremented set</xsd:documentation>
+			<xsd:documentation>First value of the auto-incremented set</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="StartValueType">
 		<xsd:annotation>
-			<xsd:documentation>First value of the incremented set</xsd:documentation>
+			<xsd:documentation>First value of the auto-incremented set</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="NumericValueType"/>
