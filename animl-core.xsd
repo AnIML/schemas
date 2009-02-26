@@ -439,7 +439,7 @@
 			<xsd:element ref="Series" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="length" type="xsd:nonNegativeInteger" use="required">
+		<xsd:attribute name="length" type="NonNegativeIntType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Number of data points each Series contains.</xsd:documentation>
 			</xsd:annotation>
@@ -1136,20 +1136,28 @@
 		</xsd:annotation>
 		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntType">
+		<xsd:annotation>
+			<xsd:documentation>Individual non-negative Integer Value (32 bits, signed)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
 	<xsd:attributeGroup name="ValueSet">
 		<xsd:annotation>
 			<xsd:documentation>Start and End Index for this Set of Values (zero-based).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="optional">
+		<xsd:attribute name="startIndex" type="NonNegativeIntType" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Zero-based index where this Value Set starts. The specification is inclusive.</xsd:documentation>
+				<xsd:documentation>Zero-based index of the first entry in this Value Set. The specification is inclusive.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
+		<xsd:attribute name="endIndex" type="NonNegativeIntType" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Zero-based Index of the last Entry in this Value Set. The specification is inclusive.</xsd:documentation>
+				<xsd:documentation>Zero-based index of the last entry in this Value Set. The specification is inclusive.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:attributeGroup>
