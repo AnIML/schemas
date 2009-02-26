@@ -197,8 +197,8 @@
 		<xsd:sequence>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
-			<xsd:element ref="Infrastructure"/>
-			<xsd:element ref="Method"/>
+			<xsd:element ref="Infrastructure" minOccurs="0"/>
+			<xsd:element ref="Method" minOccurs="0"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
@@ -220,13 +220,12 @@
 			<xsd:documentation>Represents a template for an ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Author" minOccurs="0"/>
-			<xsd:element ref="Software" minOccurs="0"/>
-			<xsd:element ref="Device" minOccurs="0"/>
-			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="CategorySet" minOccurs="0"/>
+			<xsd:element ref="Timestamp" minOccurs="0"/>
+			<xsd:element ref="Infrastructure" minOccurs="0"/>
+			<xsd:element ref="Method" minOccurs="0"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
