@@ -204,11 +204,9 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Infrastructure" minOccurs="0"/>
 			<xsd:element ref="Method" minOccurs="0"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
@@ -229,11 +227,9 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Technique" minOccurs="0"/>
-			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="Infrastructure" minOccurs="0"/>
 			<xsd:element ref="Method" minOccurs="0"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
@@ -264,6 +260,8 @@
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
 			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
 			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
+			<xsd:element ref="Timestamp" minOccurs="0"/>
+			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
