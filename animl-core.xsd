@@ -969,45 +969,45 @@
 	</xsd:simpleType>
 	<xsd:element name="String" type="StringType">
 		<xsd:annotation>
-			<xsd:documentation>Individual String Value</xsd:documentation>
+			<xsd:documentation>Individual string value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="StringType">
 		<xsd:annotation>
-			<xsd:documentation>Individual String Value</xsd:documentation>
+			<xsd:documentation>Individual string value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean Value</xsd:documentation>
+			<xsd:documentation>Individual Boolean value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean Value</xsd:documentation>
+			<xsd:documentation>Individual Boolean value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:boolean"/>
 	</xsd:simpleType>
 	<xsd:element name="DateTime" type="DateTimeType">
 		<xsd:annotation>
-			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+			<xsd:documentation>Individual ISO date/time value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="DateTimeType">
 		<xsd:annotation>
-			<xsd:documentation>Individual ISO Date/Time Value</xsd:documentation>
+			<xsd:documentation>Individual ISO date/time value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="PNG" type="PNGType">
 		<xsd:annotation>
-			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+			<xsd:documentation>Base 64 encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="PNGType">
 		<xsd:annotation>
-			<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+			<xsd:documentation>Base 64 encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:union memberTypes="xsd:base64Binary"/>
 	</xsd:simpleType>
@@ -1024,7 +1024,7 @@
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
-			<xsd:documentation>Value governed by the SVG  DTD. Used to represent vector graphic images.</xsd:documentation>
+			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="SVGType">
@@ -1080,37 +1080,37 @@
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="Int">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual integer value (32 bits, signed, maxInclusive·2147483647 and ·minInclusive·-2147483648).</xsd:documentation>
+					<xsd:documentation>Represents an individual integer value (32 bits, signed).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Long">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual Long Integer Value (64 bits, signed, ·maxInclusive·is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
+					<xsd:documentation>Represents an individual long integer value (64 bits, signed).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Float32">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual 32-bit Floating Point Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual 32-bit floating point value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Float64">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual 64-bit Floating Point Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual 64-bit floating point value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="String">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual String Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual string value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Boolean">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual Boolean Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual Boolean value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="DateTime">
 				<xsd:annotation>
-					<xsd:documentation>Represents an individual ISO Date/Time Value.</xsd:documentation>
+					<xsd:documentation>Represents an individual ISO date/time value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="EmbeddedXML">
@@ -1120,12 +1120,12 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="PNG">
 				<xsd:annotation>
-					<xsd:documentation>Base 64 encoded PNG  image</xsd:documentation>
+					<xsd:documentation>Base 64 encoded PNG image</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="SVG">
 				<xsd:annotation>
-					<xsd:documentation>Value governed by the SVG  DTD. It is for representing images.</xsd:documentation>
+					<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
