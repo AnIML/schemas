@@ -210,7 +210,7 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
-		<xsd:attribute name="experimentStepID" type="xsd:token" use="optional">
+		<xsd:attribute name="experimentStepID" type="xsd:token" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Unique identifier for this ExperimentStep. Used to point to this step from an ExperimentDataReference.</xsd:documentation>
 			</xsd:annotation>
@@ -243,7 +243,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Date and time of modification.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:dateTime"/>
+		<xsd:restriction base="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="Method" type="MethodType"/>
 	<xsd:complexType name="MethodType">
@@ -751,7 +751,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Description" type="DescriptionType">
 		<xsd:annotation>
@@ -762,7 +762,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Reference" type="ReferenceType">
 		<xsd:annotation>
@@ -773,7 +773,7 @@
 		<xsd:annotation>
 			<xsd:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:IDREF"/>
+		<xsd:restriction base="xsd:IDREF"/>
 	</xsd:simpleType>
 	<xsd:element name="Signature" type="ds:SignatureType">
 		<xsd:annotation>
@@ -920,7 +920,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifes whether a Series should be displayed by default.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:boolean"/>
+		<xsd:restriction base="xsd:boolean"/>
 	</xsd:simpleType>
 	<!-- -->
 	<!--Complex Types for Parameter and Series values, Simple Types for Data Type names-->
@@ -950,7 +950,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:int"/>
+		<xsd:restriction base="xsd:int"/>
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
@@ -961,7 +961,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual Long Integer Value (64 bits, signed, maxInclusive is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:long"/>
+		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
 	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
@@ -972,7 +972,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:float"/>
+		<xsd:restriction base="xsd:float"/>
 	</xsd:simpleType>
 	<xsd:element name="Float64" type="Float64Type">
 		<xsd:annotation>
@@ -983,7 +983,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:double"/>
+		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
 	<xsd:element name="String" type="StringType">
 		<xsd:annotation>
@@ -994,7 +994,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual string value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
@@ -1005,7 +1005,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual Boolean value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:boolean"/>
+		<xsd:restriction base="xsd:boolean"/>
 	</xsd:simpleType>
 	<xsd:element name="DateTime" type="DateTimeType">
 		<xsd:annotation>
@@ -1016,7 +1016,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Individual ISO date/time value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:dateTime"/>
+		<xsd:restriction base="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="PNG" type="PNGType">
 		<xsd:annotation>
@@ -1027,7 +1027,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Base 64 encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:base64Binary"/>
+		<xsd:restriction base="xsd:base64Binary"/>
 	</xsd:simpleType>
 	<xsd:element name="EmbeddedXML" type="EmbeddedXMLType">
 		<xsd:annotation>
@@ -1038,7 +1038,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a different XML Schema.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
@@ -1325,7 +1325,11 @@
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string"/>
+			</xsd:simpleType>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:element name="Location" type="LocationType">
 		<xsd:annotation>
@@ -1336,7 +1340,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Device" type="DeviceType">
 		<xsd:annotation>
