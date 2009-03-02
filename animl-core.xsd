@@ -344,6 +344,24 @@
 				<xsd:documentation>SampleID of the Sample used in the current ExperimentStep. Refers to the sampleID within the SampleSet section of the document.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attributeGroup ref="SampleAttributes"/>
+	</xsd:complexType>
+	<xsd:element name="SampleInheritance" type="SampleInheritanceType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that a Sample was inherited from the parent ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SampleInheritanceType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that a Sample was inherited from the parent ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="SampleAttributes"/>
+	</xsd:complexType>
+	<xsd:attributeGroup name="SampleAttributes">
+		<xsd:annotation>
+			<xsd:documentation>Common attributes for sample references.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:attribute name="role" type="xsd:token" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Role this sample plays within the current ExperimentStep.</xsd:documentation>
@@ -354,14 +372,7 @@
 				<xsd:documentation>Specifies whether the referenced sample is produced or consumed by the current ExperimentStep.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-	</xsd:complexType>
-	<xsd:element name="SampleInheritance" type="SampleInheritanceType"/>
-	<xsd:complexType name="SampleInheritanceType">
-		<xsd:complexContent>
-			<xsd:restriction base="SampleReferenceType"/>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:complexType name="SampleReferenceMasterType"/>
+	</xsd:attributeGroup>
 	<xsd:simpleType name="SamplePurposeType">
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
