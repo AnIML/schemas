@@ -939,18 +939,20 @@
 		<xsd:annotation>
 			<xsd:documentation>Base type for all value elements for use in Series and parameters. To be restricted.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice maxOccurs="unbounded">
-			<xsd:element ref="Int"/>
-			<xsd:element ref="Long"/>
-			<xsd:element ref="Float32"/>
-			<xsd:element ref="Float64"/>
-			<xsd:element ref="String"/>
-			<xsd:element ref="Boolean"/>
-			<xsd:element ref="DateTime"/>
-			<xsd:element ref="PNG"/>
-			<xsd:element ref="EmbeddedXML"/>
-			<xsd:element ref="SVG"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="Int"/>
+				<xsd:element ref="Long"/>
+				<xsd:element ref="Float32"/>
+				<xsd:element ref="Float64"/>
+				<xsd:element ref="String"/>
+				<xsd:element ref="Boolean"/>
+				<xsd:element ref="DateTime"/>
+				<xsd:element ref="PNG"/>
+				<xsd:element ref="EmbeddedXML"/>
+				<xsd:element ref="SVG"/>
+			</xsd:choice>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
@@ -1072,18 +1074,20 @@
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
-				<xsd:choice>
-					<xsd:element ref="Int"/>
-					<xsd:element ref="Long"/>
-					<xsd:element ref="Float32"/>
-					<xsd:element ref="Float64"/>
-					<xsd:element ref="String"/>
-					<xsd:element ref="Boolean"/>
-					<xsd:element ref="DateTime"/>
-					<xsd:element ref="PNG"/>
-					<xsd:element ref="EmbeddedXML"/>
-					<xsd:element ref="SVG"/>
-				</xsd:choice>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element ref="Int"/>
+						<xsd:element ref="Long"/>
+						<xsd:element ref="Float32"/>
+						<xsd:element ref="Float64"/>
+						<xsd:element ref="String"/>
+						<xsd:element ref="Boolean"/>
+						<xsd:element ref="DateTime"/>
+						<xsd:element ref="PNG"/>
+						<xsd:element ref="EmbeddedXML"/>
+						<xsd:element ref="SVG"/>
+					</xsd:choice>
+				</xsd:sequence>
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -1093,12 +1097,14 @@
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:restriction base="UnboundedValueType">
-				<xsd:choice>
-					<xsd:element ref="Int"/>
-					<xsd:element ref="Long"/>
-					<xsd:element ref="Float32"/>
-					<xsd:element ref="Float64"/>
-				</xsd:choice>
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element ref="Int"/>
+						<xsd:element ref="Long"/>
+						<xsd:element ref="Float32"/>
+						<xsd:element ref="Float64"/>
+					</xsd:choice>
+				</xsd:sequence>
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
