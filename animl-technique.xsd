@@ -428,7 +428,7 @@
 		<xsd:annotation>
 			<xsd:documentation>A positive Integer or "unbounded" (see UnboundedType)</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:positiveInteger UnboundedType"/>
+		<xsd:union memberTypes="PositiveIntType UnboundedType"/>
 	</xsd:simpleType>
 	<xsd:element name="Documentation" type="DocumentationType">
 		<xsd:annotation>
@@ -713,6 +713,14 @@
 			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:int"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveIntType">
+		<xsd:annotation>
+			<xsd:documentation>Single 32-bit positive integer value.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="1"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
