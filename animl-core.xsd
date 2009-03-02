@@ -85,7 +85,7 @@
 			<xsd:field xpath="@templateID"/>
 		</xsd:key>
 		<xsd:keyref name="templateUsedRef" refer="templateID">
-			<xsd:selector xpath="ExperimentStep"/>
+			<xsd:selector xpath="./ExperimentStep"/>
 			<xsd:field xpath="@templateUsed"/>
 		</xsd:keyref>
 	</xsd:element>
@@ -1137,7 +1137,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="SeriesTypeType">
 		<xsd:annotation>
-			<xsd:documentation>Names of Data Types for Series</xsd:documentation>
+			<xsd:documentation>Names of Data Types for Series.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
