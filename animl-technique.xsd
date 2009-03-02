@@ -439,7 +439,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<!-- -->
 	<!--Type definitions for basic data types-->
@@ -712,7 +712,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:int"/>
+		<xsd:restriction base="xsd:int"/>
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
@@ -723,7 +723,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:long"/>
+		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
 	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
@@ -734,7 +734,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:float"/>
+		<xsd:restriction base="xsd:float"/>
 	</xsd:simpleType>
 	<xsd:element name="Float64" type="Float64Type">
 		<xsd:annotation>
@@ -745,7 +745,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:double"/>
+		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
 	<xsd:element name="String" type="StringType">
 		<xsd:annotation>
@@ -756,7 +756,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single string value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
@@ -767,7 +767,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single Boolean value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:boolean"/>
+		<xsd:restriction base="xsd:boolean"/>
 	</xsd:simpleType>
 	<xsd:element name="DateTime" type="DateTimeType">
 		<xsd:annotation>
@@ -778,7 +778,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Single ISO date and time value.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:dateTime"/>
+		<xsd:restriction base="xsd:dateTime"/>
 	</xsd:simpleType>
 	<xsd:element name="PNG" type="PNGType">
 		<xsd:annotation>
@@ -789,7 +789,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Base64 binary encoded PNG image.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:base64Binary"/>
+		<xsd:restriction base="xsd:base64Binary"/>
 	</xsd:simpleType>
 	<xsd:element name="EmbeddedXML" type="EmbeddedXMLType">
 		<xsd:annotation>
@@ -800,7 +800,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Value governed by a non-AnIML XML Schema.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 	<xsd:element name="SVG" type="SVGType">
 		<xsd:annotation>
@@ -811,6 +811,6 @@
 		<xsd:annotation>
 			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:union memberTypes="xsd:string"/>
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 </xsd:schema>
