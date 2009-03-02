@@ -310,9 +310,22 @@
 		<xsd:annotation>
 			<xsd:documentation>Datatype which defines a reference to a data point or value range in the parent Result.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="DataPointReferenceType"/>
-		</xsd:complexContent>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="seriesID" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the start value of the Series referenced. It can be either a Series index or a value within the value range of the Series specified.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<!---->
 	<!--SampleReferenceSet related information-->
@@ -1213,27 +1226,6 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:complexType name="DataPointReferenceType">
-		<xsd:annotation>
-			<xsd:documentation>Basis type for a reference to a data point or value range.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="seriesID" type="xsd:string" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Specifies the start value of the Series referenced. It can be either a Series index or a value within the value range of the Series specified.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
-			<xsd:annotation>
-				<xsd:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-	</xsd:complexType>
 	<!-- -->
 	<!--Tracking Tag Elements and Types-->
 	<xsd:element name="TrackingTagSet" type="TrackingTagSetType">
