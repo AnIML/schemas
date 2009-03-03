@@ -163,7 +163,7 @@
 				<xsd:documentation>Sample ID of container in which this sample is located.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="comtainerCoordinate" type="xsd:token" use="optional">
+		<xsd:attribute name="containerCoordinate" type="xsd:token" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Coordinates of this sample within the parent container.</xsd:documentation>
 			</xsd:annotation>
