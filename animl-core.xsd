@@ -81,7 +81,7 @@
 			<xsd:field xpath="@seriesID"/>
 		</xsd:keyref>
 		<xsd:key name="templateID">
-			<xsd:selector xpath="Template"/>
+			<xsd:selector xpath="./Template"/>
 			<xsd:field xpath="@templateID"/>
 		</xsd:key>
 		<xsd:keyref name="templateUsedRef" refer="templateID">
