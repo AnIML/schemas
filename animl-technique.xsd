@@ -29,7 +29,7 @@
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3"/>
-		<xsd:attribute name="name" type="xsd:string" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
 			</xsd:annotation>
@@ -55,7 +55,7 @@
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>SampleRole name used in the Sample element's role attribute.</xsd:documentation>
 			</xsd:annotation>
@@ -116,7 +116,7 @@
 			<xsd:element ref="SeriesSetBlueprint" minOccurs="0"/>
 			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Required name of the Result.</xsd:documentation>
 			</xsd:annotation>
@@ -157,7 +157,7 @@
 				<xsd:element ref="SeriesBlueprintChoice"/>
 			</xsd:choice>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required"/>
+		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="SeriesBlueprintChoice" type="SeriesBlueprintChoiceType">
 		<xsd:annotation>
@@ -196,7 +196,7 @@
 			<xsd:element ref="AllowedRange" minOccurs="0"/>
 			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Name the Series shall have.</xsd:documentation>
 			</xsd:annotation>
@@ -223,7 +223,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Does the Series represent an independent or dependent variable?</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="independent">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that the Series represents an independent variable.</xsd:documentation>
@@ -240,7 +240,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that the Series data is typically plotted on a linear scale.</xsd:documentation>
@@ -288,7 +288,7 @@
 			<xsd:element ref="ParameterBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="CategoryBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:token" use="required"/>
+		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1"/>
 	</xsd:complexType>
@@ -314,7 +314,7 @@
 			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="parameterType" type="ParameterTypeType" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
@@ -329,7 +329,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Data type which indicates whether a sample is consumed or produced in an experiment.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="produced">
 				<xsd:annotation>
 					<xsd:documentation>Indicates that a sample is produced in an experiment.</xsd:documentation>
@@ -403,7 +403,7 @@
 		<xsd:annotation>
 			<xsd:documentation>String with two allowed values: "required" and "optional".</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="required">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that the corresponding entity is required.</xsd:documentation>
@@ -420,7 +420,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Represents the list value "unbounded".</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="unbounded"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -494,7 +494,7 @@
 		<xsd:annotation>
 			<xsd:documentation>String representation of a particular Unit.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -502,7 +502,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Human-readable name of a Quantity.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -527,7 +527,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Names of all SI Units</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="1">
 				<xsd:annotation>
 					<xsd:documentation>Represents a dimensionless unit.</xsd:documentation>
@@ -583,7 +583,7 @@
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="ParameterValueType">
-				<xsd:attribute name="unit" type="xsd:string" use="optional">
+				<xsd:attribute name="unit" type="ShortTokenType" use="optional">
 					<xsd:annotation>
 						<xsd:documentation>Label of Unit that applies to this allowed value
 </xsd:documentation>
@@ -605,7 +605,7 @@
 			<xsd:element ref="Min"/>
 			<xsd:element ref="Max"/>
 		</xsd:sequence>
-		<xsd:attribute name="unit" type="xsd:string" use="optional">
+		<xsd:attribute name="unit" type="ShortTokenType" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Label of Unit that applies to this allowed range of values.</xsd:documentation>
 			</xsd:annotation>
@@ -655,7 +655,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Enumeration of data types used in AnIML.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="Int">
 				<xsd:annotation>
 					<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
@@ -820,5 +820,23 @@
 			<xsd:documentation>Value governed by the SVG DTD. Used to represent vector graphic images.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!---->
+	<!--General purpose data types-->
+	<xsd:simpleType name="ShortStringType">
+		<xsd:annotation>
+			<xsd:documentation>String with up to 1024 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1024"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ShortTokenType">
+		<xsd:annotation>
+			<xsd:documentation>Token with up to 1024 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="1024"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>
