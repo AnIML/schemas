@@ -43,7 +43,7 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.31">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.31">
 			<xsd:annotation>
 				<xsd:documentation>Version number of this AnIML document. Must be "0.31".</xsd:documentation>
 			</xsd:annotation>
@@ -142,8 +142,8 @@
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="sampleID" type="xsd:token" use="required"/>
-		<xsd:attribute name="barcode" type="xsd:token" use="optional">
+		<xsd:attribute name="sampleID" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="barcode" type="ShortTokenType" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Value of barcode label that is attached to sample container.</xsd:documentation>
 			</xsd:annotation>
@@ -158,12 +158,12 @@
 				<xsd:documentation>Whether this sample is also a container for other samples. Set to "simple" if not.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="containerID" type="xsd:token" use="optional">
+		<xsd:attribute name="containerID" type="ShortTokenType" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Sample ID of container in which this sample is located.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="containerCoordinate" type="xsd:token" use="optional">
+		<xsd:attribute name="containerCoordinate" type="ShortTokenType" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Coordinates of this sample within the parent container.</xsd:documentation>
 			</xsd:annotation>
@@ -173,7 +173,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Describes what kind of container the current sample is.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="simple">
 				<xsd:annotation>
 					<xsd:documentation>This container holds exactly one sample (e.g. well, vial, tube).</xsd:documentation>
@@ -209,8 +209,8 @@
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="templateUsed" type="xsd:token" use="optional"/>
-		<xsd:attribute name="experimentStepID" type="xsd:token" use="required">
+		<xsd:attribute name="templateUsed" type="ShortTokenType" use="optional"/>
+		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Unique identifier for this ExperimentStep. Used to point to this step from an ExperimentDataReference.</xsd:documentation>
 			</xsd:annotation>
@@ -232,7 +232,7 @@
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="templateID" type="xsd:token" use="required"/>
+		<xsd:attribute name="templateID" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="Timestamp" type="TimestampType">
 		<xsd:annotation>
@@ -311,7 +311,7 @@
 			<xsd:documentation>Datatype which defines a reference to a data point or value range in the parent Result.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="seriesID" type="xsd:string" use="required">
+		<xsd:attribute name="seriesID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
 			</xsd:annotation>
@@ -339,7 +339,7 @@
 			<xsd:documentation>Reference to a Sample used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="sampleID" type="xsd:token" use="required">
+		<xsd:attribute name="sampleID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>SampleID of the Sample used in the current ExperimentStep. Refers to the sampleID within the SampleSet section of the document.</xsd:documentation>
 			</xsd:annotation>
@@ -362,7 +362,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Common attributes for sample references.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attribute name="role" type="xsd:token" use="required">
+		<xsd:attribute name="role" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Role this sample plays within the current ExperimentStep.</xsd:documentation>
 			</xsd:annotation>
@@ -377,7 +377,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="produced">
 				<xsd:annotation>
 					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
@@ -412,8 +412,8 @@
 		<xsd:annotation>
 			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attribute name="experimentStepID" type="xsd:token" use="required"/>
-		<xsd:attribute name="role" type="xsd:token" use="required"/>
+		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<!-- -->
 	<!--Technique related information-->
@@ -431,7 +431,7 @@
 				<xsd:documentation>URI where Extension file can be fetched.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="name" type="xsd:token" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
 			</xsd:annotation>
@@ -497,7 +497,7 @@
 				<xsd:documentation>Specified whether the Series is independent or dependent.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="seriesID" type="xsd:token" use="required">
+		<xsd:attribute name="seriesID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Identifies the Series. Used in References from subordinate ExperimentSteps. Unique per SeriesSet.</xsd:documentation>
 			</xsd:annotation>
@@ -618,7 +618,7 @@
 		<xsd:annotation>
 			<xsd:documentation>String representation of a particular Unit.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -626,7 +626,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Quantity a Unit is applicable to.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -651,7 +651,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Names of all SI Units</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="1">
 				<xsd:annotation>
 					<xsd:documentation>Represents a dimensionless unit.</xsd:documentation>
@@ -725,7 +725,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Type of change made (created, modified, ...)</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="created">
 				<xsd:annotation>
 					<xsd:documentation>The given user has created the references item(s).</xsd:documentation>
@@ -870,7 +870,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether the data points should be connected or not.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="discrete">
 				<xsd:annotation>
 					<xsd:documentation>Specifies whether the data points shouldn't be connected.</xsd:documentation>
@@ -887,7 +887,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specified whether the Series is independent or dependent.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="independent">
 				<xsd:annotation>
 					<xsd:documentation>Specified that the Series is independent.</xsd:documentation>
@@ -904,7 +904,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifies how the data in this Series is typically plotted.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="linear">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that this Series is typically plotted on a linear scale.</xsd:documentation>
@@ -1112,7 +1112,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="Int">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual integer value (32 bits, signed).</xsd:documentation>
@@ -1171,14 +1171,6 @@
 		</xsd:annotation>
 		<xsd:restriction base="ParameterTypeType"/>
 	</xsd:simpleType>
-	<xsd:simpleType name="NonNegativeIntType">
-		<xsd:annotation>
-			<xsd:documentation>Individual non-negative Integer Value (32 bits, signed)</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:int">
-			<xsd:minInclusive value="0"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- -->
 	<!--AttributeGroup for sparse data-->
 	<xsd:attributeGroup name="ValueSet">
@@ -1213,7 +1205,7 @@
 			<xsd:documentation>ID and Name attribute for Signable Items.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
-		<xsd:attribute name="name" type="xsd:token" use="required">
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Plain-text name of this item.</xsd:documentation>
 			</xsd:annotation>
@@ -1225,7 +1217,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Specifies whether a user is a real person, a device, or a software program.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token">
+		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="human">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that the user is a real person.</xsd:documentation>
@@ -1267,8 +1259,8 @@
 		<xsd:annotation>
 			<xsd:documentation>Tag to mark related data items. When a value is given, it may also serve as a reference to an external data system.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:attribute name="name" type="xsd:token" use="required"/>
-		<xsd:attribute name="value" type="xsd:string" use="optional"/>
+		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="value" type="ShortStringType" use="optional"/>
 	</xsd:complexType>
 	<!-- -->
 	<!--Humans, Device and Software involved in recording the data-->
@@ -1318,7 +1310,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Name of person or device.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:string"/>
+		<xsd:restriction base="ShortStringType"/>
 	</xsd:simpleType>
 	<xsd:element name="Email" type="EmailType">
 		<xsd:annotation>
@@ -1329,7 +1321,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
+		<xsd:restriction base="ShortStringType">
 			<xsd:pattern value=".*@.*\..*"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -1344,7 +1336,7 @@
 		</xsd:annotation>
 		<xsd:restriction>
 			<xsd:simpleType>
-				<xsd:restriction base="xsd:string"/>
+				<xsd:restriction base="ShortStringType"/>
 			</xsd:simpleType>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -1357,7 +1349,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:string"/>
+		<xsd:restriction base="ShortStringType"/>
 	</xsd:simpleType>
 	<xsd:element name="Device" type="DeviceType">
 		<xsd:annotation>
@@ -1400,7 +1392,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Company name.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token"/>
+		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
 	<xsd:element name="Version" type="VersionType">
 		<xsd:annotation>
@@ -1411,7 +1403,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Version identifier of software release.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token"/>
+		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
 	<xsd:element name="FirmwareVersion" type="FirmwareVersionType">
 		<xsd:annotation>
@@ -1422,7 +1414,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Version identifier of firmware release.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token"/>
+		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
 	<xsd:element name="SerialNumber" type="SerialNumberType">
 		<xsd:annotation>
@@ -1433,7 +1425,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Unique serial number of device.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token"/>
+		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
 	<xsd:element name="DeviceIdentifier" type="DeviceIdentifierType">
 		<xsd:annotation>
@@ -1444,6 +1436,32 @@
 		<xsd:annotation>
 			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:token"/>
+		<xsd:restriction base="ShortTokenType"/>
+	</xsd:simpleType>
+	<!---->
+	<!--General purpose data types-->
+	<xsd:simpleType name="ShortStringType">
+		<xsd:annotation>
+			<xsd:documentation>String with up to 1024 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1024"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ShortTokenType">
+		<xsd:annotation>
+			<xsd:documentation>Token with up to 1024 characters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="1024"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntType">
+		<xsd:annotation>
+			<xsd:documentation>Individual non-negative Integer Value (32 bits, signed)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="0"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>
