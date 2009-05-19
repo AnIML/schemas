@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.31" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.31">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.32" xmlns="urn:org:astm:animl:schema:core:draft:0.32" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.32">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -43,9 +43,9 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.31">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.32">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.31".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.32".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -401,11 +401,12 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="ExperimentDataReference"/>
+			<xsd:element ref="ExperimentDataBulkReference"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
+			<xsd:documentation>Reference to an Experiment Step whose data are consumed.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ExperimentDataReferenceType">
@@ -413,6 +414,18 @@
 			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="ExperimentDataBulkReference" type="ExperimentDataBulkReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Prefix-based reference to a set of Experiment Steps whose data are consumed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExperimentDataBulkReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Prefix-based reference to a set of Experiment Steps whose data are consumed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="experimentStepIDPrefix" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<!-- -->
