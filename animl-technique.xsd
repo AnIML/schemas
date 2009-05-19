@@ -193,7 +193,6 @@
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="Quantity" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="AllowedRange" minOccurs="0"/>
 			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
@@ -310,9 +309,10 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
-			<xsd:element ref="Quantity" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="Quantity" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="AllowedValue" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="parameterType" type="ParameterTypeType" use="required"/>
@@ -462,6 +462,10 @@
 				</xsd:annotation>
 			</xsd:field>
 		</xsd:unique>
+		<xsd:keyref name="allowedRangeUnitLabelKeyRef" refer="unitLabelUniquePerQuantity">
+			<xsd:selector xpath="AllowedRange"/>
+			<xsd:field xpath="@unit"/>
+		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="QuantityType">
 		<xsd:annotation>
@@ -469,6 +473,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Unit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AllowedRange" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="QuantityNameType" use="required"/>
 	</xsd:complexType>
@@ -582,14 +587,7 @@
 			<xsd:documentation>Permitted Values for Parameter. If not specified, the full range of the data type is allowed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="ParameterValueType">
-				<xsd:attribute name="unit" type="ShortTokenType" use="optional">
-					<xsd:annotation>
-						<xsd:documentation>Label of Unit that applies to this allowed value
-</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
+			<xsd:extension base="ParameterValueType"/>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="AllowedRange" type="AllowedRangeType">
