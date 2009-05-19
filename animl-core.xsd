@@ -399,10 +399,10 @@
 		<xsd:annotation>
 			<xsd:documentation>Set of Experiment Steps consumed by this Experiment Step.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
+		<xsd:choice maxOccurs="unbounded">
 			<xsd:element ref="ExperimentDataReference"/>
 			<xsd:element ref="ExperimentDataBulkReference"/>
-		</xsd:sequence>
+		</xsd:choice>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
 		<xsd:annotation>
