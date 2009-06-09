@@ -163,9 +163,9 @@
 				<xsd:documentation>Sample ID of container in which this sample is located.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="containerCoordinate" type="ShortTokenType" use="optional">
+		<xsd:attribute name="locationInContainer" type="ShortTokenType" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Coordinates of this sample within the parent container.</xsd:documentation>
+				<xsd:documentation>Coordinates of this sample within the enclosing container.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -310,20 +310,14 @@
 		<xsd:annotation>
 			<xsd:documentation>Datatype which defines a reference to a data point or value range in the parent Result.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StartValue"/>
+			<xsd:element ref="EndValue" minOccurs="0"/>
+		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="seriesID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Contains the ID of the Series referenced.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="startIndex" type="xsd:nonNegativeInteger" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Specifies the start value of the Series referenced. It can be either a Series index or a value within the value range of the Series specified.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="endIndex" type="xsd:nonNegativeInteger" use="optional">
-			<xsd:annotation>
-				<xsd:documentation>Specifies how many values, starting from the startValue, should be referenced. Used to refer to an area, rather than an individual value.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -563,12 +557,25 @@
 	</xsd:complexType>
 	<xsd:element name="StartValue" type="StartValueType">
 		<xsd:annotation>
-			<xsd:documentation>First value of the auto-incremented set</xsd:documentation>
+			<xsd:documentation>Lower boundary of an interval or ValueSet.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="StartValueType">
 		<xsd:annotation>
-			<xsd:documentation>First value of the auto-incremented set</xsd:documentation>
+			<xsd:documentation>Lower boundary of an interval or ValueSet.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NumericValueType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="EndValue" type="EndValueType">
+		<xsd:annotation>
+			<xsd:documentation>Upper boundary of an interval.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EndValueType">
+		<xsd:annotation>
+			<xsd:documentation>Upper boundary of an interval.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="NumericValueType"/>
