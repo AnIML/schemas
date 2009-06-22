@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.32" xmlns="urn:org:astm:animl:schema:core:draft:0.32" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.32">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.33" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.33" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.33">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -43,9 +43,9 @@
 			<xsd:element ref="AuditTrail" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.32">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.33">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.32".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.33".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -253,6 +253,7 @@
 			<xsd:element ref="Software" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="Infrastructure" type="InfrastructureType"/>
 	<xsd:complexType name="InfrastructureType">
@@ -263,6 +264,7 @@
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
 		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="SampleReferenceSet" type="SampleReferenceSetType">
 		<xsd:annotation>
