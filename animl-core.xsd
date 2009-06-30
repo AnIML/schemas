@@ -1356,12 +1356,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction>
-			<xsd:simpleType>
-				<xsd:restriction base="ShortStringType"/>
-			</xsd:simpleType>
-		</xsd:restriction>
-	</xsd:simpleType>
+		<xsd:restriction base="ShortStringType"/>	</xsd:simpleType>
 	<xsd:element name="Location" type="LocationType">
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
