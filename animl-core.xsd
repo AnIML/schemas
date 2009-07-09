@@ -40,7 +40,7 @@
 		<xsd:sequence>
 			<xsd:element ref="SampleSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
-			<xsd:element ref="AuditTrail" minOccurs="0"/>
+			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.33">
@@ -99,28 +99,28 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<xsd:element name="AuditTrail" type="AuditTrailType">
+	<xsd:element name="AuditTrailEntrySet" type="AuditTrailEntrySetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for log entries describing changes to this document.</xsd:documentation>
+			<xsd:documentation>Container for audit trail entries describing changes to this document.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="AuditTrailType">
+	<xsd:complexType name="AuditTrailEntrySetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for log entries describing changes to this document.</xsd:documentation>
+			<xsd:documentation>Container for audit trail entries describing changes to this document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="LogEntry" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AuditTrailEntry" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="SignatureSet" type="SignatureSetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xsd:documentation>
+			<xsd:documentation>Container for digital signatures covering parts of this AnIML document.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SignatureSetType">
 		<xsd:annotation>
-			<xsd:documentation>Container for Digital Signatures to validate parts of this AnIML document.</xsd:documentation>
+			<xsd:documentation>Container for digital signatures covering parts of this AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Signature" maxOccurs="unbounded"/>
@@ -245,8 +245,15 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:dateTime"/>
 	</xsd:simpleType>
-	<xsd:element name="Method" type="MethodType"/>
+	<xsd:element name="Method" type="MethodType">
+		<xsd:annotation>
+			<xsd:documentation>Describes how this Experiment was performed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="MethodType">
+		<xsd:annotation>
+			<xsd:documentation>Describes how this Experiment was performed.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Author" minOccurs="0"/>
 			<xsd:element ref="Device" minOccurs="0"/>
@@ -255,11 +262,18 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
-	<xsd:element name="Infrastructure" type="InfrastructureType"/>
+	<xsd:element name="Infrastructure" type="InfrastructureType">
+		<xsd:annotation>
+			<xsd:documentation>Contains references to the context of this Experiment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:complexType name="InfrastructureType">
+		<xsd:annotation>
+			<xsd:documentation>Contains references to the context of this Experiment.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SampleReferenceSet" minOccurs="0"/>
-			<xsd:element ref="ParentDataPointReference" minOccurs="0"/>
+			<xsd:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
 			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
@@ -303,14 +317,27 @@
 	</xsd:complexType>
 	<!---->
 	<!--ParentDataPointReferenceSet related information-->
+	<xsd:element name="ParentDataPointReferenceSet" type="ParentDataPointReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Contains references to the parent Result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParentDataPointReferenceSetType">
+		<xsd:annotation>
+			<xsd:documentation>Contains references to the parent Result.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ParentDataPointReference" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:element name="ParentDataPointReference" type="ParentDataPointReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Establishes a reference to a data point or value range in the parent Result.</xsd:documentation>
+			<xsd:documentation>Reference to a data point or value range in an independent Series in the parent Result.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ParentDataPointReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Datatype which defines a reference to a data point or value range in the parent Result.</xsd:documentation>
+			<xsd:documentation>Reference to a data point or value range in an independent Series in the parent Result.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="StartValue"/>
@@ -717,13 +744,13 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!---->
-	<!--AuditTrail and LogEntry related information-->
-	<xsd:element name="LogEntry" type="LogEntryType">
+	<!--AuditTrailEntry related information-->
+	<xsd:element name="AuditTrailEntry" type="AuditTrailEntryType">
 		<xsd:annotation>
 			<xsd:documentation>Describes a set of changes made to the particular AnIML document by one user at a given time.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="LogEntryType">
+	<xsd:complexType name="AuditTrailEntryType">
 		<xsd:annotation>
 			<xsd:documentation>Describes a set of changes made to the particular AnIML document by one user at a given time.</xsd:documentation>
 		</xsd:annotation>
@@ -1356,7 +1383,8 @@
 		<xsd:annotation>
 			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ShortStringType"/>	</xsd:simpleType>
+		<xsd:restriction base="ShortStringType"/>
+	</xsd:simpleType>
 	<xsd:element name="Location" type="LocationType">
 		<xsd:annotation>
 			<xsd:documentation>Location or physical address.</xsd:documentation>
