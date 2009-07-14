@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.31" xmlns="urn:org:astm:animl:schema:technique:draft:1.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.31" xmlns="urn:org:astm:animl:schema:technique:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -248,7 +248,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Does the Series represent an independent or dependent variable?</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ShortTokenType">
+		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="independent">
 				<xsd:annotation>
 					<xsd:documentation>Specifies that the Series represents an independent variable.</xsd:documentation>
@@ -546,13 +546,13 @@
 		<xsd:annotation>
 			<xsd:documentation>Combination of SI Units used to represent Scientific unit</xsd:documentation>
 		</xsd:annotation>
-		<xsd:simpleContent>
+		<xsd:complexContent>
 			<xsd:extension base="SIUnitNameList">
 				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
 			</xsd:extension>
-		</xsd:simpleContent>
+		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:simpleType name="SIUnitNameList">
 		<xsd:annotation>
@@ -679,7 +679,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Enumeration of data types used in AnIML.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ShortTokenType">
+		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="Int">
 				<xsd:annotation>
 					<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
