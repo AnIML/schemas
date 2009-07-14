@@ -7,7 +7,7 @@
 	<!-- ================== -->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are  typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
+			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:unique name="sampleRoleName">
 			<xsd:selector xpath="SampleRole"/>
@@ -20,7 +20,7 @@
 	</xsd:element>
 	<xsd:complexType name="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are  typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
+			<xsd:documentation>The root element of an AnIML Technique Definition document.  Techniques are typically categorized as either sample alteration, detection, or data post-processing.  Each document defines and constrains how ExperimentSteps and Sample definitions are to be filled for its respective technique in an AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
