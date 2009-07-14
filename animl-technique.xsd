@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (Burkhard Schaefer Software & Networks) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:1.2" xmlns="urn:org:astm:animl:schema:technique:draft:1.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.31" xmlns="urn:org:astm:animl:schema:technique:draft:1.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -25,10 +25,11 @@
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
 			<xsd:element ref="SampleRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ExperimentDataRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.3"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.31"/>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
@@ -44,12 +45,12 @@
 	<!--Basic Layout of an Experiment Step-->
 	<xsd:element name="SampleRoleBlueprint" type="SampleRoleBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of Parameters and role that the referenced Sample plays in the ExperimentStep.</xsd:documentation>
+			<xsd:documentation>Definition of characteristics and role that the referenced Sample plays in the ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="SampleRoleBlueprintType">
 		<xsd:annotation>
-			<xsd:documentation>Definition of Parameters and role that the referenced Sample plays in the ExperimentStep.</xsd:documentation>
+			<xsd:documentation>Definition of characteristics and role that the referenced Sample plays in the ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
@@ -57,7 +58,7 @@
 		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
-				<xsd:documentation>SampleRole name used in the Sample element's role attribute.</xsd:documentation>
+				<xsd:documentation>SampleRole name used in the SampleReference element's role attribute.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required">
@@ -78,6 +79,31 @@
 		<xsd:attribute name="inheritable" type="xsd:boolean" use="optional" default="true">
 			<xsd:annotation>
 				<xsd:documentation>Is the role required when this ExperimentStep is nested under a Result?  If true, the sample is inherited from the superordinate ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ExperimentDataRoleBlueprint" type="ExperimentDataRoleBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of characteristics and role that the referenced ExperimentStep plays in the ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExperimentDataRoleBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of characteristics and role that the referenced ExperimentStep plays in the ExperimentStep.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="ShortStringType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Role name used in the ExperimentData(Bulk)Reference element's role attribute.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
+			<xsd:annotation>
+				<xsd:documentation>Are ExperimentData(Bulk)References with this role required?</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
+			<xsd:annotation>
+				<xsd:documentation>Specifies how many ExperimentData(Bulk)References with this role may exist.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
