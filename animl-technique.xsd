@@ -61,7 +61,7 @@
 				<xsd:documentation>SampleRole name used in the SampleReference element's role attribute.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="samplePurpose" type="SamplePurposeType" use="required">
+		<xsd:attribute name="samplePurpose" type="PurposeType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Is the sample in this role produced or consumed by the Technique? (see SamplePurposeType).</xsd:documentation>
 			</xsd:annotation>
@@ -91,11 +91,15 @@
 		<xsd:annotation>
 			<xsd:documentation>Definition of characteristics and role that the referenced ExperimentStep plays in the ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortStringType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Role name used in the ExperimentData(Bulk)Reference element's role attribute.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="experimentStepPurpose" type="PurposeType" use="required"/>
 		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required">
 			<xsd:annotation>
 				<xsd:documentation>Are ExperimentData(Bulk)References with this role required?</xsd:documentation>
@@ -351,9 +355,9 @@
 	</xsd:complexType>
 	<!-- -->
 	<!--Type definitions for sample attributes-->
-	<xsd:simpleType name="SamplePurposeType">
+	<xsd:simpleType name="PurposeType">
 		<xsd:annotation>
-			<xsd:documentation>Data type which indicates whether a sample is consumed or produced in an experiment.</xsd:documentation>
+			<xsd:documentation>Data type which indicates whether a sample or ExperimentStep is consumed or produced in an experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortTokenType">
 			<xsd:enumeration value="produced">
