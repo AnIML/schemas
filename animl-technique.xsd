@@ -546,13 +546,13 @@
 		<xsd:annotation>
 			<xsd:documentation>Combination of SI Units used to represent Scientific unit</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
+		<xsd:simpleContent>
 			<xsd:extension base="SIUnitNameList">
 				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
 				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
 			</xsd:extension>
-		</xsd:complexContent>
+		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:simpleType name="SIUnitNameList">
 		<xsd:annotation>
