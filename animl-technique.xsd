@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.31" xmlns="urn:org:astm:animl:schema:technique:draft:0.31" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.32" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:0.32" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -29,7 +29,7 @@
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.31"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.32"/>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
@@ -188,6 +188,7 @@
 			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="modality" type="ModalityType" use="optional" default="required"/>
 	</xsd:complexType>
 	<xsd:element name="SeriesBlueprintChoice" type="SeriesBlueprintChoiceType">
 		<xsd:annotation>
