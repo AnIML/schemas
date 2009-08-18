@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.33" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.33" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.33">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.34" xmlns="urn:org:astm:animl:schema:core:draft:0.34" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.34">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -43,7 +43,7 @@
 			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.33">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.34">
 			<xsd:annotation>
 				<xsd:documentation>Version number of this AnIML document. Must be "0.33".</xsd:documentation>
 			</xsd:annotation>
@@ -127,7 +127,7 @@
 		</xsd:sequence>
 	</xsd:complexType>
 	<!-- -->
-	<!-- SampleSet information-->
+	<!--SampleSet information-->
 	<xsd:element name="Sample" type="SampleType">
 		<xsd:annotation>
 			<xsd:documentation>Individual Sample, referenced from other parts of this AnIML document.</xsd:documentation>
@@ -138,7 +138,7 @@
 			<xsd:documentation>Individual Sample, referenced from other parts of this AnIML document.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
+			<xsd:element ref="TagSet" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
@@ -276,7 +276,7 @@
 			<xsd:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
-			<xsd:element ref="TrackingTagSet" minOccurs="0"/>
+			<xsd:element ref="TagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
@@ -1005,45 +1005,45 @@
 	</xsd:complexType>
 	<xsd:element name="Int" type="IntType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+			<xsd:documentation>Individual integer value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="IntType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Integer Value (32 bits, signed).</xsd:documentation>
+			<xsd:documentation>Individual integer value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:int"/>
 	</xsd:simpleType>
 	<xsd:element name="Long" type="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Long Integer Value (64 bits, signed).</xsd:documentation>
+			<xsd:documentation>Individual long integer value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="LongType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Long Integer Value (64 bits, signed, maxInclusive is 9223372036854775807 and ·minInclusive·is -9223372036854775808.).</xsd:documentation>
+			<xsd:documentation>Individual long integer value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
 	<xsd:element name="Float32" type="Float32Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Individual 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="Float32Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 32-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Individual 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:float"/>
 	</xsd:simpleType>
 	<xsd:element name="Float64" type="Float64Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Individual 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="Float64Type">
 		<xsd:annotation>
-			<xsd:documentation>Individual 64-bit Floating Point Value.</xsd:documentation>
+			<xsd:documentation>Individual 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
@@ -1060,12 +1060,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Boolean" type="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean value.</xsd:documentation>
+			<xsd:documentation>Individual boolean value.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="BooleanType">
 		<xsd:annotation>
-			<xsd:documentation>Individual Boolean value.</xsd:documentation>
+			<xsd:documentation>Individual boolean value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:boolean"/>
 	</xsd:simpleType>
@@ -1285,26 +1285,26 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- -->
-	<!--Tracking Tag Elements and Types-->
-	<xsd:element name="TrackingTagSet" type="TrackingTagSetType">
+	<!--Tag Elements and Types-->
+	<xsd:element name="TagSet" type="TagSetType">
 		<xsd:annotation>
-			<xsd:documentation>Set of Tracking Tags</xsd:documentation>
+			<xsd:documentation>Set of Tag elements.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="TrackingTagSetType">
+	<xsd:complexType name="TagSetType">
 		<xsd:annotation>
-			<xsd:documentation>Set of Tracking Tags</xsd:documentation>
+			<xsd:documentation>Set of Tag elements.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="TrackingTag" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="Tag" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="TrackingTag" type="TrackingTagType">
+	<xsd:element name="Tag" type="TagType">
 		<xsd:annotation>
 			<xsd:documentation>Tag to mark related data items. When a value is given, it may also serve as a reference to an external data system.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="TrackingTagType">
+	<xsd:complexType name="TagType">
 		<xsd:annotation>
 			<xsd:documentation>Tag to mark related data items. When a value is given, it may also serve as a reference to an external data system.</xsd:documentation>
 		</xsd:annotation>
@@ -1363,12 +1363,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Email" type="EmailType">
 		<xsd:annotation>
-			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
+			<xsd:documentation>RFC822-compliant email address.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="EmailType">
 		<xsd:annotation>
-			<xsd:documentation>Element for the storage of eMail RFC822-compliant EMail address.</xsd:documentation>
+			<xsd:documentation>RFC822-compliant email address.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortStringType">
 			<xsd:pattern value=".*@.*\..*"/>
@@ -1376,12 +1376,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Phone" type="PhoneType">
 		<xsd:annotation>
-			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+			<xsd:documentation>Phone number.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="PhoneType">
 		<xsd:annotation>
-			<xsd:documentation>Element for the storage of phone numbers.</xsd:documentation>
+			<xsd:documentation>Phone number.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortStringType"/>
 	</xsd:simpleType>
@@ -1398,12 +1398,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Device" type="DeviceType">
 		<xsd:annotation>
-			<xsd:documentation>Device used to author experiment step.</xsd:documentation>
+			<xsd:documentation>Device used to perform experiment.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="DeviceType">
 		<xsd:annotation>
-			<xsd:documentation>Device used to author experiment step.</xsd:documentation>
+			<xsd:documentation>Device used to perform experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DeviceIdentifier" minOccurs="0"/>
