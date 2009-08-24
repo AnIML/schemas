@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.32" xmlns="urn:org:astm:animl:schema:technique:draft:0.32" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.33" xmlns="urn:org:astm:animl:schema:technique:draft:0.33" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -29,7 +29,7 @@
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.32"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.33"/>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
@@ -421,7 +421,7 @@
 						<xsd:annotation>
 							<xsd:documentation>Single 64-bit signed Integer value.</xsd:documentation>
 						</xsd:annotation>
-					</xsd:element>					
+					</xsd:element>
 					<xsd:element ref="Float32">
 						<xsd:annotation>
 							<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
@@ -691,14 +691,9 @@
 			<xsd:documentation>Enumeration of data types used in AnIML.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:token">
-			<xsd:enumeration value="Int32">
+			<xsd:enumeration value="Int">
 				<xsd:annotation>
-					<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="Int64">
-				<xsd:annotation>
-					<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
+					<xsd:documentation>Single 32-bit or 64-bit signed integer value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="Float">
