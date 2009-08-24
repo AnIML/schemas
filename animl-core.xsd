@@ -141,7 +141,7 @@
 			<xsd:element ref="TagSet" minOccurs="0"/>
 			<xsd:element ref="CategorySet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="sampleID" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="barcode" type="ShortTokenType" use="optional">
 			<xsd:annotation>
