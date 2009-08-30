@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.34" xmlns="urn:org:astm:animl:schema:core:draft:0.34" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.34">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.35" xmlns="urn:org:astm:animl:schema:core:draft:0.35" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.35">
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -43,9 +43,9 @@
 			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.34">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.35">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.33".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.35".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -990,8 +990,8 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:choice maxOccurs="unbounded">
-				<xsd:element ref="Int"/>
-				<xsd:element ref="Long"/>
+				<xsd:element ref="Int32"/>
+				<xsd:element ref="Int64"/>
 				<xsd:element ref="Float32"/>
 				<xsd:element ref="Float64"/>
 				<xsd:element ref="String"/>
@@ -1003,23 +1003,23 @@
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="Int" type="IntType">
+	<xsd:element name="Int32" type="Int32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual integer value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="IntType">
+	<xsd:simpleType name="Int32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual integer value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:int"/>
 	</xsd:simpleType>
-	<xsd:element name="Long" type="LongType">
+	<xsd:element name="Int64" type="Int64Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual long integer value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="LongType">
+	<xsd:simpleType name="Int64Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual long integer value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
@@ -1125,8 +1125,8 @@
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:sequence>
 					<xsd:choice>
-						<xsd:element ref="Int"/>
-						<xsd:element ref="Long"/>
+						<xsd:element ref="Int32"/>
+						<xsd:element ref="Int64"/>
 						<xsd:element ref="Float32"/>
 						<xsd:element ref="Float64"/>
 						<xsd:element ref="String"/>
@@ -1148,8 +1148,8 @@
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:sequence>
 					<xsd:choice>
-						<xsd:element ref="Int"/>
-						<xsd:element ref="Long"/>
+						<xsd:element ref="Int32"/>
+						<xsd:element ref="Int64"/>
 						<xsd:element ref="Float32"/>
 						<xsd:element ref="Float64"/>
 					</xsd:choice>
@@ -1162,12 +1162,12 @@
 			<xsd:documentation>Names of Data Types for Parameters</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortTokenType">
-			<xsd:enumeration value="Int">
+			<xsd:enumeration value="Int32">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual integer value (32 bits, signed).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="Long">
+			<xsd:enumeration value="Int64">
 				<xsd:annotation>
 					<xsd:documentation>Represents an individual long integer value (64 bits, signed).</xsd:documentation>
 				</xsd:annotation>
