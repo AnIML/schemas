@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.33" xmlns="urn:org:astm:animl:schema:technique:draft:0.33" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.34" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:0.34" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -17,6 +17,14 @@
 			<xsd:selector xpath="ResultBlueprint"/>
 			<xsd:field xpath="@name"/>
 		</xsd:unique>
+		<xsd:unique name="literatureReferenceID">
+			<xsd:selector xpath="Bibliography/LiteratureReference"/>
+			<xsd:field xpath="@literatureReferenceID"/>
+		</xsd:unique>
+		<xsd:keyref name="literatureReferenceIDUsage" refer="literatureReferenceID">
+			<xsd:selector xpath=".//Documentation"/>
+			<xsd:field xpath="@literatureReferenceID"/>
+		</xsd:keyref>
 	</xsd:element>
 	<xsd:complexType name="TechniqueType">
 		<xsd:annotation>
@@ -28,8 +36,9 @@
 			<xsd:element ref="ExperimentDataRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="Bibliography" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.33"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.34"/>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
@@ -472,12 +481,52 @@
 			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="DocumentationType">
+	<xsd:complexType name="DocumentationType">
 		<xsd:annotation>
 			<xsd:documentation>Description of the enclosing element.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:string"/>
-	</xsd:simpleType>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="literatureReferenceID" type="ShortTokenType" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the LiteratureReference element. Should be a speaking name, e.g. "ASTM E 131".</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Bibliography" type="BibliographyType">
+		<xsd:annotation>
+			<xsd:documentation>Set of literature references which are used in the documentation of this technique definition.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="BibliographyType">
+		<xsd:annotation>
+			<xsd:documentation>Set of literature references which are used in the documentation of this technique definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="LiteratureReference" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LiteratureReference" type="LiteratureReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Literature reference which is referenced by the documentation element.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LiteratureReferenceType">
+		<xsd:annotation>
+			<xsd:documentation>Literature reference which is referenced by the documentation element.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="literatureReferenceID" type="ShortTokenType" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the Citation element.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- -->
 	<!--Type definitions for basic data types-->
 	<!---->
