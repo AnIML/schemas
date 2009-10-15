@@ -489,7 +489,7 @@
 			<xsd:extension base="xsd:string">
 				<xsd:attribute name="literatureReferenceID" type="ShortTokenType" use="optional">
 					<xsd:annotation>
-						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the LiteratureReference element. Should be a speaking name, e.g. "ASTM E 131".</xsd:documentation>
+						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the LiteratureReference element. Should be a descriptive name, e.g. "ASTM E 131".</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:extension>
