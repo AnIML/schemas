@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.35" xmlns="urn:org:astm:animl:schema:core:draft:0.35" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.35">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.36" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.36" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.36">
+	<!-- $Id$ -->
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
 	<xsd:element name="AnIML" type="AnIMLType">
@@ -289,10 +290,10 @@
 		<xsd:annotation>
 			<xsd:documentation>Set of Samples used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice maxOccurs="unbounded">
-			<xsd:element ref="SampleReference"/>
-			<xsd:element ref="SampleInheritance"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:element ref="SampleReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="SampleInheritance" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="Technique" type="TechniqueType">
@@ -422,10 +423,10 @@
 		<xsd:annotation>
 			<xsd:documentation>Set of Experiment Steps consumed by this Experiment Step.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice maxOccurs="unbounded">
-			<xsd:element ref="ExperimentDataReference"/>
-			<xsd:element ref="ExperimentDataBulkReference"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:element ref="ExperimentDataReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ExperimentDataBulkReference" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
 		<xsd:annotation>
@@ -455,12 +456,12 @@
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Extension to amend Technique.</xsd:documentation>
+			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ExtensionType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Extension to amend Technique.</xsd:documentation>
+			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
 			<xsd:annotation>
@@ -625,12 +626,12 @@
 	</xsd:complexType>
 	<xsd:element name="AutoIncrementedValueSet" type="AutoIncrementedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values given in form of a start value and an increment.</xsd:documentation>
+			<xsd:documentation>Multiple values given in form of a start value and an increment.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AutoIncrementedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values given in form of a start value and an increment.</xsd:documentation>
+			<xsd:documentation>Multiple values given in form of a start value and an increment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="StartValue"/>
@@ -761,6 +762,7 @@
 			<xsd:element ref="Action"/>
 			<xsd:element ref="Reason" minOccurs="0"/>
 			<xsd:element ref="Description" minOccurs="0"/>
+			<xsd:element ref="Diff" minOccurs="0"/>
 			<xsd:element ref="Reference" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
@@ -785,6 +787,11 @@
 					<xsd:documentation>Item already existed and has been modified. Modifications are explained in the Description element.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+			<xsd:enumeration value="converted">
+				<xsd:annotation>
+					<xsd:documentation>Item has been converted into AnIML format.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="read">
 				<xsd:annotation>
 					<xsd:documentation>The given user has exercised read access on the referenced item(s).</xsd:documentation>
@@ -804,12 +811,12 @@
 	</xsd:simpleType>
 	<xsd:element name="Reason" type="ReasonType">
 		<xsd:annotation>
-			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
+			<xsd:documentation>Explanation why changes were made.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="ReasonType">
 		<xsd:annotation>
-			<xsd:documentation>Explaination why changes were made.</xsd:documentation>
+			<xsd:documentation>Explanation why changes were made.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
@@ -823,6 +830,19 @@
 			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="Diff" type="DiffType">
+		<xsd:annotation>
+			<xsd:documentation>Machine-readable description of changes made.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="DiffType">
+		<xsd:annotation>
+			<xsd:documentation>Machine-readable description of changes made.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:whiteSpace value="preserve"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:element name="Reference" type="ReferenceType">
 		<xsd:annotation>
@@ -915,23 +935,6 @@
 	</xsd:complexType>
 	<!-- -->
 	<!--SimpleTypes for Series definitions-->
-	<xsd:simpleType name="ContinuityType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies whether the data points should be connected or not.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ShortTokenType">
-			<xsd:enumeration value="discrete">
-				<xsd:annotation>
-					<xsd:documentation>Specifies whether the data points shouldn't be connected.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="continuous">
-				<xsd:annotation>
-					<xsd:documentation>Specifies whether the data points should be connected.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<xsd:simpleType name="DependencyType">
 		<xsd:annotation>
 			<xsd:documentation>Specified whether the Series is independent or dependent.</xsd:documentation>
@@ -1323,26 +1326,12 @@
 			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Name">
-				<xsd:annotation>
-					<xsd:documentation>Name of person or device.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Email" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact email address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Phone" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Contact phone number.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="Location" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Location or physical address.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="Affiliation" minOccurs="0"/>
+			<xsd:element ref="Role" minOccurs="0"/>
+			<xsd:element ref="Email" minOccurs="0"/>
+			<xsd:element ref="Phone" minOccurs="0"/>
+			<xsd:element ref="Location" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attribute name="userType" type="UserTypeType" use="required">
 			<xsd:annotation>
@@ -1357,7 +1346,29 @@
 	</xsd:element>
 	<xsd:simpleType name="NameType">
 		<xsd:annotation>
-			<xsd:documentation>Name of person or device.</xsd:documentation>
+			<xsd:documentation>Common name.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ShortStringType"/>
+	</xsd:simpleType>
+	<xsd:element name="Affiliation" type="AffiliationType">
+		<xsd:annotation>
+			<xsd:documentation>Organization the Author is affiliated with.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="AffiliationType">
+		<xsd:annotation>
+			<xsd:documentation>Organization the Author is affiliated with.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ShortStringType"/>
+	</xsd:simpleType>
+	<xsd:element name="Role" type="RoleType">
+		<xsd:annotation>
+			<xsd:documentation>Role the Author plays within the organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="RoleType">
+		<xsd:annotation>
+			<xsd:documentation>Role the Author plays within the organization.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortStringType"/>
 	</xsd:simpleType>
