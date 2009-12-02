@@ -44,9 +44,9 @@
 			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.35">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.36">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.35".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.36".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
