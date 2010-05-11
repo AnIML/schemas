@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.36" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.36" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.36">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.37" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.37" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.37">
 	<!-- $Id$ -->
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
@@ -44,9 +44,9 @@
 			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.36">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.37">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.36".</xsd:documentation>
+				<xsd:documentation>Version number of this AnIML document. Must be "0.37".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -352,7 +352,24 @@
 		</xsd:attribute>
 	</xsd:complexType>
 	<!---->
-	<!--SampleReferenceSet related information-->
+	<!--SampleReferenceSet and ExperimentDataReferenceSet-->
+	<xsd:simpleType name="PurposeType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies the referenced entity is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ShortTokenType">
+			<xsd:enumeration value="produced">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="consumed">
+				<xsd:annotation>
+					<xsd:documentation>Specifies whether a sample is consumed in an experiment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:element name="SampleReference" type="SampleReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a Sample used in this Experiment.</xsd:documentation>
@@ -382,6 +399,12 @@
 		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attributeGroup ref="SampleAttributes"/>
 	</xsd:complexType>
+	<xsd:simpleType name="SamplePurposeType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="PurposeType"/>
+	</xsd:simpleType>
 	<xsd:attributeGroup name="SampleAttributes">
 		<xsd:annotation>
 			<xsd:documentation>Common attributes for sample references.</xsd:documentation>
@@ -397,23 +420,6 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:attributeGroup>
-	<xsd:simpleType name="SamplePurposeType">
-		<xsd:annotation>
-			<xsd:documentation>Specifies whether a sample is consumed or produced in an experiment.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ShortTokenType">
-			<xsd:enumeration value="produced">
-				<xsd:annotation>
-					<xsd:documentation>Specifies whether a sample is produced in an experiment.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="consumed">
-				<xsd:annotation>
-					<xsd:documentation>Specifies whether a sample is consumed in an experiment.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<xsd:element name="ExperimentDataReferenceSet" type="ExperimentDataReferenceSetType">
 		<xsd:annotation>
 			<xsd:documentation>Set of Experiment Steps consumed by this Experiment Step.</xsd:documentation>
@@ -438,7 +444,6 @@
 			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required"/>
-		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataBulkReference" type="ExperimentDataBulkReferenceType">
 		<xsd:annotation>
@@ -449,9 +454,22 @@
 		<xsd:annotation>
 			<xsd:documentation>Prefix-based reference to a set of Experiment Steps whose data are consumed.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:attributeGroup ref="ExperimentDataAttributes"/>
 		<xsd:attribute name="experimentStepIDPrefix" type="ShortTokenType" use="required"/>
-		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
+	<xsd:attributeGroup name="ExperimentDataAttributes">
+		<xsd:annotation>
+			<xsd:documentation>Common attributes for experiment data references</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="role" type="ShortTokenType" use="required"/>
+		<xsd:attribute name="dataPurpose" type="ExperimentDataPurposeType" use="required"/>
+	</xsd:attributeGroup>
+	<xsd:simpleType name="ExperimentDataPurposeType">
+		<xsd:annotation>
+			<xsd:documentation>Specifies whether the referenced ExperimentStep data is consumed or produced in an experiment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="PurposeType"/>
+	</xsd:simpleType>
 	<!-- -->
 	<!--Technique related information-->
 	<xsd:element name="Extension" type="ExtensionType">
@@ -521,7 +539,7 @@
 			<xsd:documentation>Container for multiple Values.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice>
+			<xsd:choice minOccurs="0">
 				<xsd:element ref="IndividualValueSet" maxOccurs="unbounded"/>
 				<xsd:element ref="EncodedValueSet" maxOccurs="unbounded"/>
 				<xsd:element ref="AutoIncrementedValueSet" maxOccurs="unbounded"/>
@@ -761,7 +779,7 @@
 			<xsd:element ref="Software" minOccurs="0"/>
 			<xsd:element ref="Action"/>
 			<xsd:element ref="Reason" minOccurs="0"/>
-			<xsd:element ref="Description" minOccurs="0"/>
+			<xsd:element ref="Comment" minOccurs="0"/>
 			<xsd:element ref="Diff" minOccurs="0"/>
 			<xsd:element ref="Reference" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
@@ -782,7 +800,7 @@
 					<xsd:documentation>The given user has created the references item(s).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="modifed">
+			<xsd:enumeration value="modified">
 				<xsd:annotation>
 					<xsd:documentation>Item already existed and has been modified. Modifications are explained in the Description element.</xsd:documentation>
 				</xsd:annotation>
@@ -820,14 +838,14 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
-	<xsd:element name="Description" type="DescriptionType">
+	<xsd:element name="Comment" type="CommentType">
 		<xsd:annotation>
-			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
+			<xsd:documentation>Human-readable comment further explaining the changes.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="DescriptionType">
+	<xsd:simpleType name="CommentType">
 		<xsd:annotation>
-			<xsd:documentation>Detailed description of changes made.</xsd:documentation>
+			<xsd:documentation>Human-readable comment further explaining the changes.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
@@ -836,14 +854,52 @@
 			<xsd:documentation>Machine-readable description of changes made.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="DiffType">
+	<xsd:complexType name="DiffType">
 		<xsd:annotation>
 			<xsd:documentation>Machine-readable description of changes made.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:whiteSpace value="preserve"/>
+		<xsd:sequence>
+			<xsd:element ref="OldValue"/>
+			<xsd:element ref="NewValue"/>
+		</xsd:sequence>
+		<xsd:attribute name="scope" type="ScopeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Scope of diff. May be "element" or "attribute".</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="changedItem" type="xsd:IDREF" use="required">
+			<xsd:annotation>
+				<xsd:documentation>ID of the SignableItem that was changed</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="ScopeType">
+		<xsd:annotation>
+			<xsd:documentation>Scope of diff. May be "element" or "attribute".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ShortTokenType">
+			<xsd:enumeration value="element">
+				<xsd:annotation>
+					<xsd:documentation>This diff describes the whole element before and after the change.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="attributes">
+				<xsd:annotation>
+					<xsd:documentation>This diff only describes a change in attributes. The child elements remain unchanged (and are not reflected in the diff to save space).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:element name="OldValue" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Value before the change.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NewValue" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Value after the change.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="Reference" type="ReferenceType">
 		<xsd:annotation>
 			<xsd:documentation>ID of the SignableItem that was affected. If none is specified, entire document is covered.</xsd:documentation>
@@ -964,12 +1020,12 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a common logarithmic scale (base 10).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that this Series is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that this Series is typically plotted on a natural logarithmic scale (base e).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="none">
