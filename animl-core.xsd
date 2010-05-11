@@ -433,6 +433,7 @@
 			<xsd:element ref="ExperimentDataReference" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentDataBulkReference" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
+		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataReference" type="ExperimentDataReferenceType">
 		<xsd:annotation>
@@ -443,6 +444,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataBulkReference" type="ExperimentDataBulkReferenceType">
@@ -454,6 +456,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Prefix-based reference to a set of Experiment Steps whose data are consumed.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:attributeGroup ref="SignableItem"/>
 		<xsd:attributeGroup ref="ExperimentDataAttributes"/>
 		<xsd:attribute name="experimentStepIDPrefix" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
