@@ -783,7 +783,7 @@
 			<xsd:element ref="Action"/>
 			<xsd:element ref="Reason" minOccurs="0"/>
 			<xsd:element ref="Comment" minOccurs="0"/>
-			<xsd:element ref="Diff" minOccurs="0"/>
+			<xsd:element ref="Diff" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="Reference" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
