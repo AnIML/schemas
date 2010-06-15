@@ -445,6 +445,7 @@
 			<xsd:documentation>Reference to an Experiment Step whose data is consumed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="ExperimentDataAttributes"/>
 		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required"/>
 	</xsd:complexType>
 	<xsd:element name="ExperimentDataBulkReference" type="ExperimentDataBulkReferenceType">
