@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.34" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:0.34" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:technique:draft:0.90" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:org:astm:animl:schema:technique:draft:0.90" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<!--XML Schema for AnIML Technique Definition files. -->
 	<!-- -->
 	<!-- * Top-Level document elements * -->
@@ -32,13 +32,18 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="ExtensionScope" minOccurs="0"/>
 			<xsd:element ref="SampleRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentDataRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="Bibliography" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.34"/>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="0.90">
+			<xsd:annotation>
+				<xsd:documentation>Version number of the AnIML Technique Schema used in this document. Must be "0.90".</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 		<xsd:attribute name="name" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Technique Definition name (human-readable).</xsd:documentation>
@@ -47,6 +52,77 @@
 		<xsd:attribute name="extension" type="xsd:boolean" use="optional" default="false">
 			<xsd:annotation>
 				<xsd:documentation>Is this document an extension?  If false, it is a Technique Definition. If true, it is a Technique Extension.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="abstract" type="xsd:boolean" use="optional" default="false">
+			<xsd:annotation>
+				<xsd:documentation>Whether this Technique Definition or Extension needs to be used with an Extension to be valid. If true, at least one non-abstract extension is required in the ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!---->
+	<!--Extension scope related information-->
+	<xsd:element name="ExtensionScope" type="ExtensionScopeType">
+		<xsd:annotation>
+			<xsd:documentation>For Extensions only. Specifies which Technique Definitions or Extensions can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtensionScopeType">
+		<xsd:annotation>
+			<xsd:documentation>For Extensions only. Specifies which Technique Definitions or Extensions can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ExtendedTechnique" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ExtendedExtension" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ExtendedTechnique" type="ExtendedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a Technique Definition which can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtendedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a Technique Definition which can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>URI where Technique Definition file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced Technique Definition</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ExtendedExtension" type="ExtendedExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an Extension which can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtendedExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an Extension which can be extended using this Extension.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>URI where Extension file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced Extension</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -287,12 +363,12 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="log">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the Series data is typically plotted on a common logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the Series data is typically plotted on a common logarithmic scale (base 10).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="ln">
 				<xsd:annotation>
-					<xsd:documentation>Specifies that the Series data is typically plotted on a natural logarithmic scale.</xsd:documentation>
+					<xsd:documentation>Specifies that the Series data is typically plotted on a natural logarithmic scale (base e).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="none">
@@ -401,18 +477,21 @@
 		<xsd:annotation>
 			<xsd:documentation>Elements for allowed values in Parameters.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice>
-			<xsd:element ref="Int32"/>
-			<xsd:element ref="Int64"/>
-			<xsd:element ref="Float32"/>
-			<xsd:element ref="Float64"/>
-			<xsd:element ref="String"/>
-			<xsd:element ref="Boolean"/>
-			<xsd:element ref="DateTime"/>
-			<xsd:element ref="PNG"/>
-			<xsd:element ref="EmbeddedXML"/>
-			<xsd:element ref="SVG"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element ref="I"/>
+				<xsd:element ref="L"/>
+				<xsd:element ref="F"/>
+				<xsd:element ref="D"/>
+				<xsd:element ref="S"/>
+				<xsd:element ref="Boolean"/>
+				<xsd:element ref="DateTime"/>
+				<xsd:element ref="PNG"/>
+				<xsd:element ref="EmbeddedXML"/>
+				<xsd:element ref="SVG"/>
+			</xsd:choice>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="NumericValueType">
 		<xsd:annotation>
@@ -421,22 +500,22 @@
 		<xsd:complexContent>
 			<xsd:restriction base="ParameterValueType">
 				<xsd:choice>
-					<xsd:element ref="Int32">
+					<xsd:element ref="I">
 						<xsd:annotation>
 							<xsd:documentation>Single 32-bit signed Integer value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element ref="Int64">
+					<xsd:element ref="L">
 						<xsd:annotation>
 							<xsd:documentation>Single 64-bit signed Integer value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element ref="Float32">
+					<xsd:element ref="F">
 						<xsd:annotation>
 							<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element ref="Float64">
+					<xsd:element ref="D">
 						<xsd:annotation>
 							<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 						</xsd:annotation>
@@ -492,17 +571,22 @@
 						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the LiteratureReference element. Should be a descriptive name, e.g. "ASTM E 131".</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
+				<xsd:attribute name="literatureAccession" type="ShortTokenType" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Accession number, relative to the given literature reference.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:element name="Bibliography" type="BibliographyType">
 		<xsd:annotation>
-			<xsd:documentation>Set of literature references which are used in the documentation of this technique definition.</xsd:documentation>
+			<xsd:documentation>Set of literature references used in the documentation of this technique definition.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="BibliographyType">
 		<xsd:annotation>
-			<xsd:documentation>Set of literature references which are used in the documentation of this technique definition.</xsd:documentation>
+			<xsd:documentation>Set of literature references used in the documentation of this technique definition.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="LiteratureReference" maxOccurs="unbounded"/>
@@ -510,18 +594,23 @@
 	</xsd:complexType>
 	<xsd:element name="LiteratureReference" type="LiteratureReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Literature reference which is referenced by the documentation element.</xsd:documentation>
+			<xsd:documentation>Literature reference cited from within the Documentation element.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="LiteratureReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>Literature reference which is referenced by the documentation element.</xsd:documentation>
+			<xsd:documentation>Literature reference cited from within the Documentation element.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:string">
 				<xsd:attribute name="literatureReferenceID" type="ShortTokenType" use="optional">
 					<xsd:annotation>
 						<xsd:documentation>Indicates which literature source is being cited for this definition. Refers to the Citation element.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="uri" type="xsd:anyURI" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>URI location of the cited resource</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:extension>
@@ -686,8 +775,9 @@
 			<xsd:documentation>Allowed value range for a Parameter or Series.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="Min"/>
-			<xsd:element ref="Max"/>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:element ref="Min" minOccurs="0"/>
+			<xsd:element ref="Max" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attribute name="unit" type="ShortTokenType" use="optional">
 			<xsd:annotation>
@@ -750,6 +840,11 @@
 					<xsd:documentation>Single 32-bit or 64-bit floating point value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+			<xsd:enumeration value="Numeric">
+				<xsd:annotation>
+					<xsd:documentation>Single 32-bit or 64-bit integer or floating point value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="String">
 				<xsd:annotation>
 					<xsd:documentation>Single string value.</xsd:documentation>
@@ -782,7 +877,7 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:element name="Int32" type="Int32Type">
+	<xsd:element name="I" type="Int32Type">
 		<xsd:annotation>
 			<xsd:documentation>Single 32-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
@@ -801,7 +896,7 @@
 			<xsd:minInclusive value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:element name="Int64" type="Int64Type">
+	<xsd:element name="L" type="Int64Type">
 		<xsd:annotation>
 			<xsd:documentation>Single 64-bit signed integer value.</xsd:documentation>
 		</xsd:annotation>
@@ -812,7 +907,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
-	<xsd:element name="Float32" type="Float32Type">
+	<xsd:element name="F" type="Float32Type">
 		<xsd:annotation>
 			<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
@@ -823,7 +918,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:float"/>
 	</xsd:simpleType>
-	<xsd:element name="Float64" type="Float64Type">
+	<xsd:element name="D" type="Float64Type">
 		<xsd:annotation>
 			<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
@@ -834,7 +929,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
-	<xsd:element name="String" type="StringType">
+	<xsd:element name="S" type="StringType">
 		<xsd:annotation>
 			<xsd:documentation>Single string value.</xsd:documentation>
 		</xsd:annotation>
