@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Burkhard Schaefer (BSSN Software) -->
-<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.37" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.37" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.37">
+<xsd:schema targetNamespace="urn:org:astm:animl:schema:core:draft:0.90" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:org:astm:animl:schema:core:draft:0.90" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.90">
 	<!-- $Id$ -->
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 	<!--Root-Node of every AnIML document-->
@@ -44,9 +44,9 @@
 			<xsd:element ref="AuditTrailEntrySet" minOccurs="0"/>
 			<xsd:element ref="SignatureSet" minOccurs="0"/>
 		</xsd:sequence>
-		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.37">
+		<xsd:attribute name="version" type="ShortStringType" use="required" fixed="0.90">
 			<xsd:annotation>
-				<xsd:documentation>Version number of this AnIML document. Must be "0.37".</xsd:documentation>
+				<xsd:documentation>Version number of the AnIML Core Schema used in this document. Must be "0.90".</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -140,13 +140,18 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TagSet" minOccurs="0"/>
-			<xsd:element ref="CategorySet" minOccurs="0"/>
+			<xsd:element ref="Category" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="sampleID" type="ShortTokenType" use="required"/>
 		<xsd:attribute name="barcode" type="ShortTokenType" use="optional">
 			<xsd:annotation>
 				<xsd:documentation>Value of barcode label that is attached to sample container.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="comment" type="ShortStringType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Unstructured text comment to further describe the Sample.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 		<xsd:attribute name="derived" type="xsd:boolean" use="optional" default="false">
@@ -166,9 +171,10 @@
 		</xsd:attribute>
 		<xsd:attribute name="locationInContainer" type="ShortTokenType" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>Coordinates of this sample within the enclosing container.</xsd:documentation>
+				<xsd:documentation>Coordinates of this sample within the enclosing container. In case of microplates or trays, the row is identified by letters and the column is identified by numbers (1-based) while in landscape orientation. Examples: A10 = 1st row, 10th column, Z1 = 26th row, 1st column, AB2 = 28th row, 2nd column.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attributeGroup ref="SourceDataLocation"/>
 	</xsd:complexType>
 	<xsd:simpleType name="ContainerTypeType">
 		<xsd:annotation>
@@ -182,12 +188,42 @@
 			</xsd:enumeration>
 			<xsd:enumeration value="determinate">
 				<xsd:annotation>
-					<xsd:documentation>Positions within this container are precisely defined and known in advance (e.g. microtiter plates, racks, ...)</xsd:documentation>
+					<xsd:documentation>Positions within this container are precisely defined and known in advance (e.g. racks, ...)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="indeterminate">
 				<xsd:annotation>
 					<xsd:documentation>Positions within this container are not precisely defined or known in advance (e.g. gels, surfaces)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="rectangular tray">
+				<xsd:annotation>
+					<xsd:documentation>Rectangular tray with unknown (or other) number of positions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="6 wells">
+				<xsd:annotation>
+					<xsd:documentation>Microtiter plate or tray with 6 positions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="24 wells">
+				<xsd:annotation>
+					<xsd:documentation>Microtiter plate or tray with 24 positions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="96 wells">
+				<xsd:annotation>
+					<xsd:documentation>Microtiter plate or tray with 96 positions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="384 wells">
+				<xsd:annotation>
+					<xsd:documentation>Microtiter plate or tray with 384 positions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1536 wells">
+				<xsd:annotation>
+					<xsd:documentation>Microtiter plate or tray with 1536 positions.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -204,18 +240,25 @@
 			<xsd:documentation>Container that documents a step in an experiment. Use one ExperimentStep per application of a Technique.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="TagSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="Infrastructure" minOccurs="0"/>
 			<xsd:element ref="Method" minOccurs="0"/>
 			<xsd:element ref="Result" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-		<xsd:attribute name="templateUsed" type="ShortTokenType" use="optional"/>
 		<xsd:attribute name="experimentStepID" type="ShortTokenType" use="required">
 			<xsd:annotation>
 				<xsd:documentation>Unique identifier for this ExperimentStep. Used to point to this step from an ExperimentDataReference.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="templateUsed" type="ShortTokenType" use="optional"/>
+		<xsd:attribute name="comment" type="ShortStringType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Unstructured text comment to further describe the ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attributeGroup ref="SourceDataLocation"/>
 	</xsd:complexType>
 	<xsd:element name="Template" type="TemplateType">
 		<xsd:annotation>
@@ -234,6 +277,7 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
 		<xsd:attribute name="templateID" type="ShortTokenType" use="required"/>
+		<xsd:attributeGroup ref="SourceDataLocation"/>
 	</xsd:complexType>
 	<xsd:element name="Timestamp" type="TimestampType">
 		<xsd:annotation>
@@ -259,9 +303,9 @@
 			<xsd:element ref="Author" minOccurs="0"/>
 			<xsd:element ref="Device" minOccurs="0"/>
 			<xsd:element ref="Software" minOccurs="0"/>
-			<xsd:element ref="CategorySet" minOccurs="0"/>
+			<xsd:element ref="Category" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attributeGroup ref="SignableItemWithName"/>
 	</xsd:complexType>
 	<xsd:element name="Infrastructure" type="InfrastructureType">
 		<xsd:annotation>
@@ -277,7 +321,6 @@
 			<xsd:element ref="ParentDataPointReferenceSet" minOccurs="0"/>
 			<xsd:element ref="ExperimentDataReferenceSet" minOccurs="0"/>
 			<xsd:element ref="Timestamp" minOccurs="0"/>
-			<xsd:element ref="TagSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
@@ -296,14 +339,16 @@
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
+	<!-- -->
+	<!--Technique related information-->
 	<xsd:element name="Technique" type="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Technique used in this Experiment.</xsd:documentation>
+			<xsd:documentation>Reference to Technique Definition used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="TechniqueType">
 		<xsd:annotation>
-			<xsd:documentation>Reference to Technique used in this Experiment.</xsd:documentation>
+			<xsd:documentation>Reference to Technique Definition used in this Experiment.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
@@ -313,6 +358,36 @@
 		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
 			<xsd:annotation>
 				<xsd:documentation>URI where Technique Definition file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced Technique Definition</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="Extension" type="ExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>URI where Extension file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced Extension</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -475,28 +550,6 @@
 		<xsd:restriction base="PurposeType"/>
 	</xsd:simpleType>
 	<!-- -->
-	<!--Technique related information-->
-	<xsd:element name="Extension" type="ExtensionType">
-		<xsd:annotation>
-			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="ExtensionType">
-		<xsd:annotation>
-			<xsd:documentation>Reference to an Extension to amend the active Technique Definition.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:attribute name="uri" type="xsd:anyURI" use="required">
-			<xsd:annotation>
-				<xsd:documentation>URI where Extension file can be fetched.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="name" type="ShortTokenType" use="required">
-			<xsd:annotation>
-				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-	</xsd:complexType>
-	<!-- -->
 	<!--Result related information-->
 	<xsd:element name="Result" type="ResultType">
 		<xsd:annotation>
@@ -509,7 +562,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SeriesSet" minOccurs="0"/>
-			<xsd:element ref="CategorySet" minOccurs="0"/>
+			<xsd:element ref="Category" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentStepSet" minOccurs="0"/>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
@@ -594,12 +647,12 @@
 	</xsd:complexType>
 	<xsd:element name="EncodedValueSet" type="EncodedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
+			<xsd:documentation>Multiple numeric values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="EncodedValueSetType">
 		<xsd:annotation>
-			<xsd:documentation>Multiple Values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
+			<xsd:documentation>Multiple numeric values encoded as a base64 binary string. Uses little-endian byte order.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:base64Binary">
@@ -922,20 +975,6 @@
 	</xsd:element>
 	<!-- -->
 	<!--Parameter related information-->
-	<xsd:element name="CategorySet" type="CategorySetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for categorized and nested Parameters and SeriesSets.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="CategorySetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for categorized and nested Parameters and SeriesSets.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Category" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
-	</xsd:complexType>
 	<xsd:element name="Category" type="CategoryType">
 		<xsd:annotation>
 			<xsd:documentation>Defines a category of Parameters and SeriesSets. Used to model hierarchies.</xsd:documentation>
@@ -946,29 +985,15 @@
 			<xsd:documentation>Defines a category of Parameters and SeriesSets. Used to model hierarchies.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="ParameterSet" minOccurs="0"/>
+			<xsd:element ref="Parameter" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="SeriesSet" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="CategorySet" minOccurs="0">
+			<xsd:element ref="Category" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>Contains multiple subcategories of Category.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 		<xsd:attributeGroup ref="SignableItemWithName"/>
-	</xsd:complexType>
-	<xsd:element name="ParameterSet" type="ParameterSetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for Name/Value Pairs.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="ParameterSetType">
-		<xsd:annotation>
-			<xsd:documentation>Container for Name/Value Pairs.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Parameter" maxOccurs="unbounded"/>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItem"/>
 	</xsd:complexType>
 	<xsd:element name="Parameter" type="ParameterType">
 		<xsd:annotation>
@@ -1053,11 +1078,11 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:choice maxOccurs="unbounded">
-				<xsd:element ref="Int32"/>
-				<xsd:element ref="Int64"/>
-				<xsd:element ref="Float32"/>
-				<xsd:element ref="Float64"/>
-				<xsd:element ref="String"/>
+				<xsd:element ref="I"/>
+				<xsd:element ref="L"/>
+				<xsd:element ref="F"/>
+				<xsd:element ref="D"/>
+				<xsd:element ref="S"/>
 				<xsd:element ref="Boolean"/>
 				<xsd:element ref="DateTime"/>
 				<xsd:element ref="PNG"/>
@@ -1066,7 +1091,7 @@
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="Int32" type="Int32Type">
+	<xsd:element name="I" type="Int32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual integer value (32 bits, signed).</xsd:documentation>
 		</xsd:annotation>
@@ -1077,7 +1102,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:int"/>
 	</xsd:simpleType>
-	<xsd:element name="Int64" type="Int64Type">
+	<xsd:element name="L" type="Int64Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual long integer value (64 bits, signed).</xsd:documentation>
 		</xsd:annotation>
@@ -1088,7 +1113,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
-	<xsd:element name="Float32" type="Float32Type">
+	<xsd:element name="F" type="Float32Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual 32-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
@@ -1099,7 +1124,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:float"/>
 	</xsd:simpleType>
-	<xsd:element name="Float64" type="Float64Type">
+	<xsd:element name="D" type="Float64Type">
 		<xsd:annotation>
 			<xsd:documentation>Individual 64-bit floating point value.</xsd:documentation>
 		</xsd:annotation>
@@ -1110,7 +1135,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="xsd:double"/>
 	</xsd:simpleType>
-	<xsd:element name="String" type="StringType">
+	<xsd:element name="S" type="StringType">
 		<xsd:annotation>
 			<xsd:documentation>Individual string value.</xsd:documentation>
 		</xsd:annotation>
@@ -1188,11 +1213,11 @@
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:sequence>
 					<xsd:choice>
-						<xsd:element ref="Int32"/>
-						<xsd:element ref="Int64"/>
-						<xsd:element ref="Float32"/>
-						<xsd:element ref="Float64"/>
-						<xsd:element ref="String"/>
+						<xsd:element ref="I"/>
+						<xsd:element ref="L"/>
+						<xsd:element ref="F"/>
+						<xsd:element ref="D"/>
+						<xsd:element ref="S"/>
 						<xsd:element ref="Boolean"/>
 						<xsd:element ref="DateTime"/>
 						<xsd:element ref="PNG"/>
@@ -1211,10 +1236,10 @@
 			<xsd:restriction base="UnboundedValueType">
 				<xsd:sequence>
 					<xsd:choice>
-						<xsd:element ref="Int32"/>
-						<xsd:element ref="Int64"/>
-						<xsd:element ref="Float32"/>
-						<xsd:element ref="Float64"/>
+						<xsd:element ref="I"/>
+						<xsd:element ref="L"/>
+						<xsd:element ref="F"/>
+						<xsd:element ref="D"/>
 					</xsd:choice>
 				</xsd:sequence>
 			</xsd:restriction>
@@ -1347,6 +1372,16 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:attributeGroup name="SourceDataLocation">
+		<xsd:annotation>
+			<xsd:documentation>Attribute group which points to the original data source.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="sourceDataLocation" type="ShortStringType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Points to the original data source. May be a file name, uri, database ID, etc.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
 	<!-- -->
 	<!--Tag Elements and Types-->
 	<xsd:element name="TagSet" type="TagSetType">
@@ -1378,7 +1413,7 @@
 	<!--Humans, Device and Software involved in recording the data-->
 	<xsd:element name="Author" type="AuthorType">
 		<xsd:annotation>
-			<xsd:documentation>User responsible.</xsd:documentation>
+			<xsd:documentation>Information about a person, a device or a piece of software authoring AnIML files.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="AuthorType">
@@ -1484,21 +1519,17 @@
 			<xsd:element ref="SerialNumber" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="Software" type="SoftwareType">
+	<xsd:element name="DeviceIdentifier" type="DeviceIdentifierType">
 		<xsd:annotation>
-			<xsd:documentation>Software used to author this.</xsd:documentation>
+			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="SoftwareType">
+	<xsd:simpleType name="DeviceIdentifierType">
 		<xsd:annotation>
-			<xsd:documentation>Software used to author this.</xsd:documentation>
+			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="Manufacturer" minOccurs="0"/>
-			<xsd:element ref="Name"/>
-			<xsd:element ref="Version" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:complexType>
+		<xsd:restriction base="ShortTokenType"/>
+	</xsd:simpleType>
 	<xsd:element name="Manufacturer" type="ManufacturerType">
 		<xsd:annotation>
 			<xsd:documentation>Company name.</xsd:documentation>
@@ -1507,17 +1538,6 @@
 	<xsd:simpleType name="ManufacturerType">
 		<xsd:annotation>
 			<xsd:documentation>Company name.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ShortTokenType"/>
-	</xsd:simpleType>
-	<xsd:element name="Version" type="VersionType">
-		<xsd:annotation>
-			<xsd:documentation>Version identifier of software release.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:simpleType name="VersionType">
-		<xsd:annotation>
-			<xsd:documentation>Version identifier of software release.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
@@ -1543,14 +1563,41 @@
 		</xsd:annotation>
 		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
-	<xsd:element name="DeviceIdentifier" type="DeviceIdentifierType">
+	<xsd:element name="Software" type="SoftwareType">
 		<xsd:annotation>
-			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
+			<xsd:documentation>Software used to author this.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:simpleType name="DeviceIdentifierType">
+	<xsd:complexType name="SoftwareType">
 		<xsd:annotation>
-			<xsd:documentation>Unique name or identifier of the device.</xsd:documentation>
+			<xsd:documentation>Software used to author this.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Manufacturer" minOccurs="0"/>
+			<xsd:element ref="Name"/>
+			<xsd:element ref="Version" minOccurs="0"/>
+			<xsd:element ref="OperatingSystem" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OperatingSystem" type="OperatingSystemType">
+		<xsd:annotation>
+			<xsd:documentation>Operating system the software was running on.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="OperatingSystemType">
+		<xsd:annotation>
+			<xsd:documentation>Operating system the software was running on.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ShortTokenType"/>
+	</xsd:simpleType>
+	<xsd:element name="Version" type="VersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of software release.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="VersionType">
+		<xsd:annotation>
+			<xsd:documentation>Version identifier of software release.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ShortTokenType"/>
 	</xsd:simpleType>
