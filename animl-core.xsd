@@ -270,6 +270,7 @@
 			<xsd:documentation>Represents a template for an ExperimentStep.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="TagSet" minOccurs="0"/>
 			<xsd:element ref="Technique" minOccurs="0"/>
 			<xsd:element ref="Infrastructure" minOccurs="0"/>
 			<xsd:element ref="Method" minOccurs="0"/>
