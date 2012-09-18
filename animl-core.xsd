@@ -306,7 +306,12 @@
 			<xsd:element ref="Software" minOccurs="0"/>
 			<xsd:element ref="Category" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attributeGroup ref="SignableItemWithName"/>
+		<xsd:attributeGroup ref="SignableItem"/>
+		<xsd:attribute name="name" type="ShortTokenType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Optional method name, as defined in the instrument software.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<xsd:element name="Infrastructure" type="InfrastructureType">
 		<xsd:annotation>
