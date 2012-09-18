@@ -1519,7 +1519,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DeviceIdentifier" minOccurs="0"/>
-			<xsd:element ref="Manufacturer"/>
+			<xsd:element ref="Manufacturer" minOccurs="0"/>
 			<xsd:element ref="Name"/>
 			<xsd:element ref="FirmwareVersion" minOccurs="0"/>
 			<xsd:element ref="SerialNumber" minOccurs="0"/>
