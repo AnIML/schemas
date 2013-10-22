@@ -499,28 +499,15 @@
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:restriction base="ParameterValueType">
-				<xsd:choice>
-					<xsd:element ref="I">
-						<xsd:annotation>
-							<xsd:documentation>Single 32-bit signed Integer value.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="L">
-						<xsd:annotation>
-							<xsd:documentation>Single 64-bit signed Integer value.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="F">
-						<xsd:annotation>
-							<xsd:documentation>Single 32-bit floating point value.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="D">
-						<xsd:annotation>
-							<xsd:documentation>Single 64-bit floating point value.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-				</xsd:choice>
+				<xsd:sequence>
+					<xsd:element ref="Documentation" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:element ref="I"/>
+						<xsd:element ref="L"/>
+						<xsd:element ref="F"/>
+						<xsd:element ref="D"/>
+					</xsd:choice>
+				</xsd:sequence>
 			</xsd:restriction>
 		</xsd:complexContent>
 	</xsd:complexType>
