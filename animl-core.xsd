@@ -366,9 +366,9 @@
 				<xsd:documentation>URI where Technique Definition file can be fetched.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+		<xsd:attribute name="sha256" type="xsd:token" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>SHA256 checksum of the referenced Technique Definition</xsd:documentation>
+				<xsd:documentation>SHA256 checksum of the referenced Technique Definition. Hex encoded, lower cased. Similar to the output of the sha256 unix command.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -391,9 +391,9 @@
 				<xsd:documentation>Name of Extension to be used. Must match Name given in Extension Definition file.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
-		<xsd:attribute name="sha256" type="xsd:base64Binary" use="optional">
+		<xsd:attribute name="sha256" type="xsd:token" use="optional">
 			<xsd:annotation>
-				<xsd:documentation>SHA256 checksum of the referenced Extension</xsd:documentation>
+				<xsd:documentation>SHA256 checksum of the referenced Extension. Hex encoded, lower cased. Similar to the output of the sha256 unix command.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -772,9 +772,9 @@
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="SIUnitNameList">
-				<xsd:attribute name="factor" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="exponent" type="xsd:float" use="optional" default="1"/>
-				<xsd:attribute name="offset" type="xsd:float" use="optional" default="0"/>
+				<xsd:attribute name="factor" type="xsd:double" use="optional" default="1"/>
+				<xsd:attribute name="exponent" type="xsd:double" use="optional" default="1"/>
+				<xsd:attribute name="offset" type="xsd:double" use="optional" default="0"/>
 			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>
