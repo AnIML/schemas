@@ -203,6 +203,14 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:choice maxOccurs="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>(optional) list a techniques that is a valid targeting ExperimentStep must implement, if not given no specific technique is desired</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element ref="Technique"/>
+				<xsd:element ref="ReferencedTechnique"/>
+				<xsd:element ref="ExtendedTechnique"/>
+			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="name" type="ShortStringType" use="required">
 			<xsd:annotation>
