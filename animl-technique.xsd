@@ -35,6 +35,7 @@
 			<xsd:element ref="ExtensionScope" minOccurs="0"/>
 			<xsd:element ref="SampleRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentDataRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParentDataPointReferenceBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="Bibliography" minOccurs="0"/>
@@ -269,6 +270,42 @@
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
 				<xsd:documentation>Maximum number of occurences of the Result. If set to > 1, the index attribute (1+) must be used in the AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ParentDataPointReferenceBlueprint" type="ParentDataPointReferenceBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of a possible ParentDataPointReference that an ExperimentStep might referencing as a child.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParentDataPointReferenceBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of ChildExperimentStepSet that is an ExperimentStepBlueprint referencing a series in a result.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>This could either be an (embedded) technique or reference to an existing technique or an extension.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element ref="ReferencedTechnique"/>
+				<xsd:element ref="Technique"/>
+				<xsd:element ref="ExtendedTechnique"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="modality" type="ModalityType" use="optional" default="optional">
+			<xsd:annotation>
+				<xsd:documentation>Is this technique required to always reference a parent of the given type?</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="resultName" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the name of the result in the target technique.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="seriesName" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the name of the series inside the result.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
