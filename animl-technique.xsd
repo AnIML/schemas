@@ -60,6 +60,31 @@
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:element name="ReferencedTechnique" type="ReferencedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TechniqueType.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReferencedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TechniqueType.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of TechniqueType to be referenced. Must match Name given in TechniqueType Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>URI where TechniqueType file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced TechniqueType. Hex encoded, lower cased. Similar to the output of the sha256 unix command.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
 	<!---->
 	<!--Extension scope related information-->
 	<xsd:element name="ExtensionScope" type="ExtensionScopeType">
