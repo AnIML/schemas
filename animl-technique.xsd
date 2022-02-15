@@ -35,6 +35,7 @@
 			<xsd:element ref="ExtensionScope" minOccurs="0"/>
 			<xsd:element ref="SampleRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ExperimentDataRoleBlueprint" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ParentDataPointReferenceBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="MethodBlueprint" minOccurs="0"/>
 			<xsd:element ref="ResultBlueprint" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="Bibliography" minOccurs="0"/>
@@ -57,6 +58,31 @@
 		<xsd:attribute name="abstract" type="xsd:boolean" use="optional" default="false">
 			<xsd:annotation>
 				<xsd:documentation>Whether this Technique Definition or Extension needs to be used with an Extension to be valid. If true, at least one non-abstract extension is required in the ExperimentStep.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ReferencedTechnique" type="ReferencedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TechniqueType.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReferencedTechniqueType">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TechniqueType.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="ShortTokenType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Name of TechniqueType to be referenced. Must match Name given in TechniqueType Definition file.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="uri" type="xsd:anyURI" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>URI where TechniqueType file can be fetched.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="sha256" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>SHA256 checksum of the referenced TechniqueType. Hex encoded, lower cased. Similar to the output of the sha256 unix command.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
@@ -244,6 +270,42 @@
 		<xsd:attribute name="maxOccurs" type="MaxOccursType" use="optional" default="1">
 			<xsd:annotation>
 				<xsd:documentation>Maximum number of occurences of the Result. If set to > 1, the index attribute (1+) must be used in the AnIML document.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="ParentDataPointReferenceBlueprint" type="ParentDataPointReferenceBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of a possible ParentDataPointReference that an ExperimentStep might referencing as a child.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParentDataPointReferenceBlueprintType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of ChildExperimentStepSet that is an ExperimentStepBlueprint referencing a series in a result.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Documentation" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>This could either be an (embedded) technique or reference to an existing technique or an extension.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element ref="ReferencedTechnique"/>
+				<xsd:element ref="Technique"/>
+				<xsd:element ref="ExtendedTechnique"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="modality" type="ModalityType" use="optional" default="optional">
+			<xsd:annotation>
+				<xsd:documentation>Is this technique required to always reference a parent of the given type?</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="resultName" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the name of the result in the target technique.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="seriesName" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Specifies the name of the series inside the result.</xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
